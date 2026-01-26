@@ -1,0 +1,193 @@
+DO $$
+    BEGIN
+        IF EXISTS (
+            SELECT 1
+            FROM pg_constraint
+            WHERE conname ='FK_QUIZZES_ON_COURSE'
+        ) THEN
+            ALTER TABLE quizzes DROP CONSTRAINT FK_QUIZZES_ON_COURSE;
+        END IF;
+
+        IF EXISTS (
+            SELECT 1
+            FROM pg_constraint
+            WHERE conname ='FK_QUIZZES_ON_LESSON'
+        ) THEN
+            ALTER TABLE quizzes DROP CONSTRAINT FK_QUIZZES_ON_LESSON;
+        END IF;
+
+        IF EXISTS (
+            SELECT 1
+            FROM information_schema.columns
+            WHERE table_name = 'quizzes'
+              AND column_name = 'max_attempts'
+        ) THEN
+            ALTER TABLE quizzes DROP COLUMN max_attempts;
+        END IF;
+
+        IF EXISTS (
+            SELECT 1
+            FROM information_schema.columns
+            WHERE table_name = 'quizzes'
+              AND column_name = 'time_limit'
+        ) THEN
+            ALTER TABLE quizzes DROP COLUMN time_limit;
+        END IF;
+
+        IF EXISTS (
+            SELECT 1
+            FROM information_schema.columns
+            WHERE table_name = 'quizzes'
+              AND column_name = 'passing_score'
+        ) THEN
+            ALTER TABLE quizzes DROP COLUMN passing_score;
+        END IF;
+
+        IF EXISTS (
+            SELECT 1
+            FROM information_schema.columns
+            WHERE table_name = 'quizzes'
+              AND column_name = 'lesson_id'
+        ) THEN
+            ALTER TABLE quizzes DROP COLUMN  lesson_id;
+        END IF;
+
+        IF EXISTS (
+            SELECT 1
+            FROM information_schema.columns
+            WHERE table_name = 'quizzes'
+              AND column_name = 'course_id'
+        ) THEN
+            ALTER TABLE quizzes DROP COLUMN  course_id;
+        END IF;
+
+        IF EXISTS (
+            SELECT 1
+            FROM information_schema.columns
+            WHERE table_name = 'quiz_attempts'
+              AND column_name = 'time_taken'
+        ) THEN
+            ALTER TABLE quiz_attempts DROP COLUMN  time_taken;
+        END IF;
+
+        IF EXISTS (
+            SELECT 1
+            FROM information_schema.columns
+            WHERE table_name = 'quiz_attempts'
+              AND column_name = 'answers'
+        ) THEN
+            ALTER TABLE quiz_attempts DROP COLUMN  answers;
+        END IF;
+
+        IF EXISTS (
+            SELECT 1
+            FROM information_schema.columns
+            WHERE table_name = 'quiz_attempts'
+              AND column_name = 'score'
+        ) THEN
+            ALTER TABLE quiz_attempts DROP COLUMN  score;
+        END IF;
+
+        IF EXISTS (
+            SELECT 1
+            FROM information_schema.columns
+            WHERE table_name = 'quiz_attempts'
+              AND column_name = 'total_points'
+        ) THEN
+            ALTER TABLE quiz_attempts DROP COLUMN total_points;
+        END IF;
+
+        IF EXISTS (
+            SELECT 1
+            FROM information_schema.columns
+            WHERE table_name = 'questions'
+              AND column_name = 'question_type'
+        ) THEN
+            ALTER TABLE questions DROP COLUMN question_type;
+        END IF;
+
+        IF EXISTS (
+            SELECT 1
+            FROM information_schema.columns
+            WHERE table_name = 'questions'
+              AND column_name = 'options'
+        ) THEN
+            ALTER TABLE questions DROP COLUMN options;
+        END IF;
+
+        IF EXISTS (
+            SELECT 1
+            FROM information_schema.columns
+            WHERE table_name = 'questions'
+              AND column_name = 'correct_answer'
+        ) THEN
+            ALTER TABLE questions DROP COLUMN correct_answer;
+        END IF;
+
+        IF EXISTS (
+            SELECT 1
+            FROM information_schema.columns
+            WHERE table_name = 'questions'
+              AND column_name = 'explanation'
+        ) THEN
+            ALTER TABLE questions DROP COLUMN explanation;
+        END IF;
+
+        IF EXISTS (
+            SELECT 1
+            FROM information_schema.columns
+            WHERE table_name = 'questions'
+              AND column_name = 'points'
+        ) THEN
+            ALTER TABLE questions DROP COLUMN points;
+        END IF;
+
+        IF EXISTS (
+            SELECT 1
+            FROM information_schema.columns
+            WHERE table_name = 'questions'
+              AND column_name = 'sort_order'
+        ) THEN
+            ALTER TABLE questions DROP COLUMN sort_order;
+        END IF;
+    END
+$$;
+
+-- update table quizzes
+ALTER TABLE quizzes
+    ADD COLUMN IF NOT EXISTS module_id BIGINT;
+ALTER TABLE quizzes
+    ADD CONSTRAINT fk_quizzes_module FOREIGN KEY (module_id) REFERENCES course_modules(id);
+-- update table quiz_attempts
+ALTER TABLE quiz_attempts
+    ADD COLUMN IF NOT EXISTS correct_answers INT;
+
+-- add table options
+CREATE SEQUENCE IF NOT EXISTS option_id_seq START WITH 1 INCREMENT BY 1;
+CREATE TABLE IF NOT EXISTS options (
+   id BIGINT GENERATED BY DEFAULT AS IDENTITY NOT NULL,
+   created_at TIMESTAMP WITHOUT TIME ZONE,
+   updated_at TIMESTAMP WITHOUT TIME ZONE,
+   question_id BIGINT,
+   option_text TEXT,
+   "order" BIGINT,
+   is_correct BOOLEAN DEFAULT false,
+   CONSTRAINT pk_options PRIMARY KEY (id)
+);
+ALTER TABLE options
+    ADD CONSTRAINT fk_options_question FOREIGN KEY (question_id) REFERENCES questions(id);
+
+-- add table answers
+CREATE SEQUENCE IF NOT EXISTS answer_id_seq START WITH 1 INCREMENT BY 1;
+CREATE TABLE IF NOT EXISTS answers (
+   id BIGINT GENERATED BY DEFAULT AS IDENTITY NOT NULL,
+   created_at TIMESTAMP WITHOUT TIME ZONE,
+   updated_at TIMESTAMP WITHOUT TIME ZONE,
+   quiz_attempt_id BIGINT,
+   option_id BIGINT,
+   CONSTRAINT pk_answers PRIMARY KEY (id)
+);
+ALTER TABLE answers
+    ADD CONSTRAINT fk_answers_quiz_attempt FOREIGN KEY (quiz_attempt_id) REFERENCES quiz_attempts(id);
+ALTER TABLE answers
+    ADD CONSTRAINT fk_answers_option FOREIGN KEY (option_id) REFERENCES options(id);

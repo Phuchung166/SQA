@@ -1,0 +1,114 @@
+services:
+  postgres:
+    image: postgres:15.7
+    ports:
+      - "127.0.0.1:5433:5432"
+    restart: always
+    environment:
+      POSTGRES_USER: ${DB_USER:-postgres}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-ptit}
+      POSTGRES_DB: ${DB_NAME:-online_learning}
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    networks:
+      - app-network
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "pg_isready -U ${DB_USER:-postgres} -d ${DB_NAME:-online_learning}",
+        ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+
+  be:
+    container_name: be-online-learning
+    build:
+      context: ./online-learning
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_started
+    environment:
+      DB_PASSWORD: ptit
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/online_learning
+      SPRING_PROFILES_ACTIVE: prod
+      LOG_FILE_PATH: /app/logs/application.log
+      AWS_REGION_NAME: ${AWS_REGION_NAME:-us-east-1}
+      AWS_S3_BUCKET: ${AWS_S3_BUCKET}
+      AWS_ACCESS_KEY: ${AWS_ACCESS_KEY}
+      AWS_SECRET_KEY: ${AWS_SECRET_KEY}
+      CLOUDFRONT_HOST: ${CLOUDFRONT_HOST}
+      VNPAY_URL: ${VNPAY_URL}
+      VNPAY_RETURN_URL: ${VNPAY_RETURN_URL}
+      VNPAY_RETURN_URL_PRE_ORDER: ${VNPAY_RETURN_URL_PRE_ORDER}
+      VNPAY_TMN_CODE: ${VNPAY_TMN_CODE}
+      VNPAY_HASH_SECRET: ${VNPAY_HASH_SECRET}
+      VNPAY_API_URL: ${VNPAY_API_URL}
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      REDIS_PASSWORD: ${REDIS_PASSWORD:-redis123}
+      SENGRID_API_KEY: ${SENGRID_API_KEY}
+      SPRING_RABBITMQ_HOST: rabbitmq
+      SPRING_RABBITMQ_PORT: 5672
+      SPRING_RABBITMQ_USERNAME: admin
+      SPRING_RABBITMQ_PASSWORD: admin
+      SPRING_RABBITMQ_VIRTUAL_HOST: /
+      TZ: Asia/Ho_Chi_Minh
+
+    volumes:
+      - ./be-logs:/app/logs
+      - /etc/localtime:/etc/localtime:ro
+    networks:
+      - app-network
+  redis:
+    image: redis:8.2
+    container_name: redis
+    restart: always
+    expose:
+      - "6379"
+    command: redis-server --requirepass ${REDIS_PASSWORD:-redis123}
+    volumes:
+      - redis-data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "-a", "${REDIS_PASSWORD:-redis123}", "ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    environment:
+      - REDIS_PASSWORD=${REDIS_PASSWORD:-redis123}
+    networks:
+      - app-network
+
+  rabbitmq:
+    container_name: rabbitmq-online-learning
+    build:
+      context: .
+      dockerfile: Dockerfile.rabbitmq
+    restart: always
+    ports:
+      - "127.0.0.1:15672:15672"
+      - "5672:5672"
+    environment:
+      RABBITMQ_DEFAULT_USER: admin
+      RABBITMQ_DEFAULT_PASS: admin
+    volumes:
+      - rabbitmq-data:/var/lib/rabbitmq
+    networks:
+      - app-network
+
+volumes:
+  postgres-data:
+  redis-data:
+  rabbitmq-data:
+
+networks:
+  app-network:

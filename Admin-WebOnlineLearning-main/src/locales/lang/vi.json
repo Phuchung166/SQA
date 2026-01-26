@@ -1,0 +1,976 @@
+{
+    "nav": {
+        "home": "Trang chủ",
+        "apps": "Ứng dụng",
+        "user": "Quản lý tài khoản",
+        "dashboard": "Bảng điều khiển",
+        "roles": "Quản lý nhóm quyền",
+        "instructors": "Quản lý giảng viên",
+        "categories": "Quản lý danh mục",
+        "courses": "Quản lý khóa học",
+        "students": "Quản lý học viên",
+        "orders": "Quản lý đơn hàng",
+        "instructorIncome": "Thu nhập giảng viên",
+        "analytics": "Báo cáo thống kê",
+        "appsCrm": {
+            "crm": "CRM",
+            "dashboard": "Bảng điều khiển",
+            "calendar": "Lịch",
+            "customers": "Khách hàng",
+            "groups": "Nhóm người dùng",
+            "customerDetails": "Chi tiết khách hàng",
+            "mail": "Thư"
+        },
+        "appsSales": {
+            "sales": "Bán hàng",
+            "dashboard": "Bảng điều khiển",
+            "productList": "Danh sách sản phẩm",
+            "productEdit": "Chỉnh sửa sản phẩm",
+            "productNew": "Sản phẩm mới",
+            "orderList": "Danh sách đơn hàng",
+            "orderDetails": "Chi tiết đơn hàng"
+        },
+        "appsAccount": {
+            "account": "Tài khoản",
+            "settings": "Cài đặt",
+            "invoice": "Hóa đơn",
+            "activityLog": "Nhật ký hoạt động",
+            "kycForm": "Mẫu KYC"
+        },
+        "pages": {
+            "pages": "Trang",
+            "welcome": "Chào mừng",
+            "accessDenied": "Truy cập bị từ chối"
+        },
+        "summaryInfo": "Thông tin bảo tàng",
+        "artifact": "Quản lý hiện vật",
+        "period": "Quản lý thời kỳ",
+        "comment": "Quản lý cảm nhận"
+    },
+    "home": {
+        "welcome": "Chào mừng đến với CMS Bảo tàng 3D"
+    },
+    "language": {
+        "en": "Tiếng Anh",
+        "vi": "Tiếng Việt"
+    },
+    "permission": {
+        "accessDenied": "Truy cập bị từ chối",
+        "accessDeniedText": "Bạn không có quyền truy cập trang này",
+        "permissionDenied": "Quyền truy cập bị từ chối"
+    },
+    "action": {
+        "save": "Lưu",
+        "cancel": "Hủy",
+        "confirm": "Xác nhận",
+        "delete": "Xóa",
+        "edit": "Chỉnh sửa",
+        "add": "Thêm",
+        "view": "Xem",
+        "search": "Tìm kiếm",
+        "filter": "Lọc",
+        "discard": "Bỏ qua",
+        "export": "Xuất",
+        "updating": "Đang cập nhật",
+        "update": "Cập nhật"
+    },
+    "product": {
+        "title": "Sản phẩm",
+        "products": "Sản phẩm",
+        "productImage": "Hình ảnh sản phẩm",
+        "addOrChangeText": "Thêm hoặc thay đổi hình ảnh sản phẩm",
+        "deleteProductConfirm": "Bạn có chắc chắn muốn xóa sản phẩm này? Hành động này không thể được hoàn tác.",
+        "deleteProductTitle": "Xóa sản phẩm"
+    },
+    "config": {
+        "themeConfigurator": {
+            "title": "Cấu hình chủ đề",
+            "darkMode": "Chế độ tối",
+            "navMode": "Chế độ điều hướng",
+            "theme": "Chủ đề",
+            "layout": "Bố cục",
+            "switchDarkModeText": "Chuyển giao diện sang chế độ tối"
+        }
+    },
+    "auth": {
+        "common": {
+            "signIn": "Đăng nhập",
+            "signUp": "Đăng ký",
+            "userName": "Tên đăng nhập",
+            "email": "Email",
+            "password": "Mật khẩu",
+            "confirmPassword": "Xác nhận mật khẩu",
+            "userNameRequired": "Vui lòng nhập tên đăng nhập",
+            "emailRequired": "Vui lòng nhập email",
+            "passwordRequired": "Vui lòng nhập mật khẩu",
+            "confirmPasswordRequired": "Vui lòng nhập xác nhận mật khẩu",
+            "confirmPasswordMatch": "Mật khẩu và xác nhận mật khẩu không khớp",
+            "emailInvalid": "Email không hợp lệ"
+        },
+        "signIn": {
+            "welcomeBack": "Chào mừng trở lại!",
+            "pleaseEnterYourCredentials": "Vui lòng nhập thông tin đăng nhập của bạn!",
+            "rememberMe": "Ghi nhớ tài khoản",
+            "forgotPassword": "Quên mật khẩu?",
+            "dontHaveAccount": "Chưa có tài khoản?",
+            "signingIn": "Đăng nhập..."
+        },
+        "signUp": {
+            "title": "Đăng ký",
+            "letGetStarted": "Tạo tài khoản để đăng nhập hệ thống",
+            "alreadyHaveAccount": "Đã có tài khoản?",
+            "signingUp": "Đăng ký...",
+            "signUpSuccess": "Đăng ký thành công",
+            "userAlreadyExists": "Tài khoản đã tồn tại!"
+        },
+        "forgotPassword": {
+            "title": "Quên mật khẩu",
+            "forgotPasswordText": "Vui lòng nhập email của bạn để nhận được mã xác nhận",
+            "sendEmail": "Gửi email",
+            "backTo": "Quay lại",
+            "checkYourEmail": "Kiểm tra email của bạn",
+            "resendEmail": "Gửi email lại",
+            "emailSent": "Chúng tôi đã gửi hướng dẫn khôi phục mật khẩu đến email của bạn"
+        }
+    },
+    "user": {
+        "delete": "Xóa",
+        "approve": "Phê duyệt",
+        "approved": "Đã phê duyệt",
+        "account": "Tài khoản",
+        "fullName": "Họ và tên",
+        "phone": "Số điện thoại",
+        "role": "Vai trò"
+    },
+    "artifact": {
+        "manage": "Quản lý hiện vật",
+        "artifact": "Hiện vật",
+        "artifacts": "Các hiện vật",
+        "artifactImage": "Hình ảnh hiện vật",
+        "deleteArtifactConfirm": "Bạn có chắc chắn muốn xóa hiện vật này? Hành động này không thể được hoàn tác.",
+        "deleteArtifactTitle": "Xóa hiện vật",
+        "manageArtifacts": "Quản lý các hiện vật",
+        "addArtifact": "Thêm",
+        "editArtifact": "Sửa",
+        "artifactDetails": "Chi tiết ",
+        "artifactName": "Tên hiện vật",
+        "deleteArtifact": "Xóa hiện vật",
+        "fromYear": "Từ năm",
+        "toYear": "Đến năm",
+        "sync2D": "Đồng bộ 2D",
+        "searchSuccess": "Tìm kiếm thành công",
+        "artifactList": "Danh sách hiện vật",
+        "syncSuccess": "Đồng bộ thành công",
+        "syncError": "Lỗi đồng bộ",
+        "searchError": "Lỗi tìm kiếm",
+        "fromYearRequired": "Vui lòng nhập năm bắt đầu",
+        "priority": "Số ĐK",
+        "name": "Tên gọi",
+        "image": "Hình ảnh",
+        "shortDescription": "Nội dung tóm tắt",
+        "code": "Mã số",
+        "owner": "Chủ sở hữu",
+        "placeCollection": "Nguồn gốc + Nơi sưu tầm",
+        "amount": "Số lượng",
+        "timeRegister": "Thời gian đăng ký",
+        "inspection": "Hội đồng giám định",
+        "age": "Niên đại, thời kỳ",
+        "manufactTech": "Kỹ thuật chế tác",
+        "material": "Chất liệu",
+        "sizes": "Kích thước, trọng lượng",
+        "timeCollection": "Thời gian sưu tầm",
+        "placeNow": "Nơi lưu trữ hiện tại",
+        "security": "Chế độ bảo mật",
+        "addContent": "Nội dung bổ sung",
+        "fullDescription": "Nội dung lịch sử",
+        "audio": "Âm thanh",
+        "model3d": "Mô hình 3D",
+        "scale": "Tỉ lệ",
+        "scaleMustBeGreaterThanZero": "Tỉ lệ phải lớn hơn 0",
+        "action": "Hành động",
+        "3d": "3D",
+        "generalInformation": "Thông tin chung",
+        "save": "Lưu",
+        "noFileSelected": "Không có tệp nào được chọn",
+        "error": "Lỗi",
+        "cancel": "Hủy",
+        "currentFile": "Tệp hiện tại",
+        "delete": "Xóa",
+        "uploadSuccess": "Tải lên thành công",
+        "uploadError": "Tải lên thất bại",
+        "deleteSuccess": "Xóa thành công",
+        "deleteError": "Xóa thất bại",
+        "success": "Thành công",
+        "confirmDeleteAudio": "Xóa tệp âm thanh?",
+        "confirmDelete3D": "Xóa tệp mô hình 3D?",
+        "confirmDelete3DMsg": "Hành động này sẽ xóa tệp mô hình 3D liên kết với hiện vật này. Bạn có chắc chắn muốn tiếp tục?",
+        "confirmDeleteAudioMsg": "Hành động này sẽ xóa tệp âm thanh liên kết với hiện vật này. Bạn có chắc chắn muốn tiếp tục?",
+        "indexArtifactRequired": "Mã hiện vật(mã là số ưu tiên hoặc số đk)",
+        "indexArtifact": "Mã hiện vật",
+        "noResults": "Không tìm thấy kết quả",
+        "editStory": "Sửa câu chuyện",
+        "updateStory": "Cập nhật câu chuyện lịch sử",
+        "storyPlaceholder": "Nhập câu chuyện lịch sử...",
+        "updateStorySuccess": "Cập nhật câu chuyện thành công",
+        "updateStoryError": "Có lỗi xảy ra khi cập nhật câu chuyện",
+        "story": "Câu chuyện",
+        "type": "Loại hiện vật",
+        "artifact2d": "Hiện vật 2D",
+        "artifact3d": "Hiện vật 3D",
+        "all": "Tất cả",
+        "confirmDeleteStory": "Hành động này sẽ xóa câu chuyện liên kết với hiện vật này. Bạn có chắc chắn muốn tiếp tục?",
+        "confirmDeleteStoryMsg": "Bạn có chắc chắn muốn xóa câu chuyện này? Hành động này không thể được hoàn tác.",
+        "addStory": "Thêm câu chuyện"
+    },
+    "period": {
+        "editImage": "Chỉnh sửa hình ảnh",
+        "cancel": "Hủy",
+        "save": "Lưu",
+        "editImagePeriodDialogTitle": "Cập nhật hình ảnh thời kỳ",
+        "editImagePeriodDialogText": "Vui lòng chọn hình ảnh để cập nhật cho thời kỳ này.",
+        "updateImageSuccess": "Cập nhật hình ảnh thành công",
+        "updateImageError": "Cập nhật hình ảnh thất bại",
+        "error": "Lỗi",
+        "success": "Thành công",
+        "uploadSuccess": "Tải lên thành công",
+        "name": "Tên thời kỳ",
+        "image": "Hình ảnh",
+        "shortDescription": "Mô tả ngắn",
+        "startYear": "Năm bắt đầu",
+        "endYear": "Năm kết thúc",
+        "noImage": "Không có ảnh",
+        "addArtifact": "Thêm hiện vật",
+        "noArtifact": "Không có hiện vật nào trong thời kỳ này",
+        "addArtifactToPeriod": "Thêm hiện vật vào thời kỳ",
+        "editAudio": "Cập nhật audio thời kỳ",
+        "currentAudio": "Audio hiện tại",
+        "newAudio": "Audio mới",
+        "noFileSelected": "Không có tệp audio nào được chọn",
+        "invalidFileFormat": "Định dạng file audio không hợp lệ",
+        "uploadError": "Tải lên audio thất bại"
+    },
+    "common": {
+        "cancel": "Hủy",
+        "save": "Lưu",
+        "search": "Tìm kiếm"
+    },
+    "orders": {
+        "title": "Quản lý đơn hàng",
+        "description": "Quản lý và theo dõi các giao dịch mua khóa học",
+        "exportExcel": "Xuất Excel",
+        "searchPlaceholder": "Tìm kiếm đơn hàng...",
+        "status": {
+            "all": "Tất cả",
+            "pending": "Chờ thanh toán",
+            "completed": "Hoàn thành",
+            "failed": "Thất bại",
+            "refunded": "Đã hoàn tiền"
+        },
+        "paymentMethod": {
+            "label": "Phương thức",
+            "all": "Tất cả",
+            "creditCard": "Thẻ tín dụng",
+            "bankTransfer": "Chuyển khoản",
+            "eWallet": "Ví điện tử",
+            "undefined": "Chưa xác định"
+        },
+        "dateFilter": {
+            "from": "Từ ngày",
+            "to": "Đến ngày"
+        },
+        "table": {
+            "orderNumber": "Mã đơn hàng",
+            "customer": "Khách hàng",
+            "amount": "Số tiền",
+            "paymentMethod": "Phương thức",
+            "status": "Trạng thái",
+            "actions": "Thao tác",
+            "discount": "Giảm",
+            "refund": "Hoàn"
+        },
+        "actions": {
+            "view": "Xem",
+            "refund": "Hoàn tiền"
+        },
+        "detail": {
+            "title": "Đơn hàng {orderNumber}",
+            "customerInfo": "Thông tin khách hàng",
+            "paymentInfo": "Thông tin thanh toán",
+            "orderDetails": "Chi tiết đơn hàng",
+            "paymentMethod": "Phương thức:",
+            "paymentGateway": "Cổng thanh toán:",
+            "transactionId": "Mã giao dịch:",
+            "total": "Tổng tiền:",
+            "discount": "Giảm giá:",
+            "finalAmount": "Thành tiền:",
+            "refunded": "Đã hoàn tiền:",
+            "notes": "Ghi chú",
+            "close": "Đóng",
+            "refundBtn": "Hoàn tiền"
+        },
+        "refund": {
+            "title": "Hoàn tiền đơn hàng",
+            "orderLabel": "Đơn hàng:",
+            "maxAmount": "Số tiền tối đa:",
+            "amountLabel": "Số tiền hoàn",
+            "amountPlaceholder": "Nhập số tiền hoàn",
+            "reasonLabel": "Lý do hoàn tiền",
+            "reasonPlaceholder": "Nhập lý do hoàn tiền",
+            "cancel": "Hủy",
+            "confirm": "Xác nhận hoàn tiền"
+        },
+        "messages": {
+            "refundSuccess": "Hoàn tiền thành công",
+            "refundError": "Không thể hoàn tiền",
+            "exportSuccess": "Xuất dữ liệu thành công",
+            "exportError": "Không thể xuất dữ liệu"
+        }
+    },
+    "categories": {
+        "title": "Quản lý danh mục",
+        "description": "Quản lý chuyên mục khóa học với hỗ trợ phân loại nhiều cấp",
+        "createCategory": "Tạo danh mục",
+        "editCategory": "Chỉnh sửa danh mục",
+        "searchPlaceholder": "Tìm kiếm danh mục...",
+        "status": {
+            "all": "Tất cả",
+            "active": "Đang hoạt động",
+            "inactive": "Không hoạt động"
+        },
+        "parentCategory": {
+            "label": "Danh mục cha",
+            "all": "Tất cả",
+            "none": "Không có",
+            "select": "Chọn danh mục cha"
+        },
+        "table": {
+            "name": "Tên danh mục",
+            "description": "Mô tả",
+            "parent": "Danh mục cha",
+            "courseCount": "Số khóa học",
+            "status": "Trạng thái",
+            "sortOrder": "Thứ tự",
+            "actions": "Thao tác",
+            "active": "Hoạt động",
+            "inactive": "Không hoạt động",
+            "id": "ID",
+            "image": "Hình ảnh",
+            "totalCourses": "Tổng số khóa học",
+            "createdAt": "Ngày tạo",
+            "updatedAt": "Ngày cập nhật"
+        },
+        "form": {
+            "name": "Tên danh mục",
+            "namePlaceholder": "Nhập tên danh mục",
+            "nameRequired": "Tên danh mục là bắt buộc",
+            "description": "Mô tả",
+            "descriptionPlaceholder": "Nhập mô tả danh mục",
+            "parentCategory": "Danh mục cha",
+            "sortOrder": "Thứ tự sắp xếp",
+            "sortOrderPlaceholder": "Nhập thứ tự sắp xếp",
+            "isActive": "Trạng thái hoạt động",
+            "save": "Lưu",
+            "cancel": "Hủy",
+            "creating": "Đang tạo...",
+            "updating": "Đang cập nhật...",
+            "image": "Hình ảnh danh mục"
+        },
+        "actions": {
+            "edit": "Sửa",
+            "delete": "Xóa"
+        },
+        "confirmDelete": {
+            "title": "Xác nhận xóa",
+            "message": "Bạn có chắc chắn muốn xóa danh mục \"{categoryName}\"? Chỉ có thể xóa khi không có khóa học nào.",
+            "confirm": "Xóa",
+            "cancel": "Hủy"
+        },
+        "messages": {
+            "createSuccess": "Tạo danh mục thành công",
+            "updateSuccess": "Cập nhật danh mục thành công",
+            "deleteSuccess": "Xóa danh mục thành công",
+            "createError": "Có lỗi xảy ra khi tạo danh mục",
+            "updateError": "Có lỗi xảy ra khi cập nhật danh mục",
+            "deleteError": "Không thể xóa danh mục"
+        }
+    },
+    "courses": {
+        "title": "Quản lý khóa học",
+        "description": "Quản lý toàn bộ khóa học trong hệ thống",
+        "createCourse": "Tạo khóa học",
+        "searchPlaceholder": "Tìm kiếm khóa học...",
+        "status": {
+            "all": "Tất cả",
+            "draft": "Bản nháp",
+            "published": "Đã xuất bản",
+            "active": "Đang hoạt động",
+            "deactive": "Đã tạm dừng"
+        },
+        "category": {
+            "label": "Danh mục",
+            "all": "Tất cả danh mục",
+            "select": "Chọn danh mục"
+        },
+        "instructor": {
+            "label": "Giảng viên",
+            "all": "Tất cả giảng viên",
+            "select": "Chọn giảng viên"
+        },
+        "table": {
+            "course": "Khóa học",
+            "instructor": "Giảng viên",
+            "category": "Danh mục",
+            "students": "Học viên",
+            "price": "Giá",
+            "status": "Trạng thái",
+            "createdAt": "Ngày tạo",
+            "actions": "Thao tác",
+            "free": "Miễn phí",
+            "studentsCount": "học viên"
+        },
+        "actions": {
+            "view": "Xem",
+            "approve": "Phê duyệt",
+            "deactivate": "Tạm dừng",
+            "decision": "Quyết định",
+            "reject": "Từ chối"
+        },
+        "decision": {
+            "reasonPlaceholder": "Nhập lý do của bạn tại đây...",
+            "title": "Quản lý quyết định",
+            "reasonLabel": "Lý do",
+            "reasonHint": "Vui lòng cung cấp lý do cho quyết định của bạn"
+        },
+        "detail": {
+            "courseContent": "Nội dung khóa học",
+            "courseDetails": "Chi tiết khóa học",
+            "instructor": "Giảng viên",
+            "duration": "Thời lượng",
+            "whatYouLearn": "Bạn sẽ học được gì",
+            "requirements": "Yêu cầu",
+            "targetAudience": "Đối tượng phù hợp",
+            "introductionVideo": "Video giới thiệu",
+            "additionalInfo": "Thông tin bổ sung",
+            "createdDate": "Ngày tạo",
+            "updatedDate": "Cập nhật",
+            "publishedDate": "Xuất bản",
+            "lessons": "Bài học",
+            "preview": "Xem trước",
+            "lesson": "Bài học",
+            "required": "Bắt buộc",
+            "notUpdated": "Chưa cập nhật",
+            "ratings": "đánh giá",
+            "noModulesAvailable": "Không có mô-đun nào có sẵn cho khóa học này",
+            "close": "Đóng",
+            "rating": "Đánh giá"
+        },
+        "confirmDelete": {
+            "title": "Xác nhận xóa",
+            "message": "Bạn có chắc chắn muốn xóa khóa học này?",
+            "confirm": "Xóa",
+            "cancel": "Hủy"
+        },
+        "messages": {
+            "deleteSuccess": "Xóa khóa học thành công",
+            "deleteError": "Không thể xóa khóa học",
+            "fetchError": "Không thể tải danh sách khóa học",
+            "approveSuccess": "Khóa học được phê duyệt thành công",
+            "rejectSuccess": "Khóa học bị từ chối thành công"
+        }
+    },
+    "students": {
+        "title": "Quản lý học viên",
+        "description": "Quản lý thông tin và hoạt động của học viên",
+        "searchPlaceholder": "Tìm kiếm học viên...",
+        "status": {
+            "all": "Tất cả",
+            "active": "Đang hoạt động",
+            "inactive": "Không hoạt động",
+            "suspended": "Đã tạm khóa"
+        },
+        "table": {
+            "student": "Học viên",
+            "email": "Email",
+            "phone": "Số điện thoại",
+            "courses": "Khóa học",
+            "joinDate": "Ngày tham gia",
+            "status": "Trạng thái",
+            "lastActivity": "Hoạt động cuối",
+            "actions": "Thao tác",
+            "coursesCount": "khóa học"
+        },
+        "actions": {
+            "view": "Xem",
+            "edit": "Sửa",
+            "suspend": "Tạm khóa",
+            "activate": "Kích hoạt",
+            "delete": "Xóa"
+        },
+        "detail": {
+            "title": "Thông tin học viên",
+            "personalInfo": "Thông tin cá nhân",
+            "courseInfo": "Thông tin khóa học",
+            "activityInfo": "Hoạt động gần đây",
+            "fullName": "Họ và tên",
+            "email": "Email",
+            "phone": "Số điện thoại",
+            "address": "Địa chỉ",
+            "joinDate": "Ngày tham gia",
+            "status": "Trạng thái",
+            "totalCourses": "Tổng khóa học",
+            "completedCourses": "Đã hoàn thành",
+            "inProgressCourses": "Đang học",
+            "lastLogin": "Đăng nhập cuối",
+            "totalLearningTime": "Tổng thời gian học",
+            "close": "Đóng",
+            "edit": "Chỉnh sửa"
+        },
+        "confirmSuspend": {
+            "title": "Xác nhận tạm khóa",
+            "message": "Bạn có chắc chắn muốn tạm khóa tài khoản học viên này?",
+            "confirm": "Tạm khóa",
+            "cancel": "Hủy"
+        },
+        "confirmActivate": {
+            "title": "Xác nhận kích hoạt",
+            "message": "Bạn có chắc chắn muốn kích hoạt tài khoản học viên này?",
+            "confirm": "Kích hoạt",
+            "cancel": "Hủy"
+        },
+        "confirmDelete": {
+            "title": "Xác nhận xóa",
+            "message": "Bạn có chắc chắn muốn xóa tài khoản học viên này?",
+            "confirm": "Xóa",
+            "cancel": "Hủy"
+        },
+        "messages": {
+            "suspendSuccess": "Tạm khóa tài khoản thành công",
+            "activateSuccess": "Kích hoạt tài khoản thành công",
+            "deleteSuccess": "Xóa tài khoản thành công",
+            "updateSuccess": "Cập nhật thông tin thành công",
+            "fetchError": "Không thể tải danh sách học viên",
+            "suspendError": "Không thể tạm khóa tài khoản",
+            "activateError": "Không thể kích hoạt tài khoản",
+            "deleteError": "Không thể xóa tài khoản"
+        }
+    },
+    "instructors": {
+        "title": "Quản lý giảng viên",
+        "description": "Quản lý thông tin và hoạt động của giảng viên",
+        "createInstructor": "Thêm giảng viên",
+        "searchPlaceholder": "Tìm kiếm giảng viên...",
+        "status": {
+            "all": "Tất cả",
+            "active": "Đang hoạt động",
+            "inactive": "Không hoạt động",
+            "pending": "Chờ duyệt"
+        },
+        "table": {
+            "instructor": "Giảng viên",
+            "email": "Email",
+            "phone": "Số điện thoại",
+            "courses": "Khóa học",
+            "students": "Học viên",
+            "rating": "Đánh giá",
+            "experience": "Kinh nghiệm",
+            "joinDate": "Ngày tham gia",
+            "status": "Trạng thái",
+            "actions": "Thao tác",
+            "coursesCount": "khóa học",
+            "studentsCount": "học viên",
+            "years": "năm"
+        },
+        "actions": {
+            "view": "Xem",
+            "edit": "Sửa",
+            "approve": "Phê duyệt",
+            "suspend": "Tạm khóa",
+            "activate": "Kích hoạt",
+            "delete": "Xóa"
+        },
+        "detail": {
+            "title": "Thông tin giảng viên",
+            "personalInfo": "Thông tin cá nhân",
+            "professionalInfo": "Thông tin nghề nghiệp",
+            "courseInfo": "Thông tin khóa học",
+            "performanceInfo": "Hiệu suất giảng dạy",
+            "fullName": "Họ và tên",
+            "email": "Email",
+            "phone": "Số điện thoại",
+            "bio": "Tiểu sử",
+            "specialization": "Chuyên môn",
+            "experience": "Kinh nghiệm",
+            "education": "Trình độ học vấn",
+            "certifications": "Chứng chỉ",
+            "joinDate": "Ngày tham gia",
+            "status": "Trạng thái",
+            "totalCourses": "Tổng khóa học",
+            "totalStudents": "Tổng học viên",
+            "avgRating": "Đánh giá trung bình",
+            "totalRevenue": "Tổng doanh thu",
+            "close": "Đóng",
+            "edit": "Chỉnh sửa"
+        },
+        "confirmApprove": {
+            "title": "Xác nhận phê duyệt",
+            "message": "Bạn có chắc chắn muốn phê duyệt tài khoản giảng viên này?",
+            "confirm": "Phê duyệt",
+            "cancel": "Hủy"
+        },
+        "confirmSuspend": {
+            "title": "Xác nhận tạm khóa",
+            "message": "Bạn có chắc chắn muốn tạm khóa tài khoản giảng viên này?",
+            "confirm": "Tạm khóa",
+            "cancel": "Hủy"
+        },
+        "confirmReject": {
+            "title": "Xác nhận từ chối",
+            "message": "Bạn có chắc chắn muốn từ chối giảng viên này?",
+            "confirm": "Từ chối",
+            "cancel": "Hủy"
+        },
+        "messages": {
+            "approveSuccess": "Phê duyệt tài khoản thành công",
+            "suspendSuccess": "Tạm khóa tài khoản thành công",
+            "rejectSuccess": "Từ chối giảng viên thành công",
+            "activateSuccess": "Kích hoạt tài khoản thành công",
+            "updateSuccess": "Cập nhật thông tin thành công",
+            "fetchError": "Không thể tải danh sách giảng viên",
+            "approveError": "Không thể phê duyệt tài khoản",
+            "suspendError": "Không thể tạm khóa tài khoản",
+            "rejectError": "Không thể từ chối giảng viên",
+            "activateError": "Không thể kích hoạt tài khoản"
+        }
+    },
+    "reviews": {
+        "title": "Quản lý đánh giá",
+        "description": "Quản lý đánh giá và phản hồi từ học viên",
+        "searchPlaceholder": "Tìm kiếm đánh giá...",
+        "status": {
+            "all": "Tất cả",
+            "pending": "Chờ duyệt",
+            "approved": "Đã duyệt",
+            "rejected": "Từ chối"
+        },
+        "rating": {
+            "all": "Tất cả",
+            "1star": "1 sao",
+            "2star": "2 sao",
+            "3star": "3 sao",
+            "4star": "4 sao",
+            "5star": "5 sao"
+        },
+        "table": {
+            "student": "Học viên",
+            "course": "Khóa học",
+            "rating": "Đánh giá",
+            "comment": "Bình luận",
+            "date": "Ngày đánh giá",
+            "status": "Trạng thái",
+            "actions": "Thao tác",
+            "stars": "sao"
+        },
+        "actions": {
+            "view": "Xem",
+            "approve": "Duyệt",
+            "reject": "Từ chối",
+            "delete": "Xóa"
+        },
+        "detail": {
+            "title": "Chi tiết đánh giá",
+            "studentInfo": "Thông tin học viên",
+            "courseInfo": "Thông tin khóa học",
+            "reviewInfo": "Nội dung đánh giá",
+            "studentName": "Tên học viên",
+            "email": "Email",
+            "courseName": "Tên khóa học",
+            "instructor": "Giảng viên",
+            "rating": "Đánh giá",
+            "comment": "Bình luận",
+            "reviewDate": "Ngày đánh giá",
+            "status": "Trạng thái",
+            "close": "Đóng",
+            "approve": "Duyệt",
+            "reject": "Từ chối"
+        },
+        "confirmApprove": {
+            "title": "Xác nhận duyệt",
+            "message": "Bạn có chắc chắn muốn duyệt đánh giá này?",
+            "confirm": "Duyệt",
+            "cancel": "Hủy"
+        },
+        "confirmReject": {
+            "title": "Xác nhận từ chối",
+            "message": "Bạn có chắc chắn muốn từ chối đánh giá này?",
+            "confirm": "Từ chối",
+            "cancel": "Hủy"
+        },
+        "confirmDelete": {
+            "title": "Xác nhận xóa",
+            "message": "Bạn có chắc chắn muốn xóa đánh giá này?",
+            "confirm": "Xóa",
+            "cancel": "Hủy"
+        },
+        "messages": {
+            "approveSuccess": "Duyệt đánh giá thành công",
+            "rejectSuccess": "Từ chối đánh giá thành công",
+            "deleteSuccess": "Xóa đánh giá thành công",
+            "fetchError": "Không thể tải danh sách đánh giá",
+            "approveError": "Không thể duyệt đánh giá",
+            "rejectError": "Không thể từ chối đánh giá",
+            "deleteError": "Không thể xóa đánh giá"
+        }
+    },
+    "coupons": {
+        "title": "Quản lý mã giảm giá",
+        "description": "Quản lý và theo dõi các mã giảm giá trong hệ thống",
+        "searchPlaceholder": "Tìm kiếm mã giảm giá...",
+        "table": {
+            "code": "Mã",
+            "name": "Tên",
+            "discount": "Giảm giá",
+            "type": "Loại",
+            "startDate": "Ngày bắt đầu",
+            "endDate": "Ngày kết thúc",
+            "usage": "Lượt sử dụng",
+            "status": "Trạng thái",
+            "actions": "Thao tác"
+        },
+        "status": {
+            "all": "Tất cả",
+            "active": "Hoạt động",
+            "inactive": "Không hoạt động",
+            "expired": "Hết hạn"
+        },
+        "type": {
+            "all": "Tất cả",
+            "percentage": "Phần trăm",
+            "fixed": "Cố định"
+        },
+        "actions": {
+            "create": "Tạo mã giảm giá",
+            "view": "Xem",
+            "edit": "Sửa",
+            "delete": "Xóa",
+            "activate": "Kích hoạt",
+            "deactivate": "Vô hiệu hóa"
+        },
+        "create": {
+            "title": "Tạo mã giảm giá mới",
+            "code": "Mã giảm giá",
+            "codePlaceholder": "Nhập mã giảm giá",
+            "name": "Tên mã giảm giá",
+            "namePlaceholder": "Nhập tên mã giảm giá",
+            "description": "Mô tả",
+            "descriptionPlaceholder": "Nhập mô tả cho mã giảm giá",
+            "discountType": "Loại giảm giá",
+            "discountValue": "Giá trị giảm",
+            "minimumOrder": "Đơn hàng tối thiểu",
+            "maxUsage": "Số lượt sử dụng tối đa",
+            "maxUsagePerUser": "Số lượt sử dụng tối đa/người",
+            "startDate": "Ngày bắt đầu",
+            "endDate": "Ngày kết thúc",
+            "isActive": "Kích hoạt"
+        },
+        "detail": {
+            "title": "Chi tiết mã giảm giá",
+            "basicInfo": "Thông tin cơ bản",
+            "discountInfo": "Thông tin giảm giá",
+            "usageInfo": "Thông tin sử dụng",
+            "dateInfo": "Thông tin thời gian",
+            "createdAt": "Ngày tạo",
+            "updatedAt": "Ngày cập nhật",
+            "usedCount": "Đã sử dụng",
+            "close": "Đóng",
+            "edit": "Chỉnh sửa"
+        },
+        "messages": {
+            "createSuccess": "Tạo mã giảm giá thành công",
+            "createError": "Không thể tạo mã giảm giá",
+            "updateSuccess": "Cập nhật mã giảm giá thành công",
+            "updateError": "Không thể cập nhật mã giảm giá",
+            "deleteSuccess": "Xóa mã giảm giá thành công",
+            "deleteError": "Không thể xóa mã giảm giá",
+            "activateSuccess": "Kích hoạt mã giảm giá thành công",
+            "activateError": "Không thể kích hoạt mã giảm giá",
+            "deactivateSuccess": "Vô hiệu hóa mã giảm giá thành công",
+            "deactivateError": "Không thể vô hiệu hóa mã giảm giá"
+        },
+        "confirmDelete": {
+            "title": "Xác nhận xóa",
+            "message": "Bạn có chắc chắn muốn xóa mã giảm giá này?"
+        }
+    },
+    "roles": {
+        "title": "Quản lý vai trò",
+        "description": "Quản lý vai trò và quyền hạn người dùng",
+        "createRole": "Tạo vai trò",
+        "editRole": "Chỉnh sửa vai trò",
+        "searchPlaceholder": "Tìm kiếm vai trò...",
+        "table": {
+            "role": "Vai trò",
+            "permissions": "Quyền hạn",
+            "users": "Người dùng",
+            "actions": "Thao tác",
+            "createdAt": "Ngày tạo"
+        },
+        "actions": {
+            "view": "Xem",
+            "edit": "Chỉnh sửa",
+            "delete": "Xóa"
+        },
+        "form": {
+            "name": "Tên vai trò",
+            "description": "Mô tả",
+            "permissions": "Quyền hạn",
+            "selectPermissions": "Chọn quyền hạn"
+        },
+        "confirmDelete": {
+            "title": "Xác nhận xóa",
+            "message": "Bạn có chắc chắn muốn xóa vai trò này?",
+            "confirm": "Xóa",
+            "cancel": "Hủy"
+        },
+        "messages": {
+            "createSuccess": "Tạo vai trò thành công",
+            "createError": "Không thể tạo vai trò",
+            "updateSuccess": "Cập nhật vai trò thành công",
+            "updateError": "Không thể cập nhật vai trò",
+            "deleteSuccess": "Xóa vai trò thành công",
+            "deleteError": "Không thể xóa vai trò",
+            "fetchError": "Không thể tải danh sách vai trò"
+        }
+    },
+    "knowledgeBase": {
+        "title": "Cơ sở tri thức",
+        "subtitle": "Quản lý cơ sở tri thức",
+        "addArticle": "Thêm bài viết",
+        "searchPlaceholder": "Tìm kiếm bài viết...",
+        "articleTitle": "Tiêu đề bài viết",
+        "category": "Danh mục",
+        "author": "Tác giả",
+        "status": "Trạng thái",
+        "publishedDate": "Ngày xuất bản",
+        "lastModified": "Lần sửa cuối",
+        "views": "Lượt xem",
+        "actions": "Hành động",
+        "createArticle": "Tạo bài viết",
+        "editArticle": "Chỉnh sửa bài viết",
+        "viewArticle": "Xem bài viết",
+        "deleteArticle": "Xóa bài viết",
+        "deleteConfirm": "Bạn có chắc chắn muốn xóa bài viết này?",
+        "content": "Nội dung",
+        "tags": "Thẻ",
+        "featured": "Nổi bật",
+        "published": "Đã xuất bản",
+        "draft": "Bản nháp",
+        "archived": "Đã lưu trữ",
+        "selectCategory": "Chọn danh mục",
+        "addTag": "Thêm thẻ",
+        "uploadImage": "Tải lên hình ảnh",
+        "save": "Lưu",
+        "cancel": "Hủy",
+        "publish": "Xuất bản",
+        "unpublish": "Hủy xuất bản",
+        "archive": "Lưu trữ",
+        "restore": "Khôi phục"
+    },
+    "analytics": {
+        "title": "Phân tích",
+        "description": "Tổng quan hiệu suất hệ thống học trực tuyến",
+        "stats": {
+            "totalCourses": "Tổng khóa học",
+            "activeStudents": "Học viên hoạt động",
+            "monthlyRevenue": "Doanh thu tháng",
+            "completionRate": "Tỷ lệ hoàn thành"
+        },
+        "chart": {
+            "newRegistrations": "Đăng ký mới",
+            "courseCompletions": "Hoàn thành khóa học",
+            "trendTitle": "Xu hướng đăng ký"
+        },
+        "topCourses": {
+            "title": "Khóa học hàng đầu",
+            "students": "Học viên",
+            "revenue": "Doanh thu"
+        },
+        "recentActivities": {
+            "title": "Hoạt động gần đây",
+            "newCourseCreated": "Khóa học mới được tạo",
+            "studentCompleted": "Học viên hoàn thành khóa học",
+            "ratingReceived": "Đánh giá 5 sao",
+            "hoursAgo": "giờ trước"
+        },
+        "timeRange": {
+            "7d": "7 ngày",
+            "30d": "30 ngày",
+            "90d": "90 ngày",
+            "1y": "1 năm"
+        },
+        "comparedToPrevious": "so với kỳ trước"
+    },
+    "instructorIncome": {
+        "title": "Thu nhập giảng viên theo tháng",
+        "description": "Quản lý và theo dõi thu nhập của giảng viên theo từng tháng",
+        "exportExcel": "Xuất Excel",
+        "filters": {
+            "selectYear": "Chọn năm",
+            "selectMonth": "Chọn tháng",
+            "allYears": "Tất cả các năm",
+            "allMonths": "Tất cả các tháng",
+            "allStatus": "Tất cả trạng thái"
+        },
+        "months": {
+            "1": "Tháng 1",
+            "2": "Tháng 2",
+            "3": "Tháng 3",
+            "4": "Tháng 4",
+            "5": "Tháng 5",
+            "6": "Tháng 6",
+            "7": "Tháng 7",
+            "8": "Tháng 8",
+            "9": "Tháng 9",
+            "10": "Tháng 10",
+            "11": "Tháng 11",
+            "12": "Tháng 12"
+        },
+        "status": {
+            "pending": "Chờ thanh toán",
+            "paid": "Đã thanh toán"
+        },
+        "table": {
+            "period": "Kỳ",
+            "fullName": "Họ và tên",
+            "accountName": "Tên tài khoản",
+            "email": "Email",
+            "bankInfo": "Thông tin ngân hàng",
+            "bankName": "Ngân hàng",
+            "bankAccount": "Số tài khoản",
+            "totalEarning": "Tổng thu nhập",
+            "paymentStatus": "Trạng thái thanh toán",
+            "paidAt": "Ngày thanh toán",
+            "notPaid": "Chưa thanh toán",
+            "actions": "Thao tác",
+            "confirmPayment": "Xác nhận thanh toán",
+            "paid": "Đã thanh toán"
+        },
+        "messages": {
+            "exportSuccess": "Xuất dữ liệu thành công",
+            "exportError": "Không thể xuất dữ liệu",
+            "paymentSuccess": "Xác nhận thanh toán thành công",
+            "paymentSuccessDesc": "Đã xác nhận thanh toán cho giảng viên {{instructor}}",
+            "paymentError": "Không thể xác nhận thanh toán"
+        },
+        "confirmDialog": {
+            "title": "Xác nhận thanh toán cho giảng viên",
+            "instructor": "Giảng viên",
+            "period": "Kỳ thanh toán",
+            "amount": "Số tiền",
+            "bankName": "Ngân hàng",
+            "bankAccount": "Số tài khoản",
+            "confirmCheckbox": "Tôi xác nhận đã chuyển khoản thành công",
+            "cancel": "Hủy",
+            "confirm": "Xác nhận thanh toán"
+        }
+    }
+}

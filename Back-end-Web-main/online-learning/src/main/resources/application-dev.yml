@@ -1,0 +1,123 @@
+server:
+  port: 8080
+  tomcat:
+    threads:
+      max: 4
+      min-spare: 2
+
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    username: postgres
+    password: ${DB_PASSWORD}
+    url: jdbc:postgresql://localhost:5432/demo-db
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 5
+      idle-timeout: 600000
+      max-lifetime: 1800000
+      connection-timeout: 30000
+  jpa:
+    show-sql: false
+#    open-in-view: false
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+  data:
+    redis:
+      password: ${REDIS_PASSWORD:}
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+      connect-timeout: 600002
+  jackson:
+    property-naming-strategy: SNAKE_CASE
+  threads:
+    virtual:
+      enabled: true
+
+
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: admin
+    password: admin
+    virtual-host: /
+    listener:
+      simple:
+        concurrency: 4
+        max-concurrency: 10
+        prefetch: 1
+        acknowledge-mode: auto
+
+app:
+  rabbitmq:
+    exchange: app_exchange
+    email:
+      send:
+        queue: email_send_queue
+
+sendgrid:
+  api-key: ${SENGRID_API_KEY}
+  template-id: d-2e0b1f88b39b4df69814f0f7269b91ef
+  from-email: leminhvu0201@gmail.com
+
+
+jwt:
+  expiration: 2592000 #30 days = 30 * 24 * 60 * 60
+  expiration-refresh-token: 5184000 #60 days = 60 * 24 * 60 * 60
+  secretKey: 57887443bea77de47888896fb33a8a7490cc5d7c1ef72baeab1d228c09520877
+
+
+api:
+  prefix: api/v1
+
+openapi:
+  server-url: http://localhost:8080
+
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+  api-docs:
+    path: /api-docs
+  show-actuator: true
+
+management:
+  endpoint:
+    health:
+      show-details: always
+  endpoints:
+    web:
+      base-path: /api/v1/actuator
+      exposure:
+        include: "health, info"
+
+
+resilience4j:
+  ratelimiter:
+    instances:
+      resetPasswordLimiter:
+        limitForPeriod: 5
+        limitRefreshPeriod: 1h
+        timeoutDuration: 0s
+        registerHealthIndicator: true
+
+aws:
+  region: ${AWS_REGION_NAME}
+  bucket: ${AWS_S3_BUCKET}
+  accessKey: ${AWS_ACCESS_KEY}
+  secretKey: ${AWS_SECRET_KEY}
+  cloudfront:
+    host: ${CLOUDFRONT_HOST}
+
+vnpay:
+  pay-url: ${VNPAY_URL}
+  return-url-order: ${VNPAY_RETURN_URL}
+  return-url-pre-order: ${VNPAY_RETURN_URL_PRE_ORDER}
+  tmn-code:  ${VNPAY_TMN_CODE}
+  secret-key: ${VNPAY_HASH_SECRET}
+  api-url: ${VNPAY_API_URL}
+

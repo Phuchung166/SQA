@@ -1,0 +1,120 @@
+name: Continuous Deployment
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Login to digitalocean container registry
+        uses: docker/login-action@v2
+        with:
+          registry: registry.digitalocean.com
+          username: ${{ secrets.DOCR_USERNAME }}
+          password: ${{ secrets.DOCR_PASSWORD }}
+
+      - name: Build Docker image
+        run: docker build -t registry.digitalocean.com/be-online-learning/online-learning:latest ./online-learning
+
+      - name: Push Docker image
+        run: docker push registry.digitalocean.com/be-online-learning/online-learning:latest
+
+      - name: Deploy to DigitalOcean Droplet
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.DO_HOST }}
+          username: ${{ secrets.DO_USERNAME }}
+          key: ${{ secrets.DO_SSH_KEY }}
+          port: ${{ secrets.DO_PORT || 22 }}
+          script: |
+            # Navigate to application directory
+            cd ~/BE-ONLINE-LEARNING || { echo "Application directory not found"; exit 1; }
+
+            echo "🚀 Starting deployment..."
+
+            # Login to DigitalOcean Container Registry
+            echo "🔐 Logging into container registry..."
+            echo "${{ secrets.DOCR_PASSWORD }}" | docker login registry.digitalocean.com -u "${{ secrets.DOCR_USERNAME }}" --password-stdin
+
+            # Build RabbitMQ image with plugin if Dockerfile exists and image not present
+            if [ -f "Dockerfile.rabbitmq" ]; then
+              if docker images | grep -q "be-online-learning-rabbitmq"; then
+                echo "🐰 RabbitMQ image already exists, skipping build..."
+              else
+                echo "🐰 Building RabbitMQ image with delayed message plugin..."
+                docker compose -f docker-compose.prod.yml build rabbitmq
+              fi
+            fi
+
+            # Pull latest backend image (built from CI)
+            echo "📥 Pulling latest backend image..."
+            docker compose -f docker-compose.prod.yml pull be
+
+            # Rolling update - restart services
+            echo "🔄 Updating services..."
+            docker compose -f docker-compose.prod.yml up -d --no-deps be
+
+            # Wait for service to be ready
+            echo "⏳ Waiting for service to start..."
+            sleep 50
+
+            # Check service status
+            echo "📊 Checking service status..."
+            docker compose -f docker-compose.prod.yml ps
+
+            # Clean up unused images to save disk space
+            echo "🧹 Cleaning up unused images..."
+            docker image prune -f
+
+            echo "✅ Deployment completed!"
+
+      - name: Verify deployment
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.DO_HOST }}
+          username: ${{ secrets.DO_USERNAME }}
+          key: ${{ secrets.DO_SSH_KEY }}
+          port: ${{ secrets.DO_PORT || 22 }}
+          script: |
+            cd ~/BE-ONLINE-LEARNING
+
+            # Check service health
+            if  curl -f  https://ptit-online-api.site/api/v1/actuator/health; then
+              echo "✅ Deployment successful - Application is healthy"
+            else
+              echo "❌ Deployment failed - Application is not responding"
+              docker compose -f docker-compose.prod.yml logs --tail=50
+              exit 1
+            fi
+      - name: Get Current date
+        id: date
+        run: echo "current_date=$(TZ='Asia/Ho_Chi_Minh' date '+%Y-%m-%d %H:%M:%S %Z')" >> $GITHUB_ENV
+
+      - name: Telegram Notification
+        if: always()
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_CHAT_ID }}
+          token: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          format: markdown
+          message: |
+            🚀 *Deployment to Production*
+
+            📝 *Commit:* `${{ github.sha }}`
+            👤 *Author:* ${{ github.actor }}
+            🌿 *Branch:* ${{ github.ref_name }}
+            📊 *Status:* ${{ job.status }}
+            🕐 *Time:* ${{ env.current_date }}
+            📝 *Message:* ${{ github.event.head_commit.message }}
+            🔗 [View Commit](https://github.com/${{ github.repository }}/commit/${{ github.sha }})
+
+            ${{ job.status == 'success' && '✅ Deployment successful!' || '❌ Deployment failed!' }}
+        continue-on-error: true

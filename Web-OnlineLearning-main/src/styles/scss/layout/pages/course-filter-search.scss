@@ -1,0 +1,377 @@
+// Course Filter Search Styles
+
+// Style cho CourseFilter component - từng trường lọc
+.bd-course-filter-content {
+  background: #ffffff !important;
+  padding: 32px 0;
+  border-top: 1px solid #e9ecef;
+  border-bottom: 1px solid #e9ecef;
+  margin: 20px 10px;
+  box-shadow:
+    -4px 0 12px rgba(0, 0, 0, 0.08),
+    4px 0 12px rgba(0, 0, 0, 0.08),
+    0 2px 8px rgba(0, 0, 0, 0.06);
+  border-radius: 8px;
+
+  .bd-course-filter-widget {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 28px;
+    padding: 0;
+    background: #ffffff;
+    padding: 0 20px;
+
+    .bd-course-filter-item {
+      padding: 12px;
+      border-radius: 6px;
+
+      .bd-widget-title {
+        font-size: 13px;
+        font-weight: 700;
+        color: #212529;
+        text-transform: uppercase;
+        letter-spacing: 0.8px;
+        margin-bottom: 16px;
+        display: block;
+        padding-bottom: 8px;
+        border-bottom: 2px solid #07a169;
+        display: inline-block;
+      }
+
+      .bd-widget-content {
+        margin-top: 12px;
+
+        // Ant Design Select styling
+        .ant-select {
+          width: 100%;
+
+          .ant-select-selector {
+            border: 2px solid #e9ecef !important;
+            border-radius: 8px !important;
+            padding: 10px 14px !important;
+            height: 44px !important;
+            display: flex;
+            align-items: center;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+            background: #fff !important;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08) !important;
+
+            &:hover {
+              border-color: #07a169 !important;
+              box-shadow: 0 4px 12px rgba(7, 161, 105, 0.15) !important;
+              transform: translateY(-1px);
+            }
+          }
+
+          &.ant-select-focused .ant-select-selector {
+            border-color: #07a169 !important;
+            box-shadow: 0 0 0 4px rgba(7, 161, 105, 0.15) !important;
+          }
+
+          .ant-select-clear {
+            color: #07a169;
+
+            &:hover {
+              color: #059b62;
+            }
+          }
+
+          .ant-select-arrow {
+            color: #07a169;
+            transition: transform 0.3s ease;
+          }
+
+          &.ant-select-open .ant-select-arrow {
+            transform: rotate(180deg);
+          }
+        }
+
+        // Ant Design Select Dropdown
+        .ant-select-dropdown {
+          border-radius: 8px;
+          box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12) !important;
+
+          .ant-select-item {
+            padding: 10px 14px;
+            border-radius: 6px;
+            margin: 4px 8px;
+            transition: all 0.2s ease;
+
+            &:hover {
+              background: rgba(7, 161, 105, 0.1);
+              color: #07a169;
+            }
+
+            &.ant-select-item-option-selected {
+              background: rgba(7, 161, 105, 0.2);
+
+              .ant-select-item-option-content {
+                color: #07a169;
+                font-weight: 600;
+              }
+            }
+          }
+        }
+
+        // Ant Design Radio styling
+        .ant-radio-group {
+          display: flex;
+          flex-direction: column;
+          gap: 12px;
+
+          .ant-radio-wrapper {
+            padding: 10px 12px;
+            color: #495057;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            border-radius: 6px;
+            margin: 0;
+
+            &:hover {
+              color: #07a169;
+              background: rgba(7, 161, 105, 0.05);
+              transform: scale(1.05);
+            }
+
+            .ant-radio {
+              margin-right: 10px;
+
+              .ant-radio-inner {
+                border-color: #d9d9d9 !important;
+                transition: all 0.3s ease;
+                width: 18px;
+                height: 18px;
+
+                &::after {
+                  background-color: #07a169 !important;
+                }
+              }
+
+              &:hover .ant-radio-inner {
+                border-color: #07a169 !important;
+              }
+
+              &.ant-radio-checked {
+                .ant-radio-inner {
+                  border-color: #07a169 !important;
+                  background: #fff;
+                  box-shadow: 0 0 0 3px rgba(7, 161, 105, 0.1);
+                }
+              }
+            }
+
+            &.ant-radio-wrapper-checked {
+              color: #07a169;
+              font-weight: 600;
+            }
+          }
+        }
+
+        // Ant Design Space
+        .ant-space {
+          width: 100%;
+        }
+      }
+    }
+  }
+}
+
+// Search bar styling
+.bd-course-filter-search {
+  .bd-course-filter-search-form {
+    display: flex;
+    align-items: center;
+    background: #fff;
+    border: 2px solid #e9ecef;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    box-shadow:
+      -2px 0 8px rgba(0, 0, 0, 0.06),
+      2px 0 8px rgba(0, 0, 0, 0.06),
+      0 1px 4px rgba(0, 0, 0, 0.04);
+
+    &:focus-within {
+      border-color: #07a169;
+      box-shadow:
+        -4px 0 16px rgba(7, 161, 105, 0.2),
+        4px 0 16px rgba(7, 161, 105, 0.2),
+        0 4px 16px rgba(7, 161, 105, 0.15);
+    }
+
+    input {
+      flex: 1;
+      padding: 12px 16px;
+      border: none;
+      font-size: 15px;
+      color: #495057;
+      background: transparent;
+
+      &::placeholder {
+        color: #adb5bd;
+      }
+
+      &:focus {
+        outline: none;
+      }
+    }
+
+    button {
+      padding: 12px 16px;
+      background: transparent;
+      border: none;
+      color: #07a169;
+      cursor: pointer;
+      font-size: 16px;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      &:hover {
+        color: #059b62;
+        background: rgba(7, 161, 105, 0.05);
+      }
+    }
+  }
+}
+
+// Filter button styling
+.bd-filter-btn {
+  button {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 24px;
+    font-weight: 600;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    border: 2px solid #07a169;
+    color: #07a169;
+    background: #fff;
+    box-shadow:
+      -2px 0 8px rgba(7, 161, 105, 0.12),
+      2px 0 8px rgba(7, 161, 105, 0.12),
+      0 2px 8px rgba(7, 161, 105, 0.08);
+
+    &:hover {
+      background: #07a169;
+      color: #fff;
+      box-shadow:
+        -4px 0 16px rgba(7, 161, 105, 0.3),
+        4px 0 16px rgba(7, 161, 105, 0.3),
+        0 6px 16px rgba(7, 161, 105, 0.25);
+    }
+
+    .right-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+    }
+
+    i {
+      transition: transform 0.3s ease;
+    }
+
+    &:active i {
+      transform: scale(1.1);
+    }
+  }
+}
+
+// Results counter styling
+.bd-sorting-item-found {
+  font-size: 16px;
+  color: #495057;
+  font-weight: 500;
+
+  span {
+    color: #07a169;
+    font-weight: 700;
+    font-size: 18px;
+  }
+}
+
+// Mobile responsiveness
+@media (max-width: 768px) {
+  .bd-course-filter-content {
+    padding: 24px 0;
+
+    .bd-course-filter-widget {
+      grid-template-columns: 1fr;
+      gap: 20px;
+
+      .bd-course-filter-item {
+        padding: 12px;
+        border-radius: 6px;
+        background: #f8f9fa;
+        box-shadow:
+          -2px 0 8px rgba(0, 0, 0, 0.06),
+          2px 0 8px rgba(0, 0, 0, 0.06),
+          0 1px 4px rgba(0, 0, 0, 0.04);
+        transition: all 0.3s ease;
+
+        &:hover {
+          box-shadow:
+            -3px 0 12px rgba(0, 0, 0, 0.1),
+            3px 0 12px rgba(0, 0, 0, 0.1),
+            0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .bd-widget-title {
+          font-size: 12px;
+          letter-spacing: 0.6px;
+          margin-bottom: 12px;
+          padding-bottom: 6px;
+        }
+
+        .bd-widget-content {
+          margin-top: 10px;
+
+          .ant-select .ant-select-selector {
+            height: 40px !important;
+            padding: 8px 10px !important;
+            font-size: 13px;
+          }
+
+          .ant-radio-wrapper {
+            padding: 8px 10px;
+            font-size: 13px;
+
+            &:hover {
+              transform: scale(1.05);
+            }
+
+            .ant-radio .ant-radio-inner {
+              width: 16px;
+              height: 16px;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .bd-course-filter-search {
+    .bd-course-filter-search-form {
+      input {
+        padding: 10px 12px;
+        font-size: 14px;
+      }
+
+      button {
+        padding: 10px 12px;
+        font-size: 14px;
+      }
+    }
+  }
+
+  .bd-filter-btn {
+    button {
+      padding: 10px 16px;
+      font-size: 14px;
+    }
+  }
+}

@@ -1,0 +1,83 @@
+Question	My  Input
+1. What is the primary purpose of your website? - personal brand, teaching, 
+2. What topics or services does your website focus on?	coding 
+3. Who is your target audience? beginners, students
+4. What tone do you prefer? friendly,  motivational, technical
+5. Which pages do you need content for right now? (e.g., terms-condition and privacy policy )	
+6. Do you want me to include SEO keywords in the content? yes please	
+7. Do you have any existing content or examples I should refer to? Not now 
+
+
+Effective Date:27/05/2025
+
+Welcome to EnamNotes.com, a platform built to empower beginners and students in their journey to master coding skills.
+
+By accessing and using our website, you agree to comply with and be bound by the following terms and conditions. If you disagree with any part of these terms, please do not use the site.
+
+1. Use of the Website
+You agree to use this website only for lawful educational purposes and in a way that does not infringe the rights or restrict the use of others.
+
+2. Content Ownership
+All content on this site, including articles, videos, infographics, and tutorials, is owned by EnamNotes unless otherwise stated. You may reference the material with proper credit, but redistribution without permission is prohibited.
+
+3. User Accounts
+Some features (e.g., enrolling in courses) may require account creation. You agree to provide accurate information and to keep your credentials secure.
+
+4. Limitation of Liability
+We aim to provide accurate, up-to-date content. However, EnamNotes is not responsible for any decisions made based on the content, including coding errors or business outcomes.
+
+5. External Links
+Our website may link to third-party tools (e.g., GitHub, YouTube). We are not responsible for the content or privacy practices of external sites.
+
+6. Modification of Terms
+We reserve the right to change these terms at any time. You’ll be notified of significant changes via email or on this page.
+
+
+
+Privacy Policy
+Effective Date: 27/05/2025
+
+
+At EnamNotes.com, we are committed to protecting your privacy and being transparent about how we collect and use your data.
+
+1. What We Collect
+We may collect:
+
+Name and email when you sign up or contact us
+
+Basic usage data through analytics (e.g., which pages are visited)
+
+Non-personal identifiers via cookies (for ad personalization via Adsterra or analytics tools)
+
+2. How We Use Your Information
+We use your data to:
+
+Improve website content and user experience
+
+Send occasional email updates (if subscribed)
+
+Run advertising and affiliate programs (e.g., Adsterra)
+
+3. Cookies & Tracking
+We use cookies to enhance your browsing experience. These may include:
+
+Google Analytics
+
+Adsterra cookies (for ad personalization)
+
+You may opt out via your browser settings or through cookie consent banners.
+
+4. Data Sharing
+We do not sell or rent your data. We may share with:
+
+Service providers (e.g., analytics or hosting platforms)
+
+Legal authorities when required
+
+5. Your Rights
+Depending on your location (e.g., under GDPR), you have the right to access, correct, or delete your personal data. Contact us at [Your Email] for any requests.
+
+6. Security
+We implement best practices to secure your data. However, no platform can guarantee 100% security.
+
+

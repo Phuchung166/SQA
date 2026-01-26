@@ -1,0 +1,42 @@
+services:
+  postgres:
+    image: postgres:15.7
+    ports:
+      - '5433:5432'
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ptit
+      POSTGRES_DB: online_learning
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    networks:
+      - app-network
+
+  be:
+    build:
+      context: ./online-learning
+      dockerfile: Dockerfile
+    ports:
+      - '8080:8080'
+    depends_on:
+      - postgres
+    environment:
+      # Database configuration
+      DB_PASSWORD: ptit
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/online_learning
+      
+      AWS_REGION_NAME: ${AWS_REGION_NAME:-us-east-1}
+      AWS_S3_BUCKET: ${AWS_S3_BUCKET}
+      AWS_ACCESS_KEY: ${AWS_ACCESS_KEY}
+      AWS_SECRET_KEY: ${AWS_SECRET_KEY}
+      CLOUDFRONT_HOST: ${CLOUDFRONT_HOST}
+    networks:
+      - app-network
+
+volumes:
+  postgres-data:
+
+
+networks:
+  app-network:

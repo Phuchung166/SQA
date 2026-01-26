@@ -1,0 +1,9 @@
+services:
+  frontend:
+    container_name: online-learning-frontend
+    image: quyetbui203/fe-web-online-learning:latest
+    ports:
+      - 4200:3000
+    environment:
+      - NEXT_PUBLIC_API_BASE_URL= ${NEXT_PUBLIC_API_BASE_URL}
+    restart: always

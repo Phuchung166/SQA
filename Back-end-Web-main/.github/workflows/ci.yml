@@ -1,0 +1,60 @@
+name: Continuous Integration
+
+on:
+  pull_request:
+    branches:
+      - develop
+
+  push:
+    branches:
+      - develop
+
+jobs:
+  integration-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: "21"
+          distribution: "temurin"
+          cache: maven
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build and run integration tests
+        run: mvn -B clean verify -DskipUnitTests=true -Dspring.profiles.active=ci
+        working-directory: ./online-learning
+        env:
+          TESTCONTAINERS_REUSE_ENABLE: false # Disable reuse in CI for clean state
+
+      - name: Get Current date
+        id: date
+        run: echo "current_date=$(TZ='Asia/Ho_Chi_Minh' date '+%Y-%m-%d %H:%M:%S %Z')" >> $GITHUB_ENV
+
+      - name: Telegram Notification
+        if: always()
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_CHAT_ID }}
+          token: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          format: markdown
+          message: |
+            🧪 *Integration Tests CI*
+
+            📝 *Commit:* `${{ github.sha }}`
+            👤 *Author:* ${{ github.actor }}
+            🌿 *Branch:* ${{ github.ref_name }}
+            📊 *Status:* ${{ job.status }}
+            🕐 *Time:* ${{ env.current_date }}
+            📝 *Message:* ${{ github.event.head_commit.message }}
+            🔗 [View Commit](https://github.com/${{ github.repository }}/commit/${{ github.sha }})
+
+
+            ${{ job.status == 'success' && '✅ Integration tests passed!' || '❌ Integration tests failed!' }}
+        continue-on-error: true

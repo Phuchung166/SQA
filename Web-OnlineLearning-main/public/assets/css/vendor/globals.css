@@ -1,0 +1,40 @@
+.video-carousel-area {
+  background: #f9f9f9;
+  padding: 60px 0;
+}
+
+.video-slide {
+  padding: 0 15px;
+  text-align: center;
+}
+
+.video-title {
+  font-size: 16px;
+  font-weight: 600;
+  margin-top: 15px;
+}
+.video-description {
+  font-size: 14px;
+  color: #666;
+  margin-top: 5px;
+}
+
+
+
+.short-card {
+  transition: transform 0.3s ease;
+}
+.short-card:hover {
+  transform: scale(1.05);
+}
+.swiper-button-prev,
+.swiper-button-next {
+  color: #10b981; /* Your theme's green */
+}
+.swiper-pagination-bullet {
+  background-color: #10b981; /* Your theme's green */
+}
+
+.swiper-pagination-bullet-active {
+  background-color: #059669; /* Darker shade for active bullet */
+}

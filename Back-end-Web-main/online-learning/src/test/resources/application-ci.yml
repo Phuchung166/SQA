@@ -1,0 +1,114 @@
+server:
+  port: 0  # Random port for CI
+
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    # Testcontainers will override these values in CI
+    hikari:
+      maximum-pool-size: 3          # Reduced for CI environment
+      minimum-idle: 1
+      connection-timeout: 30000     # 30 seconds for CI
+      idle-timeout: 600000          # 10 minutes
+      max-lifetime: 1800000         # 30 minutes
+      leak-detection-threshold: 60000
+      pool-name: "CIHikariPool"
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: false               # Disable SQL logging in CI
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: false
+        jdbc:
+          batch_size: 20
+        order_inserts: true
+        order_updates: true
+
+  flyway:
+    enabled: true
+    clean-disabled: false
+    baseline-on-migrate: true
+
+  data:
+    redis:
+      # Testcontainers will override these values
+      host: localhost
+      port: 6379
+
+  rabbitmq:
+    # Testcontainers will override these values
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+    listener:
+      simple:
+        concurrency: 4
+        max-concurrency: 10
+        prefetch: 1
+        acknowledge-mode: auto
+        auto-startup: false  # Disable RabbitMQ listeners in CI tests
+
+  jackson:
+    property-naming-strategy: SNAKE_CASE
+
+
+app:
+  rabbitmq:
+    exchange: app_exchange
+    email:
+      send:
+        queue: email_send_queue
+
+# JWT Configuration for CI
+jwt:
+  expiration: 86400
+  expiration-refresh-token: 172800
+  secretKey: ci-test-secret-key-for-integration-testing-only
+
+api:
+  prefix: api/v1
+
+# Disable external services in CI
+sendgrid:
+  api-key: ci-test-key
+  template-id: ci-test-template
+  from-email: ci-test@example.com
+
+aws:
+  region: us-east-1
+  bucket: ci-test-bucket
+  accessKey: ci-test-access-key
+  secretKey: ci-test-secret-key
+  cloudfront:
+    host: https://ci-test.cloudfront.net
+
+vnpay:
+  pay-url: https://sandbox.vnpayment.vn/paymentv2/vpcpay.html
+  return-url-order: https://localhost:8080/api/v1/vnpay/return
+  return-url-pre-order: https://localhost:8080/api/v1/vnpay/pre-order/return
+  tmn-code: ci-dummy-tmn-code
+  secret-key: ci-dummy-secret-key
+  api-url: https://sandbox.vnpayment.vn/merchant_webapi/merchant.html
+
+# Disable rate limiting in CI
+resilience4j:
+  ratelimiter:
+    instances:
+      resetPasswordLimiter:
+        limitForPeriod: 1000
+        limitRefreshPeriod: 1s
+        timeoutDuration: 0s
+
+# Optimized logging for CI
+logging:
+  level:
+    com.ptit.onlinelearning: WARN          # Minimal logging in CI
+    org.springframework.security: ERROR    # Reduce noise
+    org.hibernate.SQL: ERROR              # No SQL logging
+    org.testcontainers: INFO
+    com.zaxxer.hikari: WARN               # Reduce connection pool logging
+    com.ptit.onlinelearning.integration.config.TestContainerManager: INFO

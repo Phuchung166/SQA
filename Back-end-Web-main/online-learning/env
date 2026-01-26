@@ -1,0 +1,5 @@
+AWS_ACCESS_KEY=AKIA4TQ3YM4RJNWXIL6T
+AWS_SECRET_KEY=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
+AWS_S3_BUCKET=e-learning-ptit
+AWS_REGION_NAME=us-east-1
+CLOUDFRONT_HOST=https://d32trhawgfkkkj.cloudfront.net/

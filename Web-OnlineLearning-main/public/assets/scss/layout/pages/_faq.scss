@@ -1,0 +1,500 @@
+@use '../../utils' as *;
+
+/*----------------------------------------*/
+/*  4.14 FAq css
+/*----------------------------------------*/
+
+.bd-faq-content {
+    .accordion-common-style.accordion-bg .accordion-body {
+        background-color: var(--bd-bg-primary);
+    }
+
+    &.has-white-bg {
+        .accordion-common-style.accordion-bg .accordion-body {
+            background-color: var(--bd-white);
+        }
+    }
+
+    &.modern-schooling {
+        .accordion-common-style.accordion-bg .accordion-body {
+            background-color: var(--primary-rgb-05);
+        }
+    }
+}
+
+.bd-faq-thumb {
+    &.style-two {
+        img {
+            border-radius: 6px;
+        }
+    }
+
+    &.style-three {
+        width: 300px;
+
+        @media #{$md,$xs,$sm} {
+            width: 100%;
+        }
+
+        img {
+            height: 100%;
+            border-radius: 6px;
+        }
+
+        &.has-small {
+            &:first-child {
+                margin-bottom: 20px;
+            }
+        }
+    }
+}
+
+.bd-faq-small-thumb {
+    margin-bottom: -30px;
+    margin-top: 30px;
+
+    @media #{$md,$xs,$sm} {
+        margin-bottom: 0;
+        margin-top: 0;
+    }
+}
+
+.bd-faq-shape {
+    .shape-1 {
+        position: absolute;
+        top: 0;
+        right: 0;
+        z-index: -1;
+    }
+
+    .shape-2 {
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        z-index: -1;
+    }
+}
+
+.bd-faq-page-shape {
+    position: absolute;
+    right: 0;
+    bottom: -100px;
+}
+
+.bd-faq-thumb {
+    &-wrapper {
+        margin-left: 20px;
+        position: relative;
+    }
+
+    &-two {
+        img {
+            -webkit-border-radius: 51% 49% 77% 23%/65% 50% 50% 35%;
+            -moz-border-radius: 51% 49% 77% 23%/65% 50% 50% 35%;
+            border-radius: 51% 49% 77% 23%/65% 50% 50% 35%;
+            -webkit-animation: image-radius-anim 5s linear infinite alternate;
+            -moz-animation: image-radius-anim 5s linear infinite alternate;
+            -o-animation: image-radius-anim 5s linear infinite alternate;
+            animation: image-radius-anim 5s linear infinite alternate;
+            transition: all 0.3s ease-out 0s;
+        }
+    }
+}
+
+.bd-faq-tab-menu {
+    .nav-pills {
+        flex-direction: column;
+        gap: 15px;
+
+        .nav-link {
+            font-size: 26px;
+            color: var(--bd-theme-black);
+            padding: 0;
+            font-weight: var(--bd-fw-medium);
+
+            &.active {
+                color: var(--bd-primary);
+                background-color: transparent;
+            }
+        }
+    }
+}
+
+/*----------------------------------------*/
+/*  Modern FAQ Section Styles
+/*----------------------------------------*/
+
+.bd-faq-area {
+    &.modern {
+        background: linear-gradient(180deg, #ffffff 0%, #f9fafb 50%, #ffffff 100%);
+        padding-top: 120px;
+        padding-bottom: 90px;
+
+        @media #{$md, $sm, $xs} {
+            padding-top: 80px;
+            padding-bottom: 60px;
+        }
+    }
+}
+
+// Modern FAQ Components
+.bd-faq {
+    &-badge {
+        display: inline-block;
+        padding: 8px 20px;
+        background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+        border-radius: 50px;
+        font-size: 14px;
+        font-weight: 600;
+        color: #059669;
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+        margin-bottom: 20px;
+    }
+
+    &-modern-title {
+        font-size: 48px;
+        font-weight: 800;
+        letter-spacing: -1.5px;
+        line-height: 1.2;
+        background: linear-gradient(135deg, #111827 0%, #374151 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin-bottom: 25px;
+
+        @media #{$md} {
+            font-size: 40px;
+            letter-spacing: -1.2px;
+        }
+
+        @media #{$sm, $xs} {
+            font-size: 32px;
+            letter-spacing: -1px;
+        }
+    }
+
+    &-modern-subtitle {
+        font-size: 18px;
+        color: #6b7280;
+        line-height: 1.8;
+        max-width: 600px;
+        margin: 0 auto;
+
+        @media #{$sm, $xs} {
+            font-size: 16px;
+        }
+    }
+
+    // Modern FAQ Items
+    &-modern-item {
+        background: var(--bd-white);
+        border: 2px solid transparent;
+        border-radius: 16px;
+        overflow: hidden;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+        margin-bottom: 25px;
+        transform: translateY(0);
+
+        &:hover:not(.active) {
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+        }
+
+        &.active {
+            border-color: #10b981;
+            box-shadow: 0 10px 40px rgba(16, 185, 129, 0.15), 0 0 0 1px rgba(16, 185, 129, 0.1);
+            transform: translateY(-2px);
+        }
+    }
+
+    // Modern Question Button
+    &-modern-question {
+        background: var(--bd-white);
+        border: none;
+        padding: 28px 32px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        width: 100%;
+        text-align: left;
+
+        @media #{$sm, $xs} {
+            padding: 20px 24px;
+        }
+
+        &.active {
+            background: linear-gradient(135deg, #f0fdf4 0%, #ecfdf5 100%);
+        }
+    }
+
+    &-question-wrapper {
+        display: flex;
+        align-items: flex-start;
+        gap: 16px;
+        flex: 1;
+    }
+
+    &-question-number {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background: #f3f4f6;
+        color: #6b7280;
+        font-size: 14px;
+        font-weight: 700;
+        transition: all 0.3s ease;
+
+        @media #{$sm, $xs} {
+            min-width: 28px;
+            height: 28px;
+            font-size: 12px;
+        }
+
+        &.active {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: var(--bd-white);
+        }
+    }
+
+    &-question-text {
+        font-size: 19px;
+        font-weight: 700;
+        color: #1f2937;
+        letter-spacing: -0.3px;
+        padding-right: 20px;
+        flex: 1;
+        line-height: 1.5;
+
+        @media #{$md} {
+            font-size: 18px;
+        }
+
+        @media #{$sm, $xs} {
+            font-size: 16px;
+            padding-right: 10px;
+        }
+
+        &.active {
+            color: #065f46;
+        }
+    }
+
+    &-question-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: #f3f4f6;
+        color: #6b7280;
+        font-size: 18px;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        transform: rotate(0deg);
+
+        @media #{$sm, $xs} {
+            min-width: 36px;
+            height: 36px;
+            font-size: 16px;
+        }
+
+        &.active {
+            background: #10b981;
+            color: var(--bd-white);
+            transform: rotate(180deg);
+        }
+    }
+
+    // Modern Answer
+    &-modern-answer {
+        max-height: 0;
+        overflow: hidden;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        background: var(--bd-white);
+
+        &.active {
+            max-height: 500px;
+        }
+    }
+
+    &-answer-content {
+        padding: 0 32px 0 80px;
+        font-size: 16px;
+        line-height: 1.8;
+        color: #4b5563;
+        transition: padding 0.4s ease;
+
+        @media #{$md} {
+            padding: 0 28px 0 60px;
+        }
+
+        @media #{$sm, $xs} {
+            padding: 0 24px 0 50px;
+            font-size: 15px;
+        }
+
+        &.active {
+            padding-bottom: 28px;
+
+            @media #{$sm, $xs} {
+                padding-bottom: 20px;
+            }
+        }
+    }
+
+    // Modern Contact CTA
+    &-modern-contact {
+        background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+        padding: 48px 40px;
+        border-radius: 20px;
+        border: none;
+        position: relative;
+        overflow: hidden;
+        margin-top: 60px;
+
+        @media #{$md} {
+            padding: 40px 32px;
+            margin-top: 50px;
+        }
+
+        @media #{$sm, $xs} {
+            padding: 32px 24px;
+            margin-top: 40px;
+            border-radius: 16px;
+        }
+
+        &::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(16, 185, 129, 0.15) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+
+            @media #{$sm, $xs} {
+                width: 200px;
+                height: 200px;
+            }
+        }
+
+        &::after {
+            content: '';
+            position: absolute;
+            bottom: -30%;
+            left: -5%;
+            width: 250px;
+            height: 250px;
+            background: radial-gradient(circle, rgba(59, 130, 246, 0.1) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+
+            @media #{$sm, $xs} {
+                width: 150px;
+                height: 150px;
+            }
+        }
+    }
+
+    &-contact-icon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 64px;
+        height: 64px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        margin-bottom: 24px;
+        box-shadow: 0 8px 24px rgba(16, 185, 129, 0.3);
+        position: relative;
+        z-index: 1;
+
+        @media #{$sm, $xs} {
+            width: 56px;
+            height: 56px;
+            margin-bottom: 20px;
+        }
+
+        i {
+            font-size: 28px;
+            color: var(--bd-white);
+
+            @media #{$sm, $xs} {
+                font-size: 24px;
+            }
+        }
+    }
+
+    &-contact-title {
+        font-size: 28px;
+        font-weight: 700;
+        margin-bottom: 16px;
+        color: var(--bd-white);
+        letter-spacing: -0.5px;
+        position: relative;
+        z-index: 1;
+
+        @media #{$md} {
+            font-size: 24px;
+        }
+
+        @media #{$sm, $xs} {
+            font-size: 22px;
+            margin-bottom: 12px;
+        }
+    }
+
+    &-contact-text {
+        font-size: 17px;
+        color: #cbd5e1;
+        margin-bottom: 32px;
+        line-height: 1.7;
+        max-width: 500px;
+        margin-left: auto;
+        margin-right: auto;
+        position: relative;
+        z-index: 1;
+
+        @media #{$sm, $xs} {
+            font-size: 15px;
+            margin-bottom: 24px;
+        }
+    }
+
+    &-contact-btn {
+        padding: 16px 40px;
+        font-size: 16px;
+        font-weight: 700;
+        border-radius: 12px;
+        text-decoration: none;
+        display: inline-block;
+        background: var(--bd-white);
+        color: #0f172a;
+        letter-spacing: 0.3px;
+        box-shadow: 0 4px 16px rgba(255, 255, 255, 0.2);
+        transition: all 0.3s ease;
+        border: none;
+        position: relative;
+        z-index: 1;
+
+        @media #{$sm, $xs} {
+            padding: 14px 32px;
+            font-size: 15px;
+        }
+
+        &:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(255, 255, 255, 0.3);
+            color: #0f172a;
+            text-decoration: none;
+        }
+    }
+}

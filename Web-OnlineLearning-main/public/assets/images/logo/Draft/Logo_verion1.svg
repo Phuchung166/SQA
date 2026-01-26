@@ -1,0 +1,14 @@
+<svg width="250" height="120" viewBox="0 0 250 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Green Circle -->
+  <rect width="75" height="75" rx="37.5" fill="#07A169"/>
+
+  <!-- Coding Icon -->
+  <text x="18" y="48" font-family="Arial, sans-serif" font-size="30" fill="white">&lt;/&gt;</text>
+
+  <!-- Text: "Enam" -->
+  <text x="100" y="50" font-family="Arial, sans-serif" font-weight="bold" font-size="36" fill="#07A169">Enam</text>
+
+  <!-- Text: "Notes" below "Enam" -->
+  <text x="100" y="95" font-family="Arial, sans-serif" font-weight="bold" font-size="36" fill="#07A169">Notes</text>
+</svg>
+

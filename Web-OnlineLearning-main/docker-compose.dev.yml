@@ -1,0 +1,11 @@
+services:
+  frontend:
+    container_name: frontend
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 4200:3000
+    environment:
+      - NEXT_PUBLIC_API_BASE_URL= ${NEXT_PUBLIC_API_BASE_URL}
+    restart: always

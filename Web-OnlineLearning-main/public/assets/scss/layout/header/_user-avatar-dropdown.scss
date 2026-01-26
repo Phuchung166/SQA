@@ -1,0 +1,177 @@
+@use '../../utils' as *;
+
+/*----------------------------------------*/
+/*  User Avatar Dropdown Style
+/*----------------------------------------*/
+.bd-header-user-dropdown {
+    position: relative;
+
+    .bd-user-avatar-btn {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        border: 2px solid var(--bd-theme-primary);
+        background: transparent;
+        cursor: pointer;
+        padding: 0;
+        transition: all 0.3s ease;
+        overflow: hidden;
+
+        &:hover {
+            border-color: var(--bd-theme-secondary);
+            transform: scale(1.05);
+        }
+
+        .user-avatar-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        .user-avatar-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--bd-theme-primary) 0%, var(--bd-theme-secondary) 100%);
+            color: var(--bd-theme-white);
+            font-size: 18px;
+            font-weight: 400;
+
+            i {
+                font-size: 20px;
+            }
+        }
+    }
+
+    .bd-user-dropdown-menu {
+        position: absolute;
+        top: calc(100% + 15px);
+        right: 0;
+        width: 260px;
+        background: #FFFFFF;
+        border-radius: 8px;
+        box-shadow: 0px 4px 24px 0px rgba(0, 0, 0, 0.15);
+        z-index: 999;
+        animation: fadeInDown 0.3s ease;
+
+        &::before {
+            content: '';
+            position: absolute;
+            top: -8px;
+            right: 12px;
+            width: 0;
+            height: 0;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-bottom: 8px solid var(--bd-theme-white);
+        }
+
+        .bd-user-dropdown-header {
+            padding: 20px;
+            border-bottom: 1px solid #f0f0f0;
+
+            .user-info {
+                .user-name {
+                    font-size: 16px;
+                    font-weight: 600;
+                    color: var(--bd-theme-black);
+                    margin-bottom: 4px;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                }
+
+                .user-email {
+                    font-size: 13px;
+                    color: var(--bd-theme-text-body);
+                    margin: 0;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                }
+            }
+        }
+
+        .bd-user-dropdown-body {
+            padding: 10px 0;
+
+            ul {
+                list-style: none;
+                padding: 0;
+                margin: 0;
+
+                li {
+                    a {
+                        display: flex;
+                        align-items: center;
+                        gap: 12px;
+                        padding: 12px 20px;
+                        color: var(--bd-theme-text-body);
+                        font-size: 14px;
+                        transition: all 0.3s ease;
+                        text-decoration: none;
+
+                        i {
+                            font-size: 16px;
+                            width: 20px;
+                            text-align: center;
+                            color: var(--bd-theme-primary);
+                        }
+
+                        &:hover {
+                            background: #f8f9fa;
+                            color: var(--bd-theme-primary);
+                            padding-left: 24px;
+                        }
+                    }
+                }
+            }
+        }
+
+        .bd-user-dropdown-footer {
+            padding: 10px 20px 15px;
+            border-top: 1px solid #f0f0f0;
+
+            .bd-logout-btn {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                width: 100%;
+                padding: 10px 15px;
+                background: transparent;
+                border: 1px solid #e0e0e0;
+                border-radius: 6px;
+                color: #dc3545;
+                font-size: 14px;
+                font-weight: 500;
+                cursor: pointer;
+                transition: all 0.3s ease;
+
+                i {
+                    font-size: 16px;
+                }
+
+                &:hover {
+                    background: #dc3545;
+                    color: var(--bd-theme-white);
+                    border-color: #dc3545;
+                }
+            }
+        }
+    }
+}
+
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

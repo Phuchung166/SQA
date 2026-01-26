@@ -1,0 +1,120 @@
+server:
+  port: 0  # Random port for tests
+
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    # Testcontainers will override these values
+    hikari:
+      maximum-pool-size: 5          # Reduced pool size for tests
+      minimum-idle: 1               # At least 1 connection
+      connection-timeout: 60000     # 60 seconds timeout
+      idle-timeout: 300000          # 5 minutes idle timeout
+      max-lifetime: 900000          # 15 minutes max lifetime
+      leak-detection-threshold: 60000 # Detect connection leaks after 60s
+      pool-name: "TestHikariPool"
+  
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: false               # Disable SQL logging to reduce noise
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: false         # Disable SQL formatting for performance
+        jdbc:
+          batch_size: 20          # Batch inserts for better performance
+        order_inserts: true       # Order inserts for batching
+        order_updates: true       # Order updates for batching
+  
+  flyway:
+    enabled: true  # Disable Flyway for tests, using JPA ddl-auto instead
+    clean-disabled: false
+    baseline-on-migrate: true
+
+  
+  data:
+    redis:
+      # Testcontainers will override these values
+      host: localhost
+      port: 6379
+  
+  rabbitmq:
+    # Testcontainers will override these values
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+    listener:
+      simple:
+        concurrency: 4
+        max-concurrency: 10
+        prefetch: 1
+        acknowledge-mode: auto
+        auto-startup: false  # Disable RabbitMQ listeners in tests
+
+  jackson:
+    property-naming-strategy: SNAKE_CASE
+
+
+app:
+  rabbitmq:
+    exchange: app_exchange
+    email:
+      send:
+        queue: email_send_queue
+
+# JWT Configuration for tests
+jwt:
+  expiration: 86400  # 1 day for tests
+  expiration-refresh-token: 172800  # 2 days for tests
+  secretKey: 03pqP5GeS7++TD+GB8h9LRHHvY0fbvYWwfMs2RD/vLA=
+
+api:
+  prefix: api/v1
+
+
+openapi:
+  server-url: http://localhost:8080
+
+# Disable external services in tests
+sendgrid:
+  api-key: test-key
+  template-id: test-template
+  from-email: test@example.com
+
+aws:
+  region: us-east-1
+  bucket: test-bucket
+  accessKey: test-access-key
+  secretKey: test-secret-key
+  cloudfront:
+    host: https://test.cloudfront.net
+
+vnpay:
+  pay-url: https://sandbox.vnpayment.vn/paymentv2/vpcpay.html
+  return-url-order: https://localhost:{port}/api/v1/vnpay/return
+  return-url-pre-order: https://localhost:{port}/api/v1/vnpay/pre-order/return
+  tmn-code:  dummy-tmn-code-for-testing
+  secret-key: dummy-secret-key-for-testing
+  api-url: https://sandbox.vnpayment.vn/merchant_webapi/merchant.html
+
+# Disable rate limiting in tests
+resilience4j:
+  ratelimiter:
+    instances:
+      resetPasswordLimiter:
+        limitForPeriod: 1000
+        limitRefreshPeriod: 1s
+        timeoutDuration: 0s
+
+# Logging
+logging:
+  level:
+    com.ptit.onlinelearning: INFO          # Reduced logging for performance
+    org.springframework.security: WARN     # Reduced security logging
+    org.hibernate.SQL: WARN               # Disable SQL logging
+    org.testcontainers: INFO
+    com.zaxxer.hikari: DEBUG              # Enable HikariCP debug logging
+    com.ptit.onlinelearning.integration.config.TestContainerManager: INFO
+

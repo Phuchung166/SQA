@@ -1,0 +1,170 @@
+.instructor-income-container {
+    padding: 24px;
+    background: #f5f5f5;
+    border-radius: 8px;
+
+    .income-header {
+        margin-bottom: 32px;
+
+        h4 {
+            margin: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+    }
+
+    .income-stats {
+        .stat-card {
+            border-radius: 12px;
+            box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            overflow: hidden;
+
+            &:hover {
+                transform: translateY(-4px);
+                box-shadow: 0 8px 24px 0 rgba(0, 0, 0, 0.15);
+            }
+
+            &.total-income {
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            }
+
+            &.commission-rate {
+                background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            }
+
+            &.total-courses {
+                background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            }
+        }
+    }
+
+    .income-table-card {
+        border-radius: 12px;
+        background: white;
+
+        .ant-table {
+            background: transparent;
+
+            .ant-table-thead>tr>th {
+                background-color: #fafafa;
+                font-weight: 600;
+                font-size: 14px;
+                color: #333;
+                border-bottom: 2px solid #f0f0f0;
+            }
+
+            .ant-table-tbody>tr {
+                transition: all 0.3s ease;
+
+                &:hover {
+                    background-color: #fafafa;
+                }
+
+                >td {
+                    padding: 16px 12px;
+                    border-bottom: 1px solid #f0f0f0;
+
+                    &:first-child {
+                        padding-left: 16px;
+                    }
+
+                    &:last-child {
+                        padding-right: 16px;
+                    }
+                }
+            }
+        }
+
+        .ant-pagination {
+            margin-top: 16px;
+
+            .ant-pagination-item {
+                &-active {
+                    background-color: #667eea;
+                    border-color: #667eea;
+
+                    a {
+                        color: white;
+                    }
+                }
+            }
+
+            .ant-pagination-item,
+            .ant-pagination-prev,
+            .ant-pagination-next {
+                transition: all 0.3s ease;
+
+                &:hover {
+                    border-color: #667eea;
+                    color: #667eea;
+                }
+            }
+        }
+
+        .course-column {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+
+            p {
+                margin: 0;
+                word-break: break-word;
+            }
+        }
+    }
+}
+
+// Responsive
+@media (max-width: 768px) {
+    .instructor-income-container {
+        padding: 16px;
+
+        .income-header {
+            h4 {
+                font-size: 20px;
+            }
+        }
+
+        .income-stats {
+            gap: 12px !important;
+        }
+    }
+}
+
+@media (max-width: 576px) {
+    .instructor-income-container {
+        padding: 12px;
+
+        .income-header {
+            h4 {
+                font-size: 18px;
+            }
+        }
+
+        .income-stats {
+            .stat-card {
+                .ant-statistic-title {
+                    font-size: 12px;
+                }
+
+                .ant-statistic-content {
+                    font-size: 20px;
+                }
+            }
+        }
+
+        .income-table-card {
+            .ant-table-thead>tr>th {
+                font-size: 12px;
+            }
+
+            .ant-table-tbody>tr>td {
+                padding: 12px 8px;
+                font-size: 12px;
+            }
+        }
+    }
+}

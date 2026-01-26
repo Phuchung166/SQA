@@ -1,0 +1,44 @@
+services:
+  postgresql:
+    container_name: amt-ai-postgres
+    image: postgres:15.7
+    ports:
+      - '5433:5433'
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ptit
+      POSTGRES_DB: its-nestjs
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+
+  redis:
+    container_name: amt-ai-redis
+    image: redis:7-alpine
+    ports:
+      - '6379:6379'
+    restart: always
+    volumes:
+      - redis-data:/data
+
+
+  rabbitmq:
+    container_name: amt-ai-rabbitmq
+    image: rabbitmq:3.12-management
+    restart: always
+    ports:
+      - '5672:5672'
+      - '15672:15672'
+    environment:
+      RABBITMQ_DEFAULT_USER: admin
+      RABBITMQ_DEFAULT_PASS: admin
+    volumes:
+      - rabbitmq-data:/var/lib/rabbitmq
+
+volumes:
+  postgres-data:
+  redis-data:
+  rabbitmq-data:
+
+# run with command
+# docker compose -f docker-compose.standalone.yml up -d

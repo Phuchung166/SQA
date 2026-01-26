@@ -1,0 +1,6 @@
+export const ADMIN = 'ROLE_ADMIN'
+export const NEW = 'new'
+export const USER = 'user'
+export const SUPER_ADMIN = 'super_admin'
+export const INSTRUCTOR = 'instructor'
+export const STUDENT = 'student'

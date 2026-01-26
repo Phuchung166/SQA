@@ -1,0 +1,868 @@
+{
+    "nav": {
+        "home": "Home",
+        "apps": "Apps",
+        "user": "Account Management",
+        "appsCrm": {
+            "crm": "CRM",
+            "dashboard": "Dashboard",
+            "calendar": "Calendar",
+            "customers": "Customers",
+            "groups": "Groups",
+            "customerDetails": "Customer Details",
+            "mail": "Mail"
+        },
+        "appsSales": {
+            "sales": "Sales",
+            "dashboard": "Dashboard",
+            "productList": "Product List",
+            "productEdit": "Product Edit",
+            "productNew": "New Product",
+            "orderList": "Order List",
+            "orderDetails": "Order Details"
+        },
+        "appsAccount": {
+            "account": "Account",
+            "settings": "Settings",
+            "invoice": "Invoice",
+            "activityLog": "Activity Log",
+            "kycForm": "KYC Form"
+        },
+        "pages": {
+            "pages": "Pages",
+            "welcome": "Welcome",
+            "accessDenied": "Access Denied"
+        },
+        "period": "Manage Period",
+        "artifact": "Manage Artifacts",
+        "summaryInfo": "Museum Information"
+    },
+    "home": {
+        "welcome": "Welcome to CMS Museum 3D"
+    },
+    "language": {
+        "en": "English",
+        "vi": "Vietnamese"
+    },
+    "permission": {
+        "accessDenied": "Access Denied",
+        "accessDeniedText": "You have no permission to visit this page",
+        "permissionDenied": "Permission Denied"
+    },
+    "action": {
+        "save": "Save",
+        "cancel": "Cancel",
+        "confirm": "Confirm",
+        "delete": "Delete",
+        "edit": "Edit",
+        "add": "Add",
+        "view": "View",
+        "search": "Search",
+        "filter": "Filter",
+        "discard": "Discard",
+        "export": "Export",
+        "updating": "Updating",
+        "update": "Update"
+    },
+    "product": {
+        "title": "Product",
+        "products": "Products",
+        "productImage": "Product Image",
+        "addOrChangeText": "Add or change image for the product",
+        "deleteProductConfirm": "Are you sure you want to delete this product? This action cannot be undone.",
+        "deleteProductTitle": "Delete product"
+    },
+    "config": {
+        "themeConfigurator": {
+            "title": "Theme Configurator",
+            "darkMode": "Dark Mode",
+            "navMode": "Nav Mode",
+            "theme": "Theme",
+            "layout": "Layout",
+            "switchDarkModeText": "Switch theme to dark mode"
+        }
+    },
+    "auth": {
+        "common": {
+            "signIn": "Sign in",
+            "signUp": "Sign up",
+            "userName": "User Name",
+            "email": "Email",
+            "password": "Password",
+            "confirmPassword": "Confirm Password",
+            "userNameRequired": "Please enter your user name",
+            "emailRequired": "Please enter your email",
+            "passwordRequired": "Please enter your password",
+            "confirmPasswordRequired": "Please enter your confirm password",
+            "confirmPasswordMatch": "Your passwords do not match",
+            "emailInvalid": "Invalid email"
+        },
+        "signIn": {
+            "welcomeBack": "Welcome back!",
+            "pleaseEnterYourCredentials": "Please enter your credentials to sign in!",
+            "rememberMe": "Remember me",
+            "forgotPassword": "Forgot password?",
+            "dontHaveAccount": "Don't have an account yet?",
+            "signingIn": "Signing in..."
+        },
+        "signUp": {
+            "title": "Sign Up",
+            "letGetStarted": "Create an account to login system",
+            "alreadyHaveAccount": "Already have an account?",
+            "signingUp": "Signing up...",
+            "signUpSuccess": "Sign up successfully",
+            "userAlreadyExists": "User already exists!"
+        },
+        "forgotPassword": {
+            "title": "Forgot Password",
+            "forgotPasswordText": "Please enter your email address to receive a verification code",
+            "sendEmail": "Send Email",
+            "backTo": "Back to",
+            "checkYourEmail": "Check your email",
+            "resendEmail": "Resend email",
+            "emailSent": "We have sent a password recovery instruction to your email"
+        }
+    },
+
+    "user": {
+        "delete": "Delete",
+        "approve": "Approve",
+        "approved": "Approved",
+        "account": "Account",
+        "fullName": "Full Name",
+        "phone": "Phone",
+        "role": "Role",
+        "action": "Action"
+    },
+    "artifact": {
+        "manage": "Manage Artifacts",
+        "artifactList": "Artifact List",
+        "artifactEdit": "Artifact Edit",
+        "artifactNew": "New Artifact",
+        "artifact": "Artifact",
+        "artifacts": "Artifacts",
+        "artifactImage": "Artifact Image",
+        "addArtifact": "Add",
+        "editArtifact": "Edit",
+        "artifactDetails": "Detail",
+        "artifactName": "Artifact Name",
+        "deleteArtifactConfirm": "Are you sure you want to delete this artifact? This action cannot be undone.",
+        "deleteArtifactTitle": "Delete Artifact",
+        "fromYear": "From Year",
+        "toYear": "To Year",
+        "sync2D": "Sync2D",
+        "searchSuccess": "Search successfully",
+        "searchError": "Search error",
+        "syncSuccess": "Sync successfully",
+        "syncError": "Sync error",
+        "fromYearRequired": "Please enter the from year",
+        "priority": "Priority",
+        "name": "Name",
+        "image": "Image",
+        "shortDescription": "Short Description",
+        "code": "Code",
+        "owner": "Owner",
+        "placeCollection": "Origin and Collection Place",
+        "amount": "Amount",
+        "timeRegister": "Registration Time",
+        "inspection": "Inspection Council",
+        "age": "Age/Period",
+        "manufactTech": "Manufacturing Technique",
+        "material": "Material",
+        "sizes": "Size/Weight",
+        "timeCollection": "Collection Time",
+        "placeNow": "Current Storage Place",
+        "security": "Security Mode",
+        "addContent": "Additional Content",
+        "fullDescription": "Historical Description",
+        "audio": "Audio",
+        "model3d": "3D Model",
+        "scale": "Scale",
+        "scaleMustBeGreaterThanZero": "Scale must be greater than 0",
+        "3d": "3D",
+        "action": "Action",
+        "generalInformation": "General Information",
+        "save": "Save",
+        "noFileSelected": "No file selected",
+        "error": "Error",
+        "cancel": "Cancel",
+        "currentFile": "Current File",
+        "delete": "Delete",
+        "uploadSuccess": "Upload Success",
+        "uploadError": "Upload Error",
+        "deleteSuccess": "Delete Success",
+        "deleteError": "Delete Error",
+        "success": "Success",
+        "confirmDeleteAudio": "Delete audio file?",
+        "confirmDelete3D": "Delete 3D model file?",
+        "confirmDelete3DMsg": "This action will delete the 3D model file associated with this artifact. Are you sure you want to proceed?",
+        "confirmDeleteAudioMsg": "This action will delete the audio file associated with this artifact. Are you sure you want to proceed?",
+        "indexArtifactRequired": "Artifact Index(index is the priority number or the number that comes first in the artifact code)",
+        "indexArtifact": "Artifact Index",
+        "noResults": "No results found",
+        "editStory": "Edit Story",
+        "updateStory": "Update Historical Story",
+        "storyPlaceholder": "Enter the historical story...",
+        "updateStorySuccess": "Historical story updated successfully",
+        "updateStoryError": "An error occurred while updating the story",
+        "story": "Story",
+        "type": "Artifact Type",
+        "artifactType2d": "2D Artifact",
+        "artifactType3d": "3D Artifact",
+        "all": "All Artifacts",
+        "confirmDeleteStory": "This action will delete the story associated with this artifact. Are you sure you want to proceed?",
+        "confirmDeleteStoryMsg": "Are you sure you want to delete the story? This action cannot be undone.",
+        "addStory": "Add Story"
+    },
+    "period": {
+        "editImage": "Edit Image",
+        "cancel": "Cancel",
+        "save": "Save",
+        "error": "Error",
+        "success": "Success",
+        "uploadSuccess": "Upload Success",
+        "name": "Period Name",
+        "image": "Image",
+        "shortDescription": "Short Description",
+        "startYear": "Start Year",
+        "endYear": "End Year",
+        "noImage": "No image",
+        "addArtifact": "Add Artifact",
+        "deleteArtifact": "Delete Artifact",
+        "noArtifact": "No artifacts in this period",
+        "addArtifactToPeriod": "Add Artifact to Period",
+        "editAudio": "Edit Period Audio",
+        "currentAudio": "Current Audio",
+        "newAudio": "New Audio",
+        "noFileSelected": "No audio file selected",
+        "invalidFileFormat": "Invalid audio file format",
+        "uploadError": "Audio upload failed"
+    },
+    "common": {
+        "cancel": "Cancel",
+        "save": "Save",
+        "search": "Search",
+        "close": "Close"
+    },
+    "orders": {
+        "title": "Order Management",
+        "description": "Manage and track course purchase transactions",
+        "exportExcel": "Export Excel",
+        "searchPlaceholder": "Search orders...",
+        "status": {
+            "all": "All",
+            "pending": "Pending Payment",
+            "completed": "Completed",
+            "failed": "Failed",
+            "refunded": "Refunded"
+        },
+        "paymentMethod": {
+            "label": "Payment Method",
+            "all": "All",
+            "creditCard": "Credit Card",
+            "bankTransfer": "Bank Transfer",
+            "eWallet": "E-Wallet",
+            "undefined": "Undefined"
+        },
+        "dateFilter": {
+            "from": "From Date",
+            "to": "To Date"
+        },
+        "table": {
+            "orderNumber": "Order Number",
+            "customer": "Customer",
+            "amount": "Amount",
+            "paymentMethod": "Payment Method",
+            "status": "Status",
+            "actions": "Actions",
+            "discount": "Discount",
+            "refund": "Refund"
+        },
+        "actions": {
+            "view": "View",
+            "refund": "Refund"
+        },
+        "detail": {
+            "title": "Order {orderNumber}",
+            "customerInfo": "Customer Information",
+            "paymentInfo": "Payment Information",
+            "orderDetails": "Order Details",
+            "paymentMethod": "Payment Method:",
+            "paymentGateway": "Payment Gateway:",
+            "transactionId": "Transaction ID:",
+            "total": "Total:",
+            "discount": "Discount:",
+            "finalAmount": "Final Amount:",
+            "refunded": "Refunded:",
+            "notes": "Notes",
+            "close": "Close",
+            "refundBtn": "Refund"
+        },
+        "refund": {
+            "title": "Refund Order",
+            "orderLabel": "Order:",
+            "maxAmount": "Maximum Amount:",
+            "amountLabel": "Refund Amount",
+            "amountPlaceholder": "Enter refund amount",
+            "reasonLabel": "Refund Reason",
+            "reasonPlaceholder": "Enter refund reason",
+            "cancel": "Cancel",
+            "confirm": "Confirm Refund"
+        },
+        "messages": {
+            "refundSuccess": "Refund successful",
+            "refundError": "Unable to process refund",
+            "exportSuccess": "Data export successful",
+            "exportError": "Unable to export data"
+        }
+    },
+    "categories": {
+        "title": "Category Management",
+        "description": "Manage course categories with multi-level classification support",
+        "createCategory": "Create Category",
+        "editCategory": "Edit Category",
+        "searchPlaceholder": "Search categories...",
+        "status": {
+            "all": "All",
+            "active": "Active",
+            "inactive": "Inactive"
+        },
+        "parentCategory": {
+            "label": "Parent Category",
+            "all": "All",
+            "none": "None",
+            "select": "Select parent category"
+        },
+        "table": {
+            "name": "Category Name",
+            "description": "Description",
+            "parent": "Parent Category",
+            "courseCount": "Course Count",
+            "status": "Status",
+            "sortOrder": "Sort Order",
+            "actions": "Actions",
+            "active": "Active",
+            "inactive": "Inactive",
+            "id": "ID",
+            "image": "Image",
+            "totalCourses": "Total Courses",
+            "createdAt": "Created Date",
+            "updatedAt": "Updated Date"
+        },
+        "form": {
+            "name": "Category Name",
+            "namePlaceholder": "Enter category name",
+            "nameRequired": "Category name is required",
+            "description": "Description",
+            "descriptionPlaceholder": "Enter category description",
+            "parentCategory": "Parent Category",
+            "sortOrder": "Sort Order",
+            "sortOrderPlaceholder": "Enter sort order",
+            "isActive": "Active Status",
+            "save": "Save",
+            "cancel": "Cancel",
+            "creating": "Creating...",
+            "updating": "Updating...",
+            "image": "Category Image"
+        },
+        "actions": {
+            "edit": "Edit",
+            "delete": "Delete"
+        },
+        "confirmDelete": {
+            "title": "Confirm Delete",
+            "message": "Are you sure you want to delete category \"{categoryName}\"? Can only delete when there are no courses.",
+            "confirm": "Delete",
+            "cancel": "Cancel"
+        },
+        "messages": {
+            "createSuccess": "Category created successfully",
+            "updateSuccess": "Category updated successfully",
+            "deleteSuccess": "Category deleted successfully",
+            "createError": "Error occurred while creating category",
+            "updateError": "Error occurred while updating category",
+            "deleteError": "Unable to delete category"
+        }
+    },
+    "courses": {
+        "title": "Course Management",
+        "description": "Manage all courses in the system",
+        "createCourse": "Create Course",
+        "searchPlaceholder": "Search courses...",
+        "status": {
+            "all": "All",
+            "draft": "Draft",
+            "published": "Published",
+            "active": "Active",
+            "deactive": "Deactive"
+        },
+        "category": {
+            "label": "Category",
+            "all": "All Categories",
+            "select": "Select category"
+        },
+        "instructor": {
+            "label": "Instructor",
+            "all": "All Instructors",
+            "select": "Select instructor"
+        },
+        "table": {
+            "course": "Course",
+            "instructor": "Instructor",
+            "category": "Category",
+            "students": "Students",
+            "price": "Price",
+            "status": "Status",
+            "createdAt": "Created Date",
+            "actions": "Actions",
+            "free": "Free",
+            "studentsCount": "students"
+        },
+        "actions": {
+            "view": "View",
+            "decision": "Decision",
+            "deactivate": "Deactivate",
+            "reject": "Reject"
+        },
+        "decision": {
+            "reasonPlaceholder": "Enter your reason here...",
+            "title": "Manage Decision",
+            "reasonLabel": "Reason",
+            "reasonHint": "Please provide a reason for your decision"
+        },
+        "detail": {
+            "courseContent": "Course Content",
+            "courseDetails": "Course Details",
+            "instructor": "Instructor",
+            "duration": "Duration",
+            "whatYouLearn": "What You Learn",
+            "requirements": "Requirements",
+            "targetAudience": "Target Audience",
+            "introductionVideo": "Introduction Video",
+            "additionalInfo": "Additional Information",
+            "createdDate": "Created Date",
+            "updatedDate": "Updated Date",
+            "publishedDate": "Published Date",
+            "lessons": "Lessons",
+            "preview": "Preview",
+            "lesson": "Lesson",
+            "required": "Required",
+            "notUpdated": "Not updated",
+            "ratings": "ratings",
+            "noModulesAvailable": "No modules available for this course",
+            "close": "Close",
+            "rating": "Rating"
+        },
+        "confirmDelete": {
+            "title": "Confirm Delete",
+            "message": "Are you sure you want to delete this course?",
+            "confirm": "Delete",
+            "cancel": "Cancel"
+        },
+        "messages": {
+            "deleteSuccess": "Course deleted successfully",
+            "deleteError": "Unable to delete course",
+            "fetchError": "Unable to load course list",
+            "approveSuccess": "Course approved successfully",
+            "rejectSuccess": "Course rejected successfully"
+        }
+    },
+    "students": {
+        "title": "Student Management",
+        "description": "Manage student information and activities",
+        "searchPlaceholder": "Search students...",
+        "status": {
+            "all": "All",
+            "active": "Active",
+            "inactive": "Inactive",
+            "suspended": "Suspended"
+        },
+        "table": {
+            "student": "Student",
+            "email": "Email",
+            "phone": "Phone",
+            "courses": "Courses",
+            "joinDate": "Join Date",
+            "status": "Status",
+            "lastActivity": "Last Activity",
+            "actions": "Actions",
+            "coursesCount": "courses"
+        },
+        "actions": {
+            "view": "View",
+            "edit": "Edit",
+            "suspend": "Suspend",
+            "activate": "Activate",
+            "delete": "Delete"
+        },
+        "detail": {
+            "title": "Student Information",
+            "personalInfo": "Personal Information",
+            "courseInfo": "Course Information",
+            "activityInfo": "Recent Activity",
+            "fullName": "Full Name",
+            "email": "Email",
+            "phone": "Phone",
+            "address": "Address",
+            "joinDate": "Join Date",
+            "status": "Status",
+            "totalCourses": "Total Courses",
+            "completedCourses": "Completed",
+            "inProgressCourses": "In Progress",
+            "lastLogin": "Last Login",
+            "totalLearningTime": "Total Learning Time",
+            "close": "Close",
+            "edit": "Edit"
+        },
+        "confirmSuspend": {
+            "title": "Confirm Suspend",
+            "message": "Are you sure you want to suspend this student account?",
+            "confirm": "Suspend",
+            "cancel": "Cancel"
+        },
+        "confirmActivate": {
+            "title": "Confirm Activate",
+            "message": "Are you sure you want to activate this student account?",
+            "confirm": "Activate",
+            "cancel": "Cancel"
+        },
+        "confirmDelete": {
+            "title": "Confirm Delete",
+            "message": "Are you sure you want to delete this student account?",
+            "confirm": "Delete",
+            "cancel": "Cancel"
+        },
+        "messages": {
+            "suspendSuccess": "Student account suspended successfully",
+            "activateSuccess": "Student account activated successfully",
+            "deleteSuccess": "Student account deleted successfully",
+            "updateSuccess": "Student information updated successfully",
+            "fetchError": "Unable to load student list",
+            "suspendError": "Unable to suspend account",
+            "activateError": "Unable to activate account",
+            "deleteError": "Unable to delete account"
+        }
+    },
+    "instructors": {
+        "title": "Instructor Management",
+        "description": "Manage instructor information and activities",
+        "createInstructor": "Add Instructor",
+        "searchPlaceholder": "Search instructors...",
+        "status": {
+            "all": "All",
+            "active": "Active",
+            "inactive": "Inactive",
+            "pending": "Pending Approval"
+        },
+        "table": {
+            "instructor": "Instructor",
+            "email": "Email",
+            "phone": "Phone",
+            "courses": "Courses",
+            "students": "Students",
+            "rating": "Rating",
+            "experience": "Experience",
+            "joinDate": "Join Date",
+            "status": "Status",
+            "actions": "Actions",
+            "coursesCount": "courses",
+            "studentsCount": "students",
+            "years": "years"
+        },
+        "actions": {
+            "view": "View",
+            "edit": "Edit",
+            "approve": "Approve",
+            "suspend": "Suspend",
+            "activate": "Activate",
+            "delete": "Delete"
+        },
+        "detail": {
+            "title": "Instructor Information",
+            "personalInfo": "Personal Information",
+            "professionalInfo": "Professional Information",
+            "courseInfo": "Course Information",
+            "performanceInfo": "Teaching Performance",
+            "fullName": "Full Name",
+            "email": "Email",
+            "phone": "Phone",
+            "bio": "Biography",
+            "specialization": "Specialization",
+            "experience": "Experience",
+            "education": "Education",
+            "certifications": "Certifications",
+            "joinDate": "Join Date",
+            "status": "Status",
+            "totalCourses": "Total Courses",
+            "totalStudents": "Total Students",
+            "avgRating": "Average Rating",
+            "totalRevenue": "Total Revenue",
+            "close": "Close",
+            "edit": "Edit"
+        },
+        "confirmApprove": {
+            "title": "Confirm Approval",
+            "message": "Are you sure you want to approve this instructor account?",
+            "confirm": "Approve",
+            "cancel": "Cancel"
+        },
+        "confirmSuspend": {
+            "title": "Confirm Suspend",
+            "message": "Are you sure you want to suspend this instructor account?",
+            "confirm": "Suspend",
+            "cancel": "Cancel"
+        },
+        "confirmReject": {
+            "title": "Confirm Rejection",
+            "message": "Are you sure you want to reject this instructor?",
+            "confirm": "Reject",
+            "cancel": "Cancel"
+        },
+        "messages": {
+            "approveSuccess": "Instructor account approved successfully",
+            "suspendSuccess": "Instructor account suspended successfully",
+            "rejectSuccess": "Instructor rejected successfully",
+            "activateSuccess": "Instructor account activated successfully",
+            "updateSuccess": "Instructor information updated successfully",
+            "fetchError": "Unable to load instructor list",
+            "approveError": "Unable to approve account",
+            "suspendError": "Unable to suspend account",
+            "rejectError": "Unable to reject account",
+            "activateError": "Unable to activate account",
+            "noInfo": "no updated information"
+        }
+    },
+    "reviews": {
+        "title": "Review Management",
+        "description": "Manage reviews and feedback from students",
+        "searchPlaceholder": "Search reviews...",
+        "status": {
+            "all": "All",
+            "pending": "Pending Approval",
+            "approved": "Approved",
+            "rejected": "Rejected"
+        },
+        "rating": {
+            "all": "All",
+            "1star": "1 star",
+            "2star": "2 stars",
+            "3star": "3 stars",
+            "4star": "4 stars",
+            "5star": "5 stars"
+        },
+        "table": {
+            "student": "Student",
+            "course": "Course",
+            "rating": "Rating",
+            "comment": "Comment",
+            "date": "Review Date",
+            "status": "Status",
+            "actions": "Actions",
+            "stars": "stars"
+        },
+        "actions": {
+            "view": "View",
+            "approve": "Approve",
+            "reject": "Reject",
+            "delete": "Delete"
+        },
+        "detail": {
+            "title": "Review Details",
+            "studentInfo": "Student Information",
+            "courseInfo": "Course Information",
+            "reviewInfo": "Review Content",
+            "studentName": "Student Name",
+            "email": "Email",
+            "courseName": "Course Name",
+            "instructor": "Instructor",
+            "rating": "Rating",
+            "comment": "Comment",
+            "reviewDate": "Review Date",
+            "status": "Status",
+            "close": "Close",
+            "approve": "Approve",
+            "reject": "Reject"
+        },
+        "confirmApprove": {
+            "title": "Confirm Approval",
+            "message": "Are you sure you want to approve this review?",
+            "confirm": "Approve",
+            "cancel": "Cancel"
+        },
+        "confirmReject": {
+            "title": "Confirm Reject",
+            "message": "Are you sure you want to reject this review?",
+            "confirm": "Reject",
+            "cancel": "Cancel"
+        },
+        "confirmDelete": {
+            "title": "Confirm Delete",
+            "message": "Are you sure you want to delete this review?",
+            "confirm": "Delete",
+            "cancel": "Cancel"
+        },
+        "messages": {
+            "approveSuccess": "Review approved successfully",
+            "rejectSuccess": "Review rejected successfully",
+            "deleteSuccess": "Review deleted successfully",
+            "fetchError": "Unable to load review list",
+            "approveError": "Unable to approve review",
+            "rejectError": "Unable to reject review",
+            "deleteError": "Unable to delete review"
+        }
+    },
+    "coupons": {
+        "title": "Coupon Management",
+        "description": "Manage and monitor discount coupons in the system",
+        "searchPlaceholder": "Search coupons...",
+        "table": {
+            "code": "Code",
+            "name": "Name",
+            "discount": "Discount",
+            "type": "Type",
+            "startDate": "Start Date",
+            "endDate": "End Date",
+            "usage": "Usage",
+            "status": "Status",
+            "actions": "Actions"
+        },
+        "status": {
+            "all": "All",
+            "active": "Active",
+            "inactive": "Inactive",
+            "expired": "Expired"
+        },
+        "type": {
+            "all": "All",
+            "percentage": "Percentage",
+            "fixed": "Fixed Amount"
+        },
+        "actions": {
+            "create": "Create Coupon",
+            "view": "View",
+            "edit": "Edit",
+            "delete": "Delete",
+            "activate": "Activate",
+            "deactivate": "Deactivate"
+        },
+        "create": {
+            "title": "Create New Coupon",
+            "code": "Coupon Code",
+            "codePlaceholder": "Enter coupon code",
+            "name": "Coupon Name",
+            "namePlaceholder": "Enter coupon name",
+            "description": "Description",
+            "descriptionPlaceholder": "Enter coupon description",
+            "discountType": "Discount Type",
+            "discountValue": "Discount Value",
+            "minimumOrder": "Minimum Order Amount",
+            "maxUsage": "Maximum Usage Count",
+            "maxUsagePerUser": "Maximum Usage Per User",
+            "startDate": "Start Date",
+            "endDate": "End Date",
+            "isActive": "Active"
+        },
+        "detail": {
+            "title": "Coupon Details",
+            "basicInfo": "Basic Information",
+            "discountInfo": "Discount Information",
+            "usageInfo": "Usage Information",
+            "dateInfo": "Date Information",
+            "createdAt": "Created At",
+            "updatedAt": "Updated At",
+            "usedCount": "Used Count",
+            "close": "Close",
+            "edit": "Edit"
+        },
+        "messages": {
+            "createSuccess": "Coupon created successfully",
+            "createError": "Failed to create coupon",
+            "updateSuccess": "Coupon updated successfully",
+            "updateError": "Failed to update coupon",
+            "deleteSuccess": "Coupon deleted successfully",
+            "deleteError": "Failed to delete coupon",
+            "activateSuccess": "Coupon activated successfully",
+            "activateError": "Failed to activate coupon",
+            "deactivateSuccess": "Coupon deactivated successfully",
+            "deactivateError": "Failed to deactivate coupon"
+        },
+        "confirmDelete": {
+            "title": "Confirm Delete",
+            "message": "Are you sure you want to delete this coupon?"
+        }
+    },
+    "roles": {
+        "title": "Role Management",
+        "description": "Manage user roles and permissions",
+        "createRole": "Create Role",
+        "editRole": "Edit Role",
+        "searchPlaceholder": "Search roles...",
+        "table": {
+            "role": "Role",
+            "permissions": "Permissions",
+            "users": "Users",
+            "actions": "Actions",
+            "createdAt": "Created Date"
+        },
+        "actions": {
+            "view": "View",
+            "edit": "Edit",
+            "delete": "Delete"
+        },
+        "form": {
+            "name": "Role Name",
+            "description": "Description",
+            "permissions": "Permissions",
+            "selectPermissions": "Select permissions"
+        },
+        "confirmDelete": {
+            "title": "Confirm Delete",
+            "message": "Are you sure you want to delete this role?",
+            "confirm": "Delete",
+            "cancel": "Cancel"
+        },
+        "messages": {
+            "createSuccess": "Role created successfully",
+            "createError": "Unable to create role",
+            "updateSuccess": "Role updated successfully",
+            "updateError": "Unable to update role",
+            "deleteSuccess": "Role deleted successfully",
+            "deleteError": "Unable to delete role",
+            "fetchError": "Unable to load role list"
+        }
+    },
+    "analytics": {
+        "title": "Analytics",
+        "description": "Overview of online learning system performance",
+        "stats": {
+            "totalCourses": "Total Courses",
+            "activeStudents": "Active Students",
+            "monthlyRevenue": "Monthly Revenue",
+            "completionRate": "Completion Rate"
+        },
+        "chart": {
+            "newRegistrations": "New Registrations",
+            "courseCompletions": "Course Completions",
+            "trendTitle": "Registration Trend"
+        },
+        "topCourses": {
+            "title": "Top Courses",
+            "students": "Students",
+            "revenue": "Revenue"
+        },
+        "recentActivities": {
+            "title": "Recent Activities",
+            "newCourseCreated": "New course created",
+            "studentCompleted": "Student completed course",
+            "ratingReceived": "5-star rating received",
+            "hoursAgo": "hours ago"
+        },
+        "timeRange": {
+            "7d": "7 days",
+            "30d": "30 days",
+            "90d": "90 days",
+            "1y": "1 year"
+        },
+        "comparedToPrevious": "vs previous period"
+    }
+}
