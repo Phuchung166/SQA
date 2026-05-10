@@ -1,12 +1,11 @@
 import html
-import os
 import time
 import unittest
 from datetime import datetime
 from pathlib import Path
 
 from selenium import webdriver
-from selenium.common.exceptions import TimeoutException
+from selenium.common.exceptions import ElementClickInterceptedException, TimeoutException
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
@@ -25,6 +24,10 @@ from test_case_registry import get_scope_cases, get_test_case
 
 SELENIUM_SCOPE_PREFIXES = ("TC-AUTH-", "TC-COURSE-", "TC-ORDER-", "TC-STUDY-")
 REPORT_PATH = (Path(__file__).resolve().parent / REPORT_DIR).resolve()
+USER_MENU_SELECTOR = (
+    ".bd-user-avatar-btn, .user-avatar-img, .user-avatar-placeholder, "
+    ".user-name, [data-testid='user-menu']"
+)
 
 
 def _safe_text(value: str) -> str:
@@ -39,7 +42,7 @@ class BaseTest(unittest.TestCase):
     all_results = []
 
     @classmethod
-    def setUpClass(cls):
+    def _build_driver(cls):
         options = Options()
         if HEADLESS:
             options.add_argument("--headless=new")
@@ -49,10 +52,24 @@ class BaseTest(unittest.TestCase):
         options.add_argument("--disable-blink-features=AutomationControlled")
         options.add_experimental_option("excludeSwitches", ["enable-automation"])
 
-        cls.driver = webdriver.Chrome(options=options)
-        cls.driver.implicitly_wait(IMPLICIT_WAIT)
-        cls.driver.set_page_load_timeout(PAGE_LOAD_TIMEOUT)
+        driver = webdriver.Chrome(options=options)
+        driver.implicitly_wait(IMPLICIT_WAIT)
+        driver.set_page_load_timeout(PAGE_LOAD_TIMEOUT)
+        return driver
+
+    @classmethod
+    def setUpClass(cls):
+        cls.driver = cls._build_driver()
         cls.results = []
+
+    def restart_driver(self):
+        try:
+            if self.__class__.driver:
+                self.__class__.driver.quit()
+        except Exception:
+            pass
+        self.__class__.driver = self.__class__._build_driver()
+        self.driver = self.__class__.driver
 
     @classmethod
     def tearDownClass(cls):
@@ -60,11 +77,32 @@ class BaseTest(unittest.TestCase):
             cls.driver.quit()
         cls._generate_report()
 
+    def _safe_get(self, url: str):
+        try:
+            self.driver.get(url)
+        except TimeoutException:
+            try:
+                self.driver.execute_script("window.stop();")
+            except Exception:
+                pass
+
     def go_to(self, path: str = ""):
-        self.driver.get(f"{LEARNER_BASE_URL}/{path}".rstrip("/"))
+        self._safe_get(f"{LEARNER_BASE_URL}/{path}".rstrip("/"))
 
     def go_to_admin(self, path: str = ""):
-        self.driver.get(f"{ADMIN_BASE_URL}/{path}".rstrip("/"))
+        self._safe_get(f"{ADMIN_BASE_URL}/{path}".rstrip("/"))
+
+    def reset_browser_state(self):
+        try:
+            self.driver.delete_all_cookies()
+        except Exception:
+            pass
+        try:
+            self.driver.execute_script(
+                "window.localStorage.clear(); window.sessionStorage.clear();"
+            )
+        except Exception:
+            pass
 
     def wait_for(self, by, value, timeout=10):
         return WebDriverWait(self.driver, timeout).until(
@@ -86,6 +124,17 @@ class BaseTest(unittest.TestCase):
             EC.text_to_be_present_in_element((by, value), text)
         )
 
+    def safe_click(self, element):
+        self.driver.execute_script(
+            "arguments[0].scrollIntoView({block: 'center', inline: 'center'});",
+            element,
+        )
+        time.sleep(0.5)
+        try:
+            element.click()
+        except ElementClickInterceptedException:
+            self.driver.execute_script("arguments[0].click();", element)
+
     def element_exists(self, by, value, timeout=5) -> bool:
         try:
             WebDriverWait(self.driver, timeout).until(
@@ -96,31 +145,47 @@ class BaseTest(unittest.TestCase):
             return False
 
     def login(self, email: str, password: str):
+        self.reset_browser_state()
         self.go_to("sign-in")
-        self.wait_for(By.NAME, "email").send_keys(email)
-        self.driver.find_element(By.NAME, "password").send_keys(password)
-        self.driver.find_element(By.CSS_SELECTOR, "button[type='submit']").click()
-        time.sleep(2)
+        email_input = self.wait_visible(By.NAME, "email", timeout=15)
+        password_input = self.wait_visible(By.NAME, "password", timeout=15)
+        email_input.clear()
+        password_input.clear()
+        email_input.send_keys(email)
+        password_input.send_keys(password)
+        self.wait_clickable(By.CSS_SELECTOR, "button[type='submit']", timeout=10).click()
+        WebDriverWait(self.driver, 15).until(
+            lambda d: (
+                "sign-in" not in d.current_url
+                or len(d.find_elements(By.CSS_SELECTOR, USER_MENU_SELECTOR)) > 0
+            )
+        )
+        time.sleep(1)
 
     def logout(self):
         try:
             avatar = self.wait_clickable(
                 By.CSS_SELECTOR,
-                ".bd-user-avatar-btn, .user-avatar-img, .user-avatar-placeholder, .user-name, [data-testid='user-menu']",
+                USER_MENU_SELECTOR,
                 timeout=5,
             )
             avatar.click()
             time.sleep(0.5)
             logout_button = self.wait_clickable(
                 By.XPATH,
-                "//*[contains(text(),'Dang xuat') or contains(text(),'Logout') or contains(text(),'Sign out') or contains(text(),'Đăng xuất')]",
+                "//*[contains(text(),'Dang xuat') or contains(text(),'Logout') or contains(text(),'Sign out')]",
                 timeout=5,
             )
             logout_button.click()
-            time.sleep(1)
+            WebDriverWait(self.driver, 10).until(
+                lambda d: (
+                    "sign-in" in d.current_url
+                    or len(d.find_elements(By.NAME, "email")) > 0
+                )
+            )
         except Exception:
-            self.driver.delete_all_cookies()
-            self.driver.refresh()
+            self.reset_browser_state()
+            self.go_to("")
 
     def get_toast_message(self, timeout=5) -> str:
         selectors = [
@@ -200,7 +265,13 @@ class BaseTest(unittest.TestCase):
 
         rows = []
         for item in results:
-            color = "#d4edda" if item["status"] == "PASS" else "#f8d7da" if item["status"] == "FAIL" else "#fff3cd"
+            color = (
+                "#d4edda"
+                if item["status"] == "PASS"
+                else "#f8d7da"
+                if item["status"] == "FAIL"
+                else "#fff3cd"
+            )
             screenshot_html = (
                 f'<a href="{html.escape(item["screenshot"])}" target="_blank">Screenshot</a>'
                 if item["screenshot"]
@@ -226,7 +297,11 @@ class BaseTest(unittest.TestCase):
                 """
             )
 
-        missing_html = "<br>".join(html.escape(tc_id) for tc_id in missing_ids) if missing_ids else "None"
+        missing_html = (
+            "<br>".join(html.escape(tc_id) for tc_id in missing_ids)
+            if missing_ids
+            else "None"
+        )
         html_report = f"""<!DOCTYPE html>
 <html>
 <head>
@@ -282,4 +357,7 @@ class BaseTest(unittest.TestCase):
         with report_path.open("w", encoding="utf-8") as handle:
             handle.write(html_report)
         print(f"\n[REPORT] Saved to: {report_path}")
-        print(f"[REPORT] PASS={pass_count}/{total}, FAIL={fail_count}/{total}, OTHER={other_count}")
+        print(
+            f"[REPORT] PASS={pass_count}/{total}, FAIL={fail_count}/{total}, "
+            f"OTHER={other_count}"
+        )

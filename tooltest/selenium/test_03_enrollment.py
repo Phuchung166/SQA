@@ -57,14 +57,12 @@ class TestEnrollment(BaseTest):
         return self.driver.find_element(By.TAG_NAME, "body").text
 
     def setUp(self):
+        self.restart_driver()
         self.login(LEARNER_EMAIL, LEARNER_PASSWORD)
-        time.sleep(2)
+        time.sleep(1)
 
     def tearDown(self):
-        try:
-            self.logout()
-        except Exception:
-            pass
+        pass
 
     def test_TC_ORDER_001_enroll_free_course(self):
         tc_id = "TC-ORDER-001"
@@ -76,7 +74,7 @@ class TestEnrollment(BaseTest):
             time.sleep(2)
 
             enroll_btn = self._find_course_primary_action(timeout=8)
-            enroll_btn.click()
+            self.safe_click(enroll_btn)
             time.sleep(3)
 
             # Verify: redirect về student-enrolled-courses (CourseSidebarWidget router.push)
@@ -116,7 +114,7 @@ class TestEnrollment(BaseTest):
             self.go_to(f"course-details/{FREE_COURSE_ID}")
             time.sleep(2)
             try:
-                self._find_course_primary_action(timeout=5).click()
+                self.safe_click(self._find_course_primary_action(timeout=5))
                 time.sleep(3)
             except Exception:
                 pass
@@ -174,7 +172,7 @@ class TestEnrollment(BaseTest):
                 btn = self.driver.find_element(
                     By.CSS_SELECTOR, ".bd-course-sidebar-widget-btn button.bd-btn.btn-primary.w-100"
                 )
-                btn.click()
+                self.safe_click(btn)
                 time.sleep(2)
             except Exception:
                 pass
@@ -198,8 +196,6 @@ class TestEnrollment(BaseTest):
                 ss,
             )
 
-        self.login(LEARNER_EMAIL, LEARNER_PASSWORD)
-
     def test_TC_ORDER_008_add_to_cart(self):
         tc_id = "TC-ORDER-008"
         try:
@@ -212,7 +208,7 @@ class TestEnrollment(BaseTest):
             # Source: CourseSidebarWidget.tsx -> button.bd-btn.btn-outline-primary.w-100
             # Chỉ hiển thị khi is_free=False và is_pre_order=False
             add_btn = self._find_course_secondary_action(timeout=8)
-            add_btn.click()
+            self.safe_click(add_btn)
             time.sleep(3)
 
             cart_after = get_cart_item_count(LEARNER_EMAIL)
@@ -247,7 +243,7 @@ class TestEnrollment(BaseTest):
             # Thêm vào giỏ trước
             self.go_to(f"course-details/{PAID_COURSE_ID}")
             time.sleep(2)
-            self._find_course_secondary_action(timeout=8).click()
+            self.safe_click(self._find_course_secondary_action(timeout=8))
             time.sleep(3)
 
             cart_before = get_cart_item_count(LEARNER_EMAIL)
@@ -258,7 +254,7 @@ class TestEnrollment(BaseTest):
             remove_btn = self.wait_clickable(
                 By.CSS_SELECTOR, "button.remove-cart-btn", timeout=8
             )
-            remove_btn.click()
+            self.safe_click(remove_btn)
             time.sleep(3)
 
             cart_after = get_cart_item_count(LEARNER_EMAIL)
@@ -369,7 +365,7 @@ class TestEnrollment(BaseTest):
                     By.XPATH,
                     "//*[contains(@class,'ant-tabs-tab') and (contains(.,'Chương trình') or contains(.,'Group') or contains(.,'Program'))]",
                 )
-                group_tab_el.click()
+                self.safe_click(group_tab_el)
                 time.sleep(2)
                 # KNOWN FAIL: tab nhóm không load dữ liệu (từ system test)
                 no_error = not self.element_exists(
