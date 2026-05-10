@@ -1,0 +1,13 @@
+tc_id,username,email,password,expected_result,expected_message
+TC-AUTH-001,testuser2026,testuser2026@gmail.com,abcd1234,PASS,Đăng ký thành công
+TC-AUTH-002,abcd,abcd@gmail.com,abcd1234,FAIL,Độ dài tên tài khoản phải nằm trong khoảng 5-20 ký tự
+TC-AUTH-003,admin,admin@gmail.com,abcd1234,PASS,Đăng ký thành công
+TC-AUTH-004,abcdefghijklmnopqrstu,long@gmail.com,abcd1234,FAIL,Độ dài tên tài khoản phải nằm trong khoảng 5-20 ký tự
+TC-AUTH-005,abcdefghijklmnopqrst,valid20@gmail.com,abcd1234,PASS,Đăng ký thành công
+TC-AUTH-006,validuser,invalidemail,abcd1234,FAIL,Email không đúng định dạng
+TC-AUTH-007,validuser2,user@,abcd1234,FAIL,Email không đúng định dạng
+TC-AUTH-008,validuser3,user@test,abcd1234,FAIL,Email không đúng định dạng
+TC-AUTH-009,existuser,testuser2026@gmail.com,abcd1234,FAIL,Email đã được sử dụng
+TC-AUTH-010,validuser4,valid4@gmail.com,abc1234,FAIL,Mật khẩu phải có ít nhất 8 ký tự
+TC-AUTH-011,validuser5,valid5@gmail.com,abcd1234,PASS,Đăng ký thành công
+TC-AUTH-012,,,, FAIL,Vui lòng nhập đầy đủ thông tin

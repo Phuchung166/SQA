@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Selenium Test Report</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    h1, h2 { color: #333; }
+    .summary { background: #f0f0f0; padding: 15px; border-radius: 5px; margin-bottom: 20px; }
+    .note { background: #eef6ff; padding: 12px; border-left: 4px solid #2f6fdb; margin-bottom: 20px; }
+    table { border-collapse: collapse; width: 100%; table-layout: fixed; }
+    th, td { border: 1px solid #ddd; padding: 8px; text-align: left; vertical-align: top; word-wrap: break-word; }
+    th { background: #4CAF50; color: white; }
+    .missing { white-space: pre-wrap; line-height: 1.5; }
+  </style>
+</head>
+<body>
+  <h1>Selenium Test Report - Online Learning System</h1>
+  <div class="summary">
+    <b>Total executed:</b> 7<br>
+    <b style="color:green">PASS:</b> 6<br>
+    <b style="color:red">FAIL:</b> 1<br>
+    <b>Other:</b> 0<br>
+    <b>Execution rate:</b> 85.7%<br>
+    <b>Workbook scope:</b> 61 cases from 13_system_test.xlsx<br>
+    <b>Executed in this run:</b> 7 / 61<br>
+    <b>Generated:</b> 2026-05-10 23:11:10
+  </div>
+  <div class="note">
+    <b>Missing Selenium coverage in workbook scope:</b><br>
+    <span class="missing">TC-AUTH-001<br>TC-AUTH-002<br>TC-AUTH-003<br>TC-AUTH-004<br>TC-AUTH-005<br>TC-AUTH-006<br>TC-AUTH-007<br>TC-AUTH-008<br>TC-AUTH-009<br>TC-AUTH-010<br>TC-AUTH-011<br>TC-AUTH-013<br>TC-AUTH-014<br>TC-AUTH-015<br>TC-AUTH-016<br>TC-AUTH-017<br>TC-AUTH-018<br>TC-AUTH-020<br>TC-AUTH-021<br>TC-AUTH-022<br>TC-AUTH-023<br>TC-AUTH-024<br>TC-AUTH-025<br>TC-AUTH-026<br>TC-AUTH-027<br>TC-AUTH-028<br>TC-AUTH-029<br>TC-COURSE-005<br>TC-ORDER-001<br>TC-ORDER-002<br>TC-ORDER-003<br>TC-ORDER-004<br>TC-ORDER-005<br>TC-ORDER-006<br>TC-ORDER-007<br>TC-ORDER-008<br>TC-ORDER-009<br>TC-ORDER-010<br>TC-ORDER-011<br>TC-ORDER-012<br>TC-ORDER-013<br>TC-ORDER-014<br>TC-STUDY-001<br>TC-STUDY-002<br>TC-STUDY-003<br>TC-STUDY-004<br>TC-STUDY-005<br>TC-STUDY-006<br>TC-STUDY-007<br>TC-STUDY-008<br>TC-STUDY-009<br>TC-STUDY-010<br>TC-STUDY-011<br>TC-STUDY-012</span>
+  </div>
+  <table>
+    <tr>
+      <th>TC ID</th>
+      <th>Sheet</th>
+      <th>Scenario</th>
+      <th>Expected</th>
+      <th>Input Data</th>
+      <th>Status</th>
+      <th>Actual</th>
+      <th>Workbook Status</th>
+      <th>DB Check</th>
+      <th>Rollback</th>
+      <th>Screenshot</th>
+      <th>Time</th>
+    </tr>
+    
+                <tr style="background:#d4edda">
+                    <td>TC-AUTH-012</td>
+                    <td>01_Xác thực</td>
+                    <td>Đăng ký tất cả trường trống</td>
+                    <td>1. Hệ thống hiển thị thông báo yêu cầu nhập cho tất cả các trường bắt buộc<br>2. Các trường được highlight với màu đỏ<br>3. Nút &#x27;Đăng ký&#x27; có thể bị disabled</td>
+                    <td>expected_result=FAIL; expected_message=Vui lòng nhập đầy đủ thông tin; csv_file=auth_test_data.csv</td>
+                    <td><b>PASS</b></td>
+                    <td>Hiển thị lỗi required</td>
+                    <td>PASS</td>
+                    <td></td>
+                    <td></td>
+                    <td><a href="TC-AUTH-012_20260510_230750.png" target="_blank">Screenshot</a></td>
+                    <td>2026-05-10 23:07:55</td>
+                </tr>
+                
+                <tr style="background:#d4edda">
+                    <td>TC-AUTH-019</td>
+                    <td>01_Xác thực</td>
+                    <td>Đăng nhập thành công</td>
+                    <td>1. Hệ thống xác thực thành công<br>2. Chuyển hướng đến trang chủ hoặc dashboard<br>3. JWT token được tạo và lưu trong cookie/localStorage<br>4. Hiển thị thông tin người dùng (avatar, tên)<br>5. Menu điều hướng cập nhật với tùy chọn đăng xuất</td>
+                    <td>email=learner_test@gmail.com; password=Test@1234; expected_result=PASS; expected_message=Đăng nhập thành công; csv_file=login_test_data.csv</td>
+                    <td><b>PASS</b></td>
+                    <td>Redirect về trang chủ, thấy avatar user</td>
+                    <td>PASS</td>
+                    <td></td>
+                    <td></td>
+                    <td><a href="TC-AUTH-019_20260510_230804.png" target="_blank">Screenshot</a></td>
+                    <td>2026-05-10 23:08:04</td>
+                </tr>
+                
+                <tr style="background:#f8d7da">
+                    <td>TC-COURSE-001</td>
+                    <td>02_Khám phá khóa học</td>
+                    <td>Tìm kiếm từ khóa tồn tại &#x27;Spring Boot&#x27;</td>
+                    <td>1. Hiển thị danh sách khóa học liên quan đến &#x27;Spring Boot&#x27;<br>2. Kết quả được sắp xếp theo relevance hoặc popularity<br>3. Mỗi kết quả hiển thị: thumbnail, title, instructor, price, rating<br>4. Thời gian phản hồi &lt; 500ms<br>5. Phân trang nếu kết quả nhiều</td>
+                    <td>action=search; keyword=Spring Boot; expected_result=PASS; expected_message=Hiển thị danh sách khóa học; csv_file=course_test_data.csv</td>
+                    <td><b>FAIL</b></td>
+                    <td>has_results=True</td>
+                    <td>PASS</td>
+                    <td></td>
+                    <td></td>
+                    <td><a href="TC-COURSE-001_20260510_231026.png" target="_blank">Screenshot</a></td>
+                    <td>2026-05-10 23:10:27</td>
+                </tr>
+                
+                <tr style="background:#d4edda">
+                    <td>TC-COURSE-002</td>
+                    <td>02_Khám phá khóa học</td>
+                    <td>Tìm kiếm từ khóa không tồn tại</td>
+                    <td>1. Hiển thị thông báo: &#x27;Không tìm thấy khóa học nào phù hợp với từ khóa...&#x27;<br>2. Gợi ý tìm kiếm khác hoặc duyệt danh mục<br>3. KHÔNG hiển thị lỗi server<br>4. Giao diện vẫn hoạt động bình thường</td>
+                    <td>action=search; keyword=xyznonexistentcourse123; expected_result=FAIL; expected_message=Không tìm thấy khóa học nào; csv_file=course_test_data.csv</td>
+                    <td><b>PASS</b></td>
+                    <td>Hiển thị thông báo không tìm thấy</td>
+                    <td>FAIL</td>
+                    <td></td>
+                    <td></td>
+                    <td><a href="TC-COURSE-002_20260510_231040.png" target="_blank">Screenshot</a></td>
+                    <td>2026-05-10 23:10:40</td>
+                </tr>
+                
+                <tr style="background:#d4edda">
+                    <td>TC-COURSE-003</td>
+                    <td>02_Khám phá khóa học</td>
+                    <td>Xem chi tiết khóa học tồn tại</td>
+                    <td>1. Hiển thị đầy đủ thông tin khóa học<br>2. Hình ảnh/video preview (nếu có)<br>3. Danh sách modules và lessons được hiển thị<br>4. Nút &#x27;Đăng ký&#x27; hoặc &#x27;Mua khóa học&#x27; hiển thị<br>5. Review section hiển thị đánh giá từ học viên<br>6. Thời gian load &lt; 3 giây</td>
+                    <td>action=view_detail; course_id=1; expected_result=PASS; expected_message=Hiển thị đầy đủ thông tin khóa học; csv_file=course_test_data.csv</td>
+                    <td><b>PASS</b></td>
+                    <td>Hiển thị đầy đủ thông tin khóa học</td>
+                    <td>PASS</td>
+                    <td></td>
+                    <td></td>
+                    <td><a href="TC-COURSE-003_20260510_231051.png" target="_blank">Screenshot</a></td>
+                    <td>2026-05-10 23:10:51</td>
+                </tr>
+                
+                <tr style="background:#d4edda">
+                    <td>TC-COURSE-004</td>
+                    <td>02_Khám phá khóa học</td>
+                    <td>Xem khóa học ID không tồn tại</td>
+                    <td>1. Hiển thị trang 404 Not Found<br>2. Hoặc thông báo: &#x27;Khóa học không tồn tại&#x27;<br>3. Có nút quay về trang chủ/tìm kiếm<br>4. KHÔNG hiển thị lỗi server chi tiết<br>5. URL không đổi sang error page khác</td>
+                    <td>action=view_detail; course_id=99999; expected_result=FAIL; expected_message=Khóa học không tồn tại; csv_file=course_test_data.csv</td>
+                    <td><b>PASS</b></td>
+                    <td>Hiển thị 404 hoặc thông báo không tồn tại</td>
+                    <td>PASS</td>
+                    <td></td>
+                    <td></td>
+                    <td><a href="TC-COURSE-004_20260510_231102.png" target="_blank">Screenshot</a></td>
+                    <td>2026-05-10 23:11:02</td>
+                </tr>
+                
+                <tr style="background:#d4edda">
+                    <td>TC-COURSE-006</td>
+                    <td>02_Khám phá khóa học</td>
+                    <td>Xem chi tiết khóa học nhóm</td>
+                    <td>1. Trang chi tiết khóa học nhóm hiển thị đầy đủ thông tin cơ bản<br>2. Danh sách khóa học thành phần hiển thị đúng<br>3. Không phát sinh lỗi 404 hoặc lỗi render dữ liệu</td>
+                    <td>action=view_group; course_id=1; expected_result=PASS; expected_message=Hiển thị thông tin khóa học nhóm; csv_file=course_test_data.csv</td>
+                    <td><b>PASS</b></td>
+                    <td>Hiển thị thông tin khóa học nhóm và danh sách khóa học</td>
+                    <td>PASS</td>
+                    <td></td>
+                    <td></td>
+                    <td><a href="TC-COURSE-006_20260510_231107.png" target="_blank">Screenshot</a></td>
+                    <td>2026-05-10 23:11:07</td>
+                </tr>
+                
+  </table>
+</body>
+</html>

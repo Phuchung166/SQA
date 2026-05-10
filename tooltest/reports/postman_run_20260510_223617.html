@@ -1,0 +1,2514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Online Learning System - API Tests (13_system_test.xlsx) - HTML Report</title>
+  <style>
+    :root {
+      --bg: #f5f7fb;
+      --panel: #ffffff;
+      --text: #142033;
+      --muted: #5b6678;
+      --border: #d8deea;
+      --pass: #1e8e5a;
+      --fail: #c62828;
+      --warn: #b26a00;
+      --shadow: 0 14px 35px rgba(20, 32, 51, 0.08);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding: 32px 20px 48px;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(180deg, #eef3fb 0%, var(--bg) 100%);
+      color: var(--text);
+    }
+    .wrap {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .hero {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 28px;
+      box-shadow: var(--shadow);
+      margin-bottom: 24px;
+    }
+    h1 {
+      margin: 0 0 10px;
+      font-size: 30px;
+      line-height: 1.15;
+    }
+    .sub {
+      color: var(--muted);
+      margin: 0;
+      font-size: 14px;
+    }
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 14px;
+      margin: 22px 0 8px;
+    }
+    .card {
+      background: #f9fbff;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 16px;
+    }
+    .card-label {
+      color: var(--muted);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .card-value {
+      margin-top: 8px;
+      font-size: 28px;
+      font-weight: 700;
+    }
+    .sections {
+      display: grid;
+      gap: 16px;
+    }
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+      padding: 22px;
+    }
+    .panel h2 {
+      margin: 0 0 14px;
+      font-size: 20px;
+    }
+    .suite {
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      background: #fcfdff;
+      margin-bottom: 12px;
+      overflow: hidden;
+    }
+    .suite summary {
+      list-style: none;
+      cursor: pointer;
+      padding: 16px 18px;
+    }
+    .suite summary::-webkit-details-marker {
+      display: none;
+    }
+    .suite-head {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+    }
+    .suite-name {
+      font-weight: 600;
+    }
+    .suite-meta {
+      color: var(--muted);
+      font-size: 13px;
+    }
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 56px;
+      height: 28px;
+      padding: 0 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+    }
+    .pill-pass {
+      background: rgba(30, 142, 90, 0.12);
+      color: var(--pass);
+    }
+    .pill-fail {
+      background: rgba(198, 40, 40, 0.12);
+      color: var(--fail);
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+    thead {
+      background: #f4f7fc;
+    }
+    th, td {
+      padding: 12px 18px;
+      text-align: left;
+      vertical-align: top;
+      border-top: 1px solid var(--border);
+    }
+    .detail-row td {
+      padding-top: 0;
+      background: #fffdfd;
+    }
+    .failure {
+      border-left: 4px solid var(--fail);
+      background: #fff6f6;
+      padding: 12px 14px;
+      border-radius: 8px;
+      margin: 4px 0 10px;
+    }
+    .failure-title {
+      font-weight: 700;
+      color: var(--fail);
+      margin-bottom: 8px;
+    }
+    pre {
+      margin: 0;
+      white-space: pre-wrap;
+      word-break: break-word;
+      font-family: Consolas, "Courier New", monospace;
+      font-size: 12px;
+      color: #3a4352;
+    }
+    .muted {
+      color: var(--muted);
+    }
+    .footer {
+      color: var(--muted);
+      font-size: 12px;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <section class="hero">
+      <h1>Online Learning System - API Tests (13_system_test.xlsx)</h1>
+      <p class="sub">Source XML: C:\Users\tranv\Desktop\System Test\SQA\tooltest\reports\postman_run_20260510_223617.xml</p>
+      <div class="cards">
+        <div class="card">
+          <div class="card-label">Requests</div>
+          <div class="card-value">64</div>
+        </div>
+        <div class="card">
+          <div class="card-label">Assertions</div>
+          <div class="card-value">91</div>
+        </div>
+        <div class="card">
+          <div class="card-label">Passed</div>
+          <div class="card-value">83</div>
+        </div>
+        <div class="card">
+          <div class="card-label">Failed</div>
+          <div class="card-value">8</div>
+        </div>
+        <div class="card">
+          <div class="card-label">Fail Rate</div>
+          <div class="card-value">8.8%</div>
+        </div>
+        <div class="card">
+          <div class="card-label">Duration</div>
+          <div class="card-value">1m 5.6s</div>
+        </div>
+      </div>
+    </section>
+
+    <div class="sections">
+      <section class="panel">
+        <h2>Failing Requests (8)</h2>
+        
+    <details class="suite" open>
+      <summary>
+        <div class="suite-head">
+          <span class="pill pill-fail">FAIL</span>
+          <span class="suite-name">01_Xac_Thuc / [TC-AUTH-008] Dang ky email khong co domain extension - KNOWN FAIL</span>
+          <span class="suite-meta">1 assertions | 1 failures | 16ms</span>
+        </div>
+      </summary>
+      <table>
+        <thead>
+          <tr>
+            <th>Status</th>
+            <th>Testcase</th>
+            <th>Time</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+            <tr>
+              <td><span class="pill pill-fail">FAIL</span></td>
+              <td>[TC-AUTH-008] KNOWN FAIL: BE chap nhan email @test</td>
+              <td>16ms</td>
+            </tr>
+            <tr class="detail-row">
+              <td colspan="3"><div class="failure"><div class="failure-title">BE should reject email without TLD: expected 200 to equal 400</div><pre>Failed 1 times.
+Collection JSON ID: 6050124b-c576-4181-b9ad-56351ea2a1c8.
+Collection name: Online Learning System - API Tests (13_system_test.xlsx).
+Request name: 01_Xac_Thuc / [TC-AUTH-008] Dang ky email khong co domain extension - KNOWN FAIL.
+Test description: [TC-AUTH-008] KNOWN FAIL: BE chap nhan email @test.
+Error message: BE should reject email without TLD: expected 200 to equal 400.
+Stacktrace: AssertionError: BE should reject email without TLD: expected 200 to equal 400
+at Object.eval sandbox-script.js:1:7).</pre></div></td>
+            </tr>
+            
+        </tbody>
+      </table>
+    </details>
+    
+    <details class="suite" open>
+      <summary>
+        <div class="suite-head">
+          <span class="pill pill-fail">FAIL</span>
+          <span class="suite-name">01_Xac_Thuc / [TC-AUTH-021] Dang nhap email khong ton tai - KNOWN FAIL</span>
+          <span class="suite-meta">1 assertions | 1 failures | 12ms</span>
+        </div>
+      </summary>
+      <table>
+        <thead>
+          <tr>
+            <th>Status</th>
+            <th>Testcase</th>
+            <th>Time</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+            <tr>
+              <td><span class="pill pill-fail">FAIL</span></td>
+              <td>[TC-AUTH-021] KNOWN FAIL: BE lo thong tin email ton tai</td>
+              <td>12ms</td>
+            </tr>
+            <tr class="detail-row">
+              <td colspan="3"><div class="failure"><div class="failure-title">Should not reveal if email exists: expected 404 to equal 400</div><pre>Failed 1 times.
+Collection JSON ID: 6050124b-c576-4181-b9ad-56351ea2a1c8.
+Collection name: Online Learning System - API Tests (13_system_test.xlsx).
+Request name: 01_Xac_Thuc / [TC-AUTH-021] Dang nhap email khong ton tai - KNOWN FAIL.
+Test description: [TC-AUTH-021] KNOWN FAIL: BE lo thong tin email ton tai.
+Error message: Should not reveal if email exists: expected 404 to equal 400.
+Stacktrace: AssertionError: Should not reveal if email exists: expected 404 to equal 400
+at Object.eval sandbox-script.js:1:13).</pre></div></td>
+            </tr>
+            
+        </tbody>
+      </table>
+    </details>
+    
+    <details class="suite" open>
+      <summary>
+        <div class="suite-head">
+          <span class="pill pill-fail">FAIL</span>
+          <span class="suite-name">03_Thanh_Toan_Dang_Ky_Hoc / [TC-ORDER-007] VNPay gia qua thap - KNOWN FAIL</span>
+          <span class="suite-meta">1 assertions | 1 failures | 23ms</span>
+        </div>
+      </summary>
+      <table>
+        <thead>
+          <tr>
+            <th>Status</th>
+            <th>Testcase</th>
+            <th>Time</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+            <tr>
+              <td><span class="pill pill-fail">FAIL</span></td>
+              <td>[TC-ORDER-007] KNOWN FAIL: BE cho phep gia 1 VND</td>
+              <td>23ms</td>
+            </tr>
+            <tr class="detail-row">
+              <td colspan="3"><div class="failure"><div class="failure-title">Should reject price below VNPay minimum: expected 500 to equal 400</div><pre>Failed 1 times.
+Collection JSON ID: 6050124b-c576-4181-b9ad-56351ea2a1c8.
+Collection name: Online Learning System - API Tests (13_system_test.xlsx).
+Request name: 03_Thanh_Toan_Dang_Ky_Hoc / [TC-ORDER-007] VNPay gia qua thap - KNOWN FAIL.
+Test description: [TC-ORDER-007] KNOWN FAIL: BE cho phep gia 1 VND.
+Error message: Should reject price below VNPay minimum: expected 500 to equal 400.
+Stacktrace: AssertionError: Should reject price below VNPay minimum: expected 500 to equal 400
+at Object.eval sandbox-script.js:1:30).</pre></div></td>
+            </tr>
+            
+        </tbody>
+      </table>
+    </details>
+    
+    <details class="suite" open>
+      <summary>
+        <div class="suite-head">
+          <span class="pill pill-fail">FAIL</span>
+          <span class="suite-name">05_QL_Noi_Dung_Khoa_Hoc / [TC-INS-007] Tao khoa hoc tieu de trong - KNOWN FAIL BE</span>
+          <span class="suite-meta">1 assertions | 1 failures | 33ms</span>
+        </div>
+      </summary>
+      <table>
+        <thead>
+          <tr>
+            <th>Status</th>
+            <th>Testcase</th>
+            <th>Time</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+            <tr>
+              <td><span class="pill pill-fail">FAIL</span></td>
+              <td>[TC-INS-007] KNOWN FAIL: BE khong validate title rong</td>
+              <td>33ms</td>
+            </tr>
+            <tr class="detail-row">
+              <td colspan="3"><div class="failure"><div class="failure-title">BE should reject empty title - missing @NotBlank annotation: expected 201 to equal 400</div><pre>Failed 1 times.
+Collection JSON ID: 6050124b-c576-4181-b9ad-56351ea2a1c8.
+Collection name: Online Learning System - API Tests (13_system_test.xlsx).
+Request name: 05_QL_Noi_Dung_Khoa_Hoc / [TC-INS-007] Tao khoa hoc tieu de trong - KNOWN FAIL BE.
+Test description: [TC-INS-007] KNOWN FAIL: BE khong validate title rong.
+Error message: BE should reject empty title - missing @NotBlank annotation: expected 201 to equal 400.
+Stacktrace: AssertionError: BE should reject empty title - missing @NotBlank annotation: expected 201 to equal 400
+at Object.eval sandbox-script.js:1:40).</pre></div></td>
+            </tr>
+            
+        </tbody>
+      </table>
+    </details>
+    
+    <details class="suite" open>
+      <summary>
+        <div class="suite-head">
+          <span class="pill pill-fail">FAIL</span>
+          <span class="suite-name">05_QL_Noi_Dung_Khoa_Hoc / [TC-INS-013b] Xuat ban khoa hoc chua co module - PATCH publish</span>
+          <span class="suite-meta">1 assertions | 1 failures | 20.810s</span>
+        </div>
+      </summary>
+      <table>
+        <thead>
+          <tr>
+            <th>Status</th>
+            <th>Testcase</th>
+            <th>Time</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+            <tr>
+              <td><span class="pill pill-fail">FAIL</span></td>
+              <td>[TC-INS-013] KNOWN FAIL: BE cho phep publish khong co module</td>
+              <td>20.810s</td>
+            </tr>
+            <tr class="detail-row">
+              <td colspan="3"><div class="failure"><div class="failure-title">BE should reject publish for course with no modules: expected 200 to equal 400</div><pre>Failed 1 times.
+Collection JSON ID: 6050124b-c576-4181-b9ad-56351ea2a1c8.
+Collection name: Online Learning System - API Tests (13_system_test.xlsx).
+Request name: 05_QL_Noi_Dung_Khoa_Hoc / [TC-INS-013b] Xuat ban khoa hoc chua co module - PATCH publish.
+Test description: [TC-INS-013] KNOWN FAIL: BE cho phep publish khong co module.
+Error message: BE should reject publish for course with no modules: expected 200 to equal 400.
+Stacktrace: AssertionError: BE should reject publish for course with no modules: expected 200 to equal 400
+at Object.eval sandbox-script.js:1:47).</pre></div></td>
+            </tr>
+            
+        </tbody>
+      </table>
+    </details>
+    
+    <details class="suite" open>
+      <summary>
+        <div class="suite-head">
+          <span class="pill pill-fail">FAIL</span>
+          <span class="suite-name">05_QL_Noi_Dung_Khoa_Hoc / [TC-INS-029] Them cau hoi voi it hon 4 dap an - KNOWN FAIL BE</span>
+          <span class="suite-meta">1 assertions | 1 failures | 19ms</span>
+        </div>
+      </summary>
+      <table>
+        <thead>
+          <tr>
+            <th>Status</th>
+            <th>Testcase</th>
+            <th>Time</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+            <tr>
+              <td><span class="pill pill-fail">FAIL</span></td>
+              <td>[TC-INS-029] KNOWN FAIL: BE cho phep &lt; 4 dap an</td>
+              <td>19ms</td>
+            </tr>
+            <tr class="detail-row">
+              <td colspan="3"><div class="failure"><div class="failure-title">BE should require exactly 4 options: expected 500 to equal 400</div><pre>Failed 1 times.
+Collection JSON ID: 6050124b-c576-4181-b9ad-56351ea2a1c8.
+Collection name: Online Learning System - API Tests (13_system_test.xlsx).
+Request name: 05_QL_Noi_Dung_Khoa_Hoc / [TC-INS-029] Them cau hoi voi it hon 4 dap an - KNOWN FAIL BE.
+Test description: [TC-INS-029] KNOWN FAIL: BE cho phep &lt; 4 dap an.
+Error message: BE should require exactly 4 options: expected 500 to equal 400.
+Stacktrace: AssertionError: BE should require exactly 4 options: expected 500 to equal 400
+at Object.eval sandbox-script.js:1:48).</pre></div></td>
+            </tr>
+            
+        </tbody>
+      </table>
+    </details>
+    
+    <details class="suite" open>
+      <summary>
+        <div class="suite-head">
+          <span class="pill pill-fail">FAIL</span>
+          <span class="suite-name">06_Quan_Tri_He_Thong / [TC-ADM-009] Them danh muc trung ten - KNOWN FAIL BE</span>
+          <span class="suite-meta">1 assertions | 1 failures | 34ms</span>
+        </div>
+      </summary>
+      <table>
+        <thead>
+          <tr>
+            <th>Status</th>
+            <th>Testcase</th>
+            <th>Time</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+            <tr>
+              <td><span class="pill pill-fail">FAIL</span></td>
+              <td>[TC-ADM-009] KNOWN FAIL: BE cho phep tao danh muc trung ten</td>
+              <td>34ms</td>
+            </tr>
+            <tr class="detail-row">
+              <td colspan="3"><div class="failure"><div class="failure-title">BE should reject duplicate category name: expected 201 to be one of [ 400, 409 ]</div><pre>Failed 1 times.
+Collection JSON ID: 6050124b-c576-4181-b9ad-56351ea2a1c8.
+Collection name: Online Learning System - API Tests (13_system_test.xlsx).
+Request name: 06_Quan_Tri_He_Thong / [TC-ADM-009] Them danh muc trung ten - KNOWN FAIL BE.
+Test description: [TC-ADM-009] KNOWN FAIL: BE cho phep tao danh muc trung ten.
+Error message: BE should reject duplicate category name: expected 201 to be one of [ 400, 409 ].
+Stacktrace: AssertionError: BE should reject duplicate category name: expected 201 to be one of [ 400, 409 ]
+at Object.eval sandbox-script.js:1:56).</pre></div></td>
+            </tr>
+            
+        </tbody>
+      </table>
+    </details>
+    
+    <details class="suite" open>
+      <summary>
+        <div class="suite-head">
+          <span class="pill pill-fail">FAIL</span>
+          <span class="suite-name">06_Quan_Tri_He_Thong / [TC-ADM-023] Xem danh sach thu nhap giang vien - KNOWN FAIL mock</span>
+          <span class="suite-meta">1 assertions | 1 failures | 14ms</span>
+        </div>
+      </summary>
+      <table>
+        <thead>
+          <tr>
+            <th>Status</th>
+            <th>Testcase</th>
+            <th>Time</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+            <tr>
+              <td><span class="pill pill-fail">FAIL</span></td>
+              <td>[TC-ADM-023] KNOWN FAIL: Du lieu dang mock</td>
+              <td>14ms</td>
+            </tr>
+            <tr class="detail-row">
+              <td colspan="3"><div class="failure"><div class="failure-title">expected 500 to equal 200</div><pre>Failed 1 times.
+Collection JSON ID: 6050124b-c576-4181-b9ad-56351ea2a1c8.
+Collection name: Online Learning System - API Tests (13_system_test.xlsx).
+Request name: 06_Quan_Tri_He_Thong / [TC-ADM-023] Xem danh sach thu nhap giang vien - KNOWN FAIL mock.
+Test description: [TC-ADM-023] KNOWN FAIL: Du lieu dang mock.
+Error message: expected 500 to equal 200.
+Stacktrace: AssertionError: expected 500 to equal 200
+at Object.eval sandbox-script.js:1:63).</pre></div></td>
+            </tr>
+            
+        </tbody>
+      </table>
+    </details>
+    
+      </section>
+
+      <section class="panel">
+        <h2>Passing Requests (56)</h2>
+        
+    <details class="suite" >
+      <summary>
+        <div class="suite-head">
+          <span class="pill pill-pass">PASS</span>
+          <span class="suite-name">01_Xac_Thuc / [TC-AUTH-001] Dang ky thanh cong</span>
+          <span class="suite-meta">2 assertions | 0 failures | 217ms</span>
+        </div>
+      </summary>
+      <table>
+        <thead>
+          <tr>
+            <th>Status</th>
+            <th>Testcase</th>
+            <th>Time</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+            <tr>
+              <td><span class="pill pill-pass">PASS</span></td>
+              <td>[TC-AUTH-001] Status 200 or 201</td>
+              <td>217ms</td>
+            </tr>
+            <tr class="detail-row">
+              <td colspan="3"><span class="muted">No failure detail.</span></td>
+            </tr>
+            
+            <tr>
+              <td><span class="pill pill-pass">PASS</span></td>
+              <td>[TC-AUTH-001] Response co message</td>
+              <td>217ms</td>
+            </tr>
+            <tr class="detail-row">
+              <td colspan="3"><span class="muted">No failure detail.</span></td>
+            </tr>
+            
+        </tbody>
+      </table>
+    </details>
+    
+    <details class="suite" >
+      <summary>
+        <div class="suite-head">
+          <span class="pill pill-pass">PASS</span>
+          <span class="suite-name">01_Xac_Thuc / [TC-AUTH-002] Dang ky username qua ngan 4 ky tu - KNOWN FAIL</span>
+          <span class="suite-meta">1 assertions | 0 failures | 9ms</span>
+        </div>
+      </summary>
+      <table>
+        <thead>
+          <tr>
+            <th>Status</th>
+            <th>Testcase</th>
+            <th>Time</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+            <tr>
+              <td><span class="pill pill-pass">PASS</span></td>
+              <td>[TC-AUTH-002] KNOWN FAIL: BE khong validate username length</td>
+              <td>9ms</td>
+            </tr>
+            <tr class="detail-row">
+              <td colspan="3"><span class="muted">No failure detail.</span></td>
+            </tr>
+            
+        </tbody>
+      </table>
+    </details>
+    
+    <details class="suite" >
+      <summary>
+        <div class="suite-head">
+          <span class="pill pill-pass">PASS</span>
+          <span class="suite-name">01_Xac_Thuc / [TC-AUTH-003] Dang ky username dung 5 ky tu bien hop le</span>
+          <span class="suite-meta">1 assertions | 0 failures | 121ms</span>
+        </div>
+      </summary>
+      <table>
+        <thead>
+          <tr>
+            <th>Status</th>
+            <th>Testcase</th>
+            <th>Time</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+            <tr>
+              <td><span class="pill pill-pass">PASS</span></td>
+              <td>[TC-AUTH-003] Status 200 or 201</td>
+              <td>121ms</td>
+            </tr>
+            <tr class="detail-row">
+              <td colspan="3"><span class="muted">No failure detail.</span></td>
+            </tr>
+            
+        </tbody>
+      </table>
+    </details>
+    
+    <details class="suite" >
+      <summary>
+        <div class="suite-head">
+          <span class="pill pill-pass">PASS</span>
+          <span class="suite-name">01_Xac_Thuc / [TC-AUTH-004] Dang ky username 21 ky tu vuot toi da 20</span>
+          <span class="suite-meta">2 assertions | 0 failures | 7ms</span>
+        </div>
+      </summary>
+      <table>
+        <thead>
+          <tr>
+            <th>Status</th>
+            <th>Testcase</th>
+            <th>Time</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+            <tr>
+              <td><span class="pill pill-pass">PASS</span></td>
+              <td>[TC-AUTH-004] BE tra 400 cho username &gt; 20 chars</td>
+              <td>7ms</td>
+            </tr>
+            <tr class="detail-row">
+              <td colspan="3"><span class="muted">No failure detail.</span></td>
+            </tr>
+            
+            <tr>
+              <td><span class="pill pill-pass">PASS</span></td>
+              <td>[TC-AUTH-004] Response co thong bao loi</td>
+              <td>7ms</td>
+            </tr>
+            <tr class="detail-row">
+              <td colspan="3"><span class="muted">No failure detail.</span></td>
+            </tr>
+            
+        </tbody>
+      </table>
+    </details>
+    
+    <details class="suite" >
+      <summary>
+        <div class="suite-head">
+          <span class="pill pill-pass">PASS</span>
+          <span class="suite-name">01_Xac_Thuc / [TC-AUTH-006] Dang ky email khong co @</span>
+          <span class="suite-meta">2 assertions | 0 failures | 8ms</span>
+        </div>
+      </summary>
+      <table>
+        <thead>
+          <tr>
+            <th>Status</th>
+            <th>Testcase</th>
+            <th>Time</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+            <tr>
+              <td><span class="pill pill-pass">PASS</span></td>
+              <td>[TC-AUTH-006] BE tra 400 cho email sai dinh dang</td>
+              <td>8ms</td>
+            </tr>
+            <tr class="detail-row">
+              <td colspan="3"><span class="muted">No failure detail.</span></td>
+            </tr>
+            
+            <tr>
+              <td><span class="pill pill-pass">PASS</span></td>
+              <td>[TC-AUTH-006] Response co thong bao loi email</td>
+              <td>8ms</td>
+            </tr>
+            <tr class="detail-row">
+              <td colspan="3"><span class="muted">No failure detail.</span></td>
+            </tr>
+            
+        </tbody>
+      </table>
+    </details>
+    
+    <details class="suite" >
+      <summary>
+        <div class="suite-head">
+          <span class="pill pill-pass">PASS</span>
+          <span class="suite-name">01_Xac_Thuc / [TC-AUTH-007] Dang ky email khong co domain</span>
+          <span class="suite-meta">1 assertions | 0 failures | 8ms</span>
+        </div>
+      </summary>
+      <table>
+        <thead>
+          <tr>
+            <th>Status</th>
+            <th>Testcase</th>
+            <th>Time</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+            <tr>
+              <td><span class="pill pill-pass">PASS</span></td>
+              <td>[TC-AUTH-007] BE tra 400 cho email thieu domain</td>
+              <td>8ms</td>
+            </tr>
+            <tr class="detail-row">
+              <td colspan="3"><span class="muted">No failure detail.</span></td>
+            </tr>
+            
+        </tbody>
+      </table>
+    </details>
+    
+    <details class="suite" >
+      <summary>
+        <div class="suite-head">
+          <span class="pill pill-pass">PASS</span>
+          <span class="suite-name">01_Xac_Thuc / [TC-AUTH-009] Dang ky email da ton tai</span>
+          <span class="suite-meta">2 assertions | 0 failures | 12ms</span>
+        </div>
+      </summary>
+      <table>
+        <thead>
+          <tr>
+            <th>Status</th>
+            <th>Testcase</th>
+            <th>Time</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+            <tr>
+              <td><span class="pill pill-pass">PASS</span></td>
+              <td>[TC-AUTH-009] BE tra 400 cho email trung</td>
+              <td>12ms</td>
+            </tr>
+            <tr class="detail-row">
+              <td colspan="3"><span class="muted">No failure detail.</span></td>
+            </tr>
+            
+            <tr>
+              <td><span class="pill pill-pass">PASS</span></td>
+              <td>[TC-AUTH-009] Response co thong bao email da ton tai</td>
+              <td>12ms</td>
+            </tr>
+            <tr class="detail-row">
+              <td colspan="3"><span class="muted">No failure detail.</span></td>
+            </tr>
+            
+        </tbody>
+      </table>
+    </details>
+    
+    <details class="suite" >
+      <summary>
+        <div class="suite-head">
+          <span class="pill pill-pass">PASS</span>
+          <span class="suite-name">01_Xac_Thuc / [TC-AUTH-010] Dang ky password qua ngan 7 ky tu - KNOWN FAIL</span>
+          <span class="suite-meta">1 assertions | 0 failures | 13ms</span>
+        </div>
+      </summary>
+      <table>
+        <thead>
+          <tr>
+            <th>Status</th>
+            <th>Testcase</th>
+            <th>Time</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+            <tr>
+              <td><span class="pill pill-pass">PASS</span></td>
+              <td>[TC-AUTH-010] KNOWN FAIL: BE khong validate password length</td>
+              <td>13ms</td>
+            </tr>
+            <tr class="detail-row">
+              <td colspan="3"><span class="muted">No failure detail.</span></td>
+            </tr>
+            
+        </tbody>
+      </table>
+    </details>
+    
+    <details class="suite" >
+      <summary>
+        <div class="suite-head">
+          <span class="pill pill-pass">PASS</span>
+          <span class="suite-name">01_Xac_Thuc / [TC-AUTH-011] Dang ky password dung 8 ky tu bien hop le</span>
+          <span class="suite-meta">1 assertions | 0 failures | 144ms</span>
+        </div>
+      </summary>
+      <table>
+        <thead>
+          <tr>
+            <th>Status</th>
+            <th>Testcase</th>
+            <th>Time</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+            <tr>
+              <td><span class="pill pill-pass">PASS</span></td>
+              <td>[TC-AUTH-011] Status 200 or 201</td>
+              <td>144ms</td>
+            </tr>
+            <tr class="detail-row">
+              <td colspan="3"><span class="muted">No failure detail.</span></td>
+            </tr>
+            
+        </tbody>
+      </table>
+    </details>
+    
+    <details class="suite" >
+      <summary>
+        <div class="suite-head">
+          <span class="pill pill-pass">PASS</span>
+          <span class="suite-name">01_Xac_Thuc / [TC-AUTH-019] Dang nhap thanh cong - Lay token</span>
+          <span class="suite-meta">2 assertions | 0 failures | 327ms</span>
+        </div>
+      </summary>
+      <table>
+        <thead>
+          <tr>
+            <th>Status</th>
+            <th>Testcase</th>
+            <th>Time</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+            <tr>
+              <td><span class="pill pill-pass">PASS</span></td>
+              <td>[TC-AUTH-019] Status 200</td>
+              <td>327ms</td>
+            </tr>
+            <tr class="detail-row">
+              <td colspan="3"><span class="muted">No failure detail.</span></td>
+            </tr>
+            
+            <tr>
+              <td><span class="pill pill-pass">PASS</span></td>
+              <td>[TC-AUTH-019] Response co token</td>
+              <td>327ms</td>
+            </tr>
+            <tr class="detail-row">
+              <td colspan="3"><span class="muted">No failure detail.</span></td>
+            </tr>
+            
+        </tbody>
+      </table>
+    </details>
+    
+    <details class="suite" >
+      <summary>
+        <div class="suite-head">
+          <span class="pill pill-pass">PASS</span>
+          <span class="suite-name">01_Xac_Thuc / [TC-AUTH-020] Dang nhap sai password - KNOWN FAIL</span>
+          <span class="suite-meta">1 assertions | 0 failures | 142ms</span>
+        </div>
+      </summary>
+      <table>
+        <thead>
+          <tr>
+            <th>Status</th>
+            <th>Testcase</th>
+            <th>Time</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+            <tr>
+              <td><span class="pill pill-pass">PASS</span></td>
+              <td>[TC-AUTH-020] KNOWN FAIL: BE tra 404 thay vi 400</td>
+              <td>142ms</td>
+            </tr>
+            <tr class="detail-row">
+              <td colspan="3"><span class="muted">No failure detail.</span></td>
+            </tr>
+            
+        </tbody>
+      </table>
+    </details>
+    
+    <details class="suite" >
+      <summary>
+        <div class="suite-head">
+          <span class="pill pill-pass">PASS</span>
+          <span class="suite-name">01_Xac_Thuc / [SETUP-AUTH-022] [SETUP] Tao user chua xac thuc OTP</span>
+          <span class="suite-meta">1 assertions | 0 failures | 122ms</span>
+        </div>
+      </summary>
+      <table>
+        <thead>
+          <tr>
+            <th>Status</th>
+            <th>Testcase</th>
+            <th>Time</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+            <tr>
+              <td><span class="pill pill-pass">PASS</span></td>
+              <td>[SETUP-AUTH-022] Status 200 or 201</td>
+              <td>122ms</td>
+            </tr>
+            <tr class="detail-row">
+              <td colspan="3"><span class="muted">No failure detail.</span></td>
+            </tr>
+            
+        </tbody>
+      </table>
+    </details>
+    
+    <details class="suite" >
+      <summary>
+        <div class="suite-head">
+          <span class="pill pill-pass">PASS</span>
+          <span class="suite-name">01_Xac_Thuc / [TC-AUTH-022] Dang nhap email chua xac thuc OTP</span>
+          <span class="suite-meta">2 assertions | 0 failures | 198ms</span>
+        </div>
+      </summary>
+      <table>
+        <thead>
+          <tr>
+            <th>Status</th>
+            <th>Testcase</th>
+            <th>Time</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+            <tr>
+              <td><span class="pill pill-pass">PASS</span></td>
+              <td>[TC-AUTH-022] BE tra 400 cho email chua xac thuc</td>
+              <td>198ms</td>
+            </tr>
+            <tr class="detail-row">
+              <td colspan="3"><span class="muted">No failure detail.</span></td>
+            </tr>
+            
+            <tr>
+              <td><span class="pill pill-pass">PASS</span></td>
+              <td>[TC-AUTH-022] Response co thong bao chua xac thuc</td>
+              <td>198ms</td>
+            </tr>
+            <tr class="detail-row">
+              <td colspan="3"><span class="muted">No failure detail.</span></td>
+            </tr>
+            
+        </tbody>
+      </table>
+    </details>
+    
+    <details class="suite" >
+      <summary>
+        <div class="suite-head">
+          <span class="pill pill-pass">PASS</span>
+          <span class="suite-name">01_Xac_Thuc / [TC-AUTH-025] Gui yeu cau reset password email ton tai</span>
+          <span class="suite-meta">2 assertions | 0 failures | 17ms</span>
+        </div>
+      </summary>
+      <table>
+        <thead>
+          <tr>
+            <th>Status</th>
+            <th>Testcase</th>
+            <th>Time</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+            <tr>
+              <td><span class="pill pill-pass">PASS</span></td>
+              <td>[TC-AUTH-025] Status 200</td>
+              <td>17ms</td>
+            </tr>
+            <tr class="detail-row">
+              <td colspan="3"><span class="muted">No failure detail.</span></td>
+            </tr>
+            
+            <tr>
+              <td><span class="pill pill-pass">PASS</span></td>
+              <td>[TC-AUTH-025] Response co message</td>
+              <td>17ms</td>
+            </tr>
+            <tr class="detail-row">
+              <td colspan="3"><span class="muted">No failure detail.</span></td>
+            </tr>
+            
+        </tbody>
+      </table>
+    </details>
+    
+    <details class="suite" >
+      <summary>
+        <div class="suite-head">
+          <span class="pill pill-pass">PASS</span>
+          <span class="suite-name">01_Xac_Thuc / [TC-AUTH-026] Gui yeu cau reset password email khong ton tai</span>
+          <span class="suite-meta">1 assertions | 0 failures | 12ms</span>
+        </div>
+      </summary>
+      <table>
+        <thead>
+          <tr>
+            <th>Status</th>
+            <th>Testcase</th>
+            <th>Time</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+            <tr>
+              <td><span class="pill pill-pass">PASS</span></td>
+              <td>[TC-AUTH-026] Status 200 - thong bao chung bao mat</td>
+              <td>12ms</td>
+            </tr>
+            <tr class="detail-row">
+              <td colspan="3"><span class="muted">No failure detail.</span></td>
+            </tr>
+            
+        </tbody>
+      </table>
+    </details>
+    
+    <details class="suite" >
+      <summary>
+        <div class="suite-head">
+          <span class="pill pill-pass">PASS</span>
+          <span class="suite-name">01_Xac_Thuc / [TC-AUTH-029] Dang xuat FE-only, API chua ho tro</span>
+          <span class="suite-meta">1 assertions | 0 failures | 19ms</span>
+        </div>
+      </summary>
+      <table>
+        <thead>
+          <tr>
+            <th>Status</th>
+            <th>Testcase</th>
+            <th>Time</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+            <tr>
+              <td><span class="pill pill-pass">PASS</span></td>
+              <td>[TC-AUTH-029] API logout chua ho tro</td>
+              <td>19ms</td>
+            </tr>
+            <tr class="detail-row">
+              <td colspan="3"><span class="muted">No failure detail.</span></td>
+            </tr>
+            
+        </tbody>
+      </table>
+    </details>
+    
+    <details class="suite" >
+      <summary>
+        <div class="suite-head">
+          <span class="pill pill-pass">PASS</span>
+          <span class="suite-name">01_Xac_Thuc / [ROLLBACK-AUTH] [ROLLBACK] Clear env; API chua ho tro xoa user test</span>
+          <span class="suite-meta">1 assertions | 0 failures | 32ms</span>
+        </div>
+      </summary>
+      <table>
+        <thead>
+          <tr>
+            <th>Status</th>
+            <th>Testcase</th>
+            <th>Time</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+            <tr>
+              <td><span class="pill pill-pass">PASS</span></td>
+              <td>[ROLLBACK-AUTH] Public endpoint van truy cap duoc</td>
+              <td>32ms</td>
+            </tr>
+            <tr class="detail-row">
+              <td colspan="3"><span class="muted">No failure detail.</span></td>
+            </tr>
+            
+        </tbody>
+      </table>
+    </details>
+    
+    <details class="suite" >
+      <summary>
+        <div class="suite-head">
+          <span class="pill pill-pass">PASS</span>
+          <span class="suite-name">02_Kham_Pha_Khoa_Hoc / [SETUP-LOGIN] [SETUP] Login lay learner_token</span>
+          <span class="suite-meta">0 assertions | 0 failures | 314ms</span>
+        </div>
+      </summary>
+      <table>
+        <thead>
+          <tr>
+            <th>Status</th>
+            <th>Testcase</th>
+            <th>Time</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+        </tbody>
+      </table>
+    </details>
+    
+    <details class="suite" >
+      <summary>
+        <div class="suite-head">
+          <span class="pill pill-pass">PASS</span>
+          <span class="suite-name">02_Kham_Pha_Khoa_Hoc / [TC-COURSE-001] Tim kiem khoa hoc tu khoa ton tai</span>
+          <span class="suite-meta">3 assertions | 0 failures | 20ms</span>
+        </div>
+      </summary>
+      <table>
+        <thead>
+          <tr>
+            <th>Status</th>
+            <th>Testcase</th>
+            <th>Time</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+            <tr>
+              <td><span class="pill pill-pass">PASS</span></td>
+              <td>[TC-COURSE-001] Status 200</td>
+              <td>20ms</td>
+            </tr>
+            <tr class="detail-row">
+              <td colspan="3"><span class="muted">No failure detail.</span></td>
+            </tr>
+            
+            <tr>
+              <td><span class="pill pill-pass">PASS</span></td>
+              <td>[TC-COURSE-001] Co ket qua tra ve</td>
+              <td>20ms</td>
+            </tr>
+            <tr class="detail-row">
+              <td colspan="3"><span class="muted">No failure detail.</span></td>
+            </tr>
+            
+            <tr>
+              <td><span class="pill pill-pass">PASS</span></td>
+              <td>[TC-COURSE-001] Ket qua chua tu khoa Spring Boot</td>
+              <td>20ms</td>
+            </tr>
+            <tr class="detail-row">
+              <td colspan="3"><span class="muted">No failure detail.</span></td>
+            </tr>
+            
+        </tbody>
+      </table>
+    </details>
+    
+    <details class="suite" >
+      <summary>
+        <div class="suite-head">
+          <span class="pill pill-pass">PASS</span>
+          <span class="suite-name">02_Kham_Pha_Khoa_Hoc / [TC-COURSE-002] Tim kiem tu khoa khong ton tai - KNOWN FAIL</span>
+          <span class="suite-meta">2 assertions | 0 failures | 10ms</span>
+        </div>
+      </summary>
+      <table>
+        <thead>
+          <tr>
+            <th>Status</th>
+            <th>Testcase</th>
+            <th>Time</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+            <tr>
+              <td><span class="pill pill-pass">PASS</span></td>
+              <td>[TC-COURSE-002] Status 200</td>
+              <td>10ms</td>
+            </tr>
+            <tr class="detail-row">
+              <td colspan="3"><span class="muted">No failure detail.</span></td>
+            </tr>
+            
+            <tr>
+              <td><span class="pill pill-pass">PASS</span></td>
+              <td>[TC-COURSE-002] KNOWN FAIL: FE khong hien thi thong bao trong</td>
+              <td>10ms</td>
+            </tr>
+            <tr class="detail-row">
+              <td colspan="3"><span class="muted">No failure detail.</span></td>
+            </tr>
+            
+        </tbody>
+      </table>
+    </details>
+    
+    <details class="suite" >
+      <summary>
+        <div class="suite-head">
+          <span class="pill pill-pass">PASS</span>
+          <span class="suite-name">02_Kham_Pha_Khoa_Hoc / [TC-COURSE-003] Xem chi tiet khoa hoc ton tai</span>
+          <span class="suite-meta">2 assertions | 0 failures | 12ms</span>
+        </div>
+      </summary>
+      <table>
+        <thead>
+          <tr>
+            <th>Status</th>
+            <th>Testcase</th>
+            <th>Time</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+            <tr>
+              <td><span class="pill pill-pass">PASS</span></td>
+              <td>[TC-COURSE-003] Status 200</td>
+              <td>12ms</td>
+            </tr>
+            <tr class="detail-row">
+              <td colspan="3"><span class="muted">No failure detail.</span></td>
+            </tr>
+            
+            <tr>
+              <td><span class="pill pill-pass">PASS</span></td>
+              <td>[TC-COURSE-003] Response co day du thong tin</td>
+              <td>12ms</td>
+            </tr>
+            <tr class="detail-row">
+              <td colspan="3"><span class="muted">No failure detail.</span></td>
+            </tr>
+            
+        </tbody>
+      </table>
+    </details>
+    
+    <details class="suite" >
+      <summary>
+        <div class="suite-head">
+          <span class="pill pill-pass">PASS</span>
+          <span class="suite-name">02_Kham_Pha_Khoa_Hoc / [TC-COURSE-004] Xem khoa hoc ID khong ton tai</span>
+          <span class="suite-meta">2 assertions | 0 failures | 9ms</span>
+        </div>
+      </summary>
+      <table>
+        <thead>
+          <tr>
+            <th>Status</th>
+            <th>Testcase</th>
+            <th>Time</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+            <tr>
+              <td><span class="pill pill-pass">PASS</span></td>
+              <td>[TC-COURSE-004] Status 404</td>
+              <td>9ms</td>
+            </tr>
+            <tr class="detail-row">
+              <td colspan="3"><span class="muted">No failure detail.</span></td>
+            </tr>
+            
+            <tr>
+              <td><span class="pill pill-pass">PASS</span></td>
+              <td>[TC-COURSE-004] Response co thong bao khong tim thay</td>
+              <td>9ms</td>
+            </tr>
+            <tr class="detail-row">
+              <td colspan="3"><span class="muted">No failure detail.</span></td>
+            </tr>
+            
+        </tbody>
+      </table>
+    </details>
+    
+    <details class="suite" >
+      <summary>
+        <div class="suite-head">
+          <span class="pill pill-pass">PASS</span>
+          <span class="suite-name">02_Kham_Pha_Khoa_Hoc / [TC-COURSE-006] Xem chi tiet khoa hoc nhom</span>
+          <span class="suite-meta">2 assertions | 0 failures | 17ms</span>
+        </div>
+      </summary>
+      <table>
+        <thead>
+          <tr>
+            <th>Status</th>
+            <th>Testcase</th>
+            <th>Time</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+            <tr>
+              <td><span class="pill pill-pass">PASS</span></td>
+              <td>[TC-COURSE-006] Status 200</td>
+              <td>17ms</td>
+            </tr>
+            <tr class="detail-row">
+              <td colspan="3"><span class="muted">No failure detail.</span></td>
+            </tr>
+            
+            <tr>
+              <td><span class="pill pill-pass">PASS</span></td>
+              <td>[TC-COURSE-006] Response co danh sach khoa hoc thanh phan</td>
+              <td>17ms</td>
+            </tr>
+            <tr class="detail-row">
+              <td colspan="3"><span class="muted">No failure detail.</span></td>
+            </tr>
+            
+        </tbody>
+      </table>
+    </details>
+    
+    <details class="suite" >
+      <summary>
+        <div class="suite-head">
+          <span class="pill pill-pass">PASS</span>
+          <span class="suite-name">03_Thanh_Toan_Dang_Ky_Hoc / [SETUP-LOGIN-ORDER] [SETUP] Login lay learner_token</span>
+          <span class="suite-meta">0 assertions | 0 failures | 296ms</span>
+        </div>
+      </summary>
+      <table>
+        <thead>
+          <tr>
+            <th>Status</th>
+            <th>Testcase</th>
+            <th>Time</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+        </tbody>
+      </table>
+    </details>
+    
+    <details class="suite" >
+      <summary>
+        <div class="suite-head">
+          <span class="pill pill-pass">PASS</span>
+          <span class="suite-name">03_Thanh_Toan_Dang_Ky_Hoc / [TC-ORDER-001] Dang ky khoa hoc mien phi thanh cong</span>
+          <span class="suite-meta">2 assertions | 0 failures | 29ms</span>
+        </div>
+      </summary>
+      <table>
+        <thead>
+          <tr>
+            <th>Status</th>
+            <th>Testcase</th>
+            <th>Time</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+            <tr>
+              <td><span class="pill pill-pass">PASS</span></td>
+              <td>[TC-ORDER-001] Status 200 or 201</td>
+              <td>29ms</td>
+            </tr>
+            <tr class="detail-row">
+              <td colspan="3"><span class="muted">No failure detail.</span></td>
+            </tr>
+            
+            <tr>
+              <td><span class="pill pill-pass">PASS</span></td>
+              <td>[TC-ORDER-001] Enrollment duoc tao</td>
+              <td>29ms</td>
+            </tr>
+            <tr class="detail-row">
+              <td colspan="3"><span class="muted">No failure detail.</span></td>
+            </tr>
+            
+        </tbody>
+      </table>
+    </details>
+    
+    <details class="suite" >
+      <summary>
+        <div class="suite-head">
+          <span class="pill pill-pass">PASS</span>
+          <span class="suite-name">03_Thanh_Toan_Dang_Ky_Hoc / [TC-ORDER-002] Dang ky khoa hoc da dang ky truoc do</span>
+          <span class="suite-meta">1 assertions | 0 failures | 27ms</span>
+        </div>
+      </summary>
+      <table>
+        <thead>
+          <tr>
+            <th>Status</th>
+            <th>Testcase</th>
+            <th>Time</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+            <tr>
+              <td><span class="pill pill-pass">PASS</span></td>
+              <td>[TC-ORDER-002] He thong bao da dang ky hoac tra 409</td>
+              <td>27ms</td>
+            </tr>
+            <tr class="detail-row">
+              <td colspan="3"><span class="muted">No failure detail.</span></td>
+            </tr>
+            
+        </tbody>
+      </table>
+    </details>
+    
+    <details class="suite" >
+      <summary>
+        <div class="suite-head">
+          <span class="pill pill-pass">PASS</span>
+          <span class="suite-name">03_Thanh_Toan_Dang_Ky_Hoc / [TC-ORDER-003] Dang ky khi chua dang nhap - 401</span>
+          <span class="suite-meta">1 assertions | 0 failures | 11ms</span>
+        </div>
+      </summary>
+      <table>
+        <thead>
+          <tr>
+            <th>Status</th>
+            <th>Testcase</th>
+            <th>Time</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+            <tr>
+              <td><span class="pill pill-pass">PASS</span></td>
+              <td>[TC-ORDER-003] Status 401 hoac 403 khi chua dang nhap</td>
+              <td>11ms</td>
+            </tr>
+            <tr class="detail-row">
+              <td colspan="3"><span class="muted">No failure detail.</span></td>
+            </tr>
+            
+        </tbody>
+      </table>
+    </details>
+    
+    <details class="suite" >
+      <summary>
+        <div class="suite-head">
+          <span class="pill pill-pass">PASS</span>
+          <span class="suite-name">03_Thanh_Toan_Dang_Ky_Hoc / [TC-ORDER-008] Them khoa hoc vao gio hang</span>
+          <span class="suite-meta">2 assertions | 0 failures | 37ms</span>
+        </div>
+      </summary>
+      <table>
+        <thead>
+          <tr>
+            <th>Status</th>
+            <th>Testcase</th>
+            <th>Time</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+            <tr>
+              <td><span class="pill pill-pass">PASS</span></td>
+              <td>[TC-ORDER-008] Status 200 or 201</td>
+              <td>37ms</td>
+            </tr>
+            <tr class="detail-row">
+              <td colspan="3"><span class="muted">No failure detail.</span></td>
+            </tr>
+            
+            <tr>
+              <td><span class="pill pill-pass">PASS</span></td>
+              <td>[TC-ORDER-008] Cart item duoc tao</td>
+              <td>37ms</td>
+            </tr>
+            <tr class="detail-row">
+              <td colspan="3"><span class="muted">No failure detail.</span></td>
+            </tr>
+            
+        </tbody>
+      </table>
+    </details>
+    
+    <details class="suite" >
+      <summary>
+        <div class="suite-head">
+          <span class="pill pill-pass">PASS</span>
+          <span class="suite-name">03_Thanh_Toan_Dang_Ky_Hoc / [TC-ORDER-009] Xoa khoa hoc khoi gio hang</span>
+          <span class="suite-meta">1 assertions | 0 failures | 27ms</span>
+        </div>
+      </summary>
+      <table>
+        <thead>
+          <tr>
+            <th>Status</th>
+            <th>Testcase</th>
+            <th>Time</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+            <tr>
+              <td><span class="pill pill-pass">PASS</span></td>
+              <td>[TC-ORDER-009] Status 200 or 204</td>
+              <td>27ms</td>
+            </tr>
+            <tr class="detail-row">
+              <td colspan="3"><span class="muted">No failure detail.</span></td>
+            </tr>
+            
+        </tbody>
+      </table>
+    </details>
+    
+    <details class="suite" >
+      <summary>
+        <div class="suite-head">
+          <span class="pill pill-pass">PASS</span>
+          <span class="suite-name">03_Thanh_Toan_Dang_Ky_Hoc / [TC-ORDER-012] Xem lich su mua hang chua co don</span>
+          <span class="suite-meta">2 assertions | 0 failures | 27ms</span>
+        </div>
+      </summary>
+      <table>
+        <thead>
+          <tr>
+            <th>Status</th>
+            <th>Testcase</th>
+            <th>Time</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+            <tr>
+              <td><span class="pill pill-pass">PASS</span></td>
+              <td>[TC-ORDER-012] Status 200</td>
+              <td>27ms</td>
+            </tr>
+            <tr class="detail-row">
+              <td colspan="3"><span class="muted">No failure detail.</span></td>
+            </tr>
+            
+            <tr>
+              <td><span class="pill pill-pass">PASS</span></td>
+              <td>[TC-ORDER-012] Trang load khong loi</td>
+              <td>27ms</td>
+            </tr>
+            <tr class="detail-row">
+              <td colspan="3"><span class="muted">No failure detail.</span></td>
+            </tr>
+            
+        </tbody>
+      </table>
+    </details>
+    
+    <details class="suite" >
+      <summary>
+        <div class="suite-head">
+          <span class="pill pill-pass">PASS</span>
+          <span class="suite-name">03_Thanh_Toan_Dang_Ky_Hoc / [TC-ORDER-013] Xem lich su mua hang co don hang</span>
+          <span class="suite-meta">2 assertions | 0 failures | 23ms</span>
+        </div>
+      </summary>
+      <table>
+        <thead>
+          <tr>
+            <th>Status</th>
+            <th>Testcase</th>
+            <th>Time</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+            <tr>
+              <td><span class="pill pill-pass">PASS</span></td>
+              <td>[TC-ORDER-013] Status 200</td>
+              <td>23ms</td>
+            </tr>
+            <tr class="detail-row">
+              <td colspan="3"><span class="muted">No failure detail.</span></td>
+            </tr>
+            
+            <tr>
+              <td><span class="pill pill-pass">PASS</span></td>
+              <td>[TC-ORDER-013] Co don hang trong lich su</td>
+              <td>23ms</td>
+            </tr>
+            <tr class="detail-row">
+              <td colspan="3"><span class="muted">No failure detail.</span></td>
+            </tr>
+            
+        </tbody>
+      </table>
+    </details>
+    
+    <details class="suite" >
+      <summary>
+        <div class="suite-head">
+          <span class="pill pill-pass">PASS</span>
+          <span class="suite-name">03_Thanh_Toan_Dang_Ky_Hoc / [TC-ORDER-014] Xem danh sach khoa hoc da dang ky - KNOWN FAIL tab nhom</span>
+          <span class="suite-meta">3 assertions | 0 failures | 20ms</span>
+        </div>
+      </summary>
+      <table>
+        <thead>
+          <tr>
+            <th>Status</th>
+            <th>Testcase</th>
+            <th>Time</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+            <tr>
+              <td><span class="pill pill-pass">PASS</span></td>
+              <td>[TC-ORDER-014] Status 200</td>
+              <td>20ms</td>
+            </tr>
+            <tr class="detail-row">
+              <td colspan="3"><span class="muted">No failure detail.</span></td>
+            </tr>
+            
+            <tr>
+              <td><span class="pill pill-pass">PASS</span></td>
+              <td>[TC-ORDER-014] Tab khoa hoc doc lap load duoc</td>
+              <td>20ms</td>
+            </tr>
+            <tr class="detail-row">
+              <td colspan="3"><span class="muted">No failure detail.</span></td>
+            </tr>
+            
+            <tr>
+              <td><span class="pill pill-pass">PASS</span></td>
+              <td>[TC-ORDER-014] Tab khoa hoc nhom load duoc</td>
+              <td>20ms</td>
+            </tr>
+            <tr class="detail-row">
+              <td colspan="3"><span class="muted">No failure detail.</span></td>
+            </tr>
+            
+        </tbody>
+      </table>
+    </details>
+    
+    <details class="suite" >
+      <summary>
+        <div class="suite-head">
+          <span class="pill pill-pass">PASS</span>
+          <span class="suite-name">03_Thanh_Toan_Dang_Ky_Hoc / [ROLLBACK-ORDER] [ROLLBACK] Clear env; API chua ho tro xoa enrollment</span>
+          <span class="suite-meta">1 assertions | 0 failures | 27ms</span>
+        </div>
+      </summary>
+      <table>
+        <thead>
+          <tr>
+            <th>Status</th>
+            <th>Testcase</th>
+            <th>Time</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+            <tr>
+              <td><span class="pill pill-pass">PASS</span></td>
+              <td>[ROLLBACK-ORDER] Check enrollment endpoint hoat dong</td>
+              <td>27ms</td>
+            </tr>
+            <tr class="detail-row">
+              <td colspan="3"><span class="muted">No failure detail.</span></td>
+            </tr>
+            
+        </tbody>
+      </table>
+    </details>
+    
+    <details class="suite" >
+      <summary>
+        <div class="suite-head">
+          <span class="pill pill-pass">PASS</span>
+          <span class="suite-name">05_QL_Noi_Dung_Khoa_Hoc / [SETUP-LOGIN-INS] [SETUP] Login lay instructor_token</span>
+          <span class="suite-meta">0 assertions | 0 failures | 287ms</span>
+        </div>
+      </summary>
+      <table>
+        <thead>
+          <tr>
+            <th>Status</th>
+            <th>Testcase</th>
+            <th>Time</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+        </tbody>
+      </table>
+    </details>
+    
+    <details class="suite" >
+      <summary>
+        <div class="suite-head">
+          <span class="pill pill-pass">PASS</span>
+          <span class="suite-name">05_QL_Noi_Dung_Khoa_Hoc / [TC-INS-001] Tao khoa hoc doc lap thanh cong</span>
+          <span class="suite-meta">2 assertions | 0 failures | 50ms</span>
+        </div>
+      </summary>
+      <table>
+        <thead>
+          <tr>
+            <th>Status</th>
+            <th>Testcase</th>
+            <th>Time</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+            <tr>
+              <td><span class="pill pill-pass">PASS</span></td>
+              <td>[TC-INS-001] Status 201</td>
+              <td>50ms</td>
+            </tr>
+            <tr class="detail-row">
+              <td colspan="3"><span class="muted">No failure detail.</span></td>
+            </tr>
+            
+            <tr>
+              <td><span class="pill pill-pass">PASS</span></td>
+              <td>[TC-INS-001] Khoa hoc duoc tao voi status DRAFT</td>
+              <td>50ms</td>
+            </tr>
+            <tr class="detail-row">
+              <td colspan="3"><span class="muted">No failure detail.</span></td>
+            </tr>
+            
+        </tbody>
+      </table>
+    </details>
+    
+    <details class="suite" >
+      <summary>
+        <div class="suite-head">
+          <span class="pill pill-pass">PASS</span>
+          <span class="suite-name">05_QL_Noi_Dung_Khoa_Hoc / [TC-INS-002] Tao khoa hoc mien phi isFree=true</span>
+          <span class="suite-meta">2 assertions | 0 failures | 32ms</span>
+        </div>
+      </summary>
+      <table>
+        <thead>
+          <tr>
+            <th>Status</th>
+            <th>Testcase</th>
+            <th>Time</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+            <tr>
+              <td><span class="pill pill-pass">PASS</span></td>
+              <td>[TC-INS-002] Status 201</td>
+              <td>32ms</td>
+            </tr>
+            <tr class="detail-row">
+              <td colspan="3"><span class="muted">No failure detail.</span></td>
+            </tr>
+            
+            <tr>
+              <td><span class="pill pill-pass">PASS</span></td>
+              <td>[TC-INS-002] is_free=true va price=0</td>
+              <td>32ms</td>
+            </tr>
+            <tr class="detail-row">
+              <td colspan="3"><span class="muted">No failure detail.</span></td>
+            </tr>
+            
+        </tbody>
+      </table>
+    </details>
+    
+    <details class="suite" >
+      <summary>
+        <div class="suite-head">
+          <span class="pill pill-pass">PASS</span>
+          <span class="suite-name">05_QL_Noi_Dung_Khoa_Hoc / [TC-INS-008] Tao khoa hoc gia am so - BE validate dung</span>
+          <span class="suite-meta">2 assertions | 0 failures | 24ms</span>
+        </div>
+      </summary>
+      <table>
+        <thead>
+          <tr>
+            <th>Status</th>
+            <th>Testcase</th>
+            <th>Time</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+            <tr>
+              <td><span class="pill pill-pass">PASS</span></td>
+              <td>[TC-INS-008] BE tra 400 cho gia am</td>
+              <td>24ms</td>
+            </tr>
+            <tr class="detail-row">
+              <td colspan="3"><span class="muted">No failure detail.</span></td>
+            </tr>
+            
+            <tr>
+              <td><span class="pill pill-pass">PASS</span></td>
+              <td>[TC-INS-008] Response co thong bao loi gia</td>
+              <td>24ms</td>
+            </tr>
+            <tr class="detail-row">
+              <td colspan="3"><span class="muted">No failure detail.</span></td>
+            </tr>
+            
+        </tbody>
+      </table>
+    </details>
+    
+    <details class="suite" >
+      <summary>
+        <div class="suite-head">
+          <span class="pill pill-pass">PASS</span>
+          <span class="suite-name">05_QL_Noi_Dung_Khoa_Hoc / [TC-INS-009] Cap nhat khoa hoc thanh cong - KNOWN FAIL FE cache</span>
+          <span class="suite-meta">2 assertions | 0 failures | 32ms</span>
+        </div>
+      </summary>
+      <table>
+        <thead>
+          <tr>
+            <th>Status</th>
+            <th>Testcase</th>
+            <th>Time</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+            <tr>
+              <td><span class="pill pill-pass">PASS</span></td>
+              <td>[TC-INS-009] Status 200</td>
+              <td>32ms</td>
+            </tr>
+            <tr class="detail-row">
+              <td colspan="3"><span class="muted">No failure detail.</span></td>
+            </tr>
+            
+            <tr>
+              <td><span class="pill pill-pass">PASS</span></td>
+              <td>[TC-INS-009] DB cap nhat dung - FE cache van hien cu</td>
+              <td>32ms</td>
+            </tr>
+            <tr class="detail-row">
+              <td colspan="3"><span class="muted">No failure detail.</span></td>
+            </tr>
+            
+        </tbody>
+      </table>
+    </details>
+    
+    <details class="suite" >
+      <summary>
+        <div class="suite-head">
+          <span class="pill pill-pass">PASS</span>
+          <span class="suite-name">05_QL_Noi_Dung_Khoa_Hoc / [TC-INS-010] Xoa khoa hoc khong co hoc vien</span>
+          <span class="suite-meta">1 assertions | 0 failures | 35ms</span>
+        </div>
+      </summary>
+      <table>
+        <thead>
+          <tr>
+            <th>Status</th>
+            <th>Testcase</th>
+            <th>Time</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+            <tr>
+              <td><span class="pill pill-pass">PASS</span></td>
+              <td>[TC-INS-010] Status 204</td>
+              <td>35ms</td>
+            </tr>
+            <tr class="detail-row">
+              <td colspan="3"><span class="muted">No failure detail.</span></td>
+            </tr>
+            
+        </tbody>
+      </table>
+    </details>
+    
+    <details class="suite" >
+      <summary>
+        <div class="suite-head">
+          <span class="pill pill-pass">PASS</span>
+          <span class="suite-name">05_QL_Noi_Dung_Khoa_Hoc / [TC-INS-011] Xoa khoa hoc co hoc vien - KNOWN FAIL BE</span>
+          <span class="suite-meta">1 assertions | 0 failures | 26ms</span>
+        </div>
+      </summary>
+      <table>
+        <thead>
+          <tr>
+            <th>Status</th>
+            <th>Testcase</th>
+            <th>Time</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+            <tr>
+              <td><span class="pill pill-pass">PASS</span></td>
+              <td>[TC-INS-011] BE chan xoa course da co hoc vien</td>
+              <td>26ms</td>
+            </tr>
+            <tr class="detail-row">
+              <td colspan="3"><span class="muted">No failure detail.</span></td>
+            </tr>
+            
+        </tbody>
+      </table>
+    </details>
+    
+    <details class="suite" >
+      <summary>
+        <div class="suite-head">
+          <span class="pill pill-pass">PASS</span>
+          <span class="suite-name">05_QL_Noi_Dung_Khoa_Hoc / [TC-INS-012] Xuat ban khoa hoc thanh cong</span>
+          <span class="suite-meta">2 assertions | 0 failures | 18.996s</span>
+        </div>
+      </summary>
+      <table>
+        <thead>
+          <tr>
+            <th>Status</th>
+            <th>Testcase</th>
+            <th>Time</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+            <tr>
+              <td><span class="pill pill-pass">PASS</span></td>
+              <td>[TC-INS-012] Status 200</td>
+              <td>18.996s</td>
+            </tr>
+            <tr class="detail-row">
+              <td colspan="3"><span class="muted">No failure detail.</span></td>
+            </tr>
+            
+            <tr>
+              <td><span class="pill pill-pass">PASS</span></td>
+              <td>[TC-INS-012] Response xac nhan da publish</td>
+              <td>18.996s</td>
+            </tr>
+            <tr class="detail-row">
+              <td colspan="3"><span class="muted">No failure detail.</span></td>
+            </tr>
+            
+        </tbody>
+      </table>
+    </details>
+    
+    <details class="suite" >
+      <summary>
+        <div class="suite-head">
+          <span class="pill pill-pass">PASS</span>
+          <span class="suite-name">05_QL_Noi_Dung_Khoa_Hoc / [TC-INS-013] Xuat ban khoa hoc chua co module - KNOWN FAIL BE</span>
+          <span class="suite-meta">0 assertions | 0 failures | 58ms</span>
+        </div>
+      </summary>
+      <table>
+        <thead>
+          <tr>
+            <th>Status</th>
+            <th>Testcase</th>
+            <th>Time</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+        </tbody>
+      </table>
+    </details>
+    
+    <details class="suite" >
+      <summary>
+        <div class="suite-head">
+          <span class="pill pill-pass">PASS</span>
+          <span class="suite-name">05_QL_Noi_Dung_Khoa_Hoc / [ROLLBACK-INS] [ROLLBACK] Xoa cac course test</span>
+          <span class="suite-meta">1 assertions | 0 failures | 70ms</span>
+        </div>
+      </summary>
+      <table>
+        <thead>
+          <tr>
+            <th>Status</th>
+            <th>Testcase</th>
+            <th>Time</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+            <tr>
+              <td><span class="pill pill-pass">PASS</span></td>
+              <td>[ROLLBACK-INS] Public course endpoint hoat dong</td>
+              <td>70ms</td>
+            </tr>
+            <tr class="detail-row">
+              <td colspan="3"><span class="muted">No failure detail.</span></td>
+            </tr>
+            
+        </tbody>
+      </table>
+    </details>
+    
+    <details class="suite" >
+      <summary>
+        <div class="suite-head">
+          <span class="pill pill-pass">PASS</span>
+          <span class="suite-name">06_Quan_Tri_He_Thong / [SETUP-LOGIN-ADM] [SETUP] Login lay admin_token</span>
+          <span class="suite-meta">0 assertions | 0 failures | 267ms</span>
+        </div>
+      </summary>
+      <table>
+        <thead>
+          <tr>
+            <th>Status</th>
+            <th>Testcase</th>
+            <th>Time</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+        </tbody>
+      </table>
+    </details>
+    
+    <details class="suite" >
+      <summary>
+        <div class="suite-head">
+          <span class="pill pill-pass">PASS</span>
+          <span class="suite-name">06_Quan_Tri_He_Thong / [TC-ADM-001] Duyet khoa hoc PUBLISHED -&gt; ACTIVE</span>
+          <span class="suite-meta">2 assertions | 0 failures | 10.878s</span>
+        </div>
+      </summary>
+      <table>
+        <thead>
+          <tr>
+            <th>Status</th>
+            <th>Testcase</th>
+            <th>Time</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+            <tr>
+              <td><span class="pill pill-pass">PASS</span></td>
+              <td>[TC-ADM-001] Status 200</td>
+              <td>10.878s</td>
+            </tr>
+            <tr class="detail-row">
+              <td colspan="3"><span class="muted">No failure detail.</span></td>
+            </tr>
+            
+            <tr>
+              <td><span class="pill pill-pass">PASS</span></td>
+              <td>[TC-ADM-001] Status chuyen sang ACTIVE</td>
+              <td>10.878s</td>
+            </tr>
+            <tr class="detail-row">
+              <td colspan="3"><span class="muted">No failure detail.</span></td>
+            </tr>
+            
+        </tbody>
+      </table>
+    </details>
+    
+    <details class="suite" >
+      <summary>
+        <div class="suite-head">
+          <span class="pill pill-pass">PASS</span>
+          <span class="suite-name">06_Quan_Tri_He_Thong / [TC-ADM-002] Tam dung khoa hoc PUBLISHED -&gt; SUSPENDED - KNOWN FAIL</span>
+          <span class="suite-meta">1 assertions | 0 failures | 33ms</span>
+        </div>
+      </summary>
+      <table>
+        <thead>
+          <tr>
+            <th>Status</th>
+            <th>Testcase</th>
+            <th>Time</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+            <tr>
+              <td><span class="pill pill-pass">PASS</span></td>
+              <td>[TC-ADM-002] KNOWN FAIL: Khong co trang thai SUSPENDED</td>
+              <td>33ms</td>
+            </tr>
+            <tr class="detail-row">
+              <td colspan="3"><span class="muted">No failure detail.</span></td>
+            </tr>
+            
+        </tbody>
+      </table>
+    </details>
+    
+    <details class="suite" >
+      <summary>
+        <div class="suite-head">
+          <span class="pill pill-pass">PASS</span>
+          <span class="suite-name">06_Quan_Tri_He_Thong / [TC-ADM-005] Tim kiem khoa hoc voi bo loc day du</span>
+          <span class="suite-meta">2 assertions | 0 failures | 14ms</span>
+        </div>
+      </summary>
+      <table>
+        <thead>
+          <tr>
+            <th>Status</th>
+            <th>Testcase</th>
+            <th>Time</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+            <tr>
+              <td><span class="pill pill-pass">PASS</span></td>
+              <td>[TC-ADM-005] Status 200</td>
+              <td>14ms</td>
+            </tr>
+            <tr class="detail-row">
+              <td colspan="3"><span class="muted">No failure detail.</span></td>
+            </tr>
+            
+            <tr>
+              <td><span class="pill pill-pass">PASS</span></td>
+              <td>[TC-ADM-005] Ket qua khop dieu kien loc</td>
+              <td>14ms</td>
+            </tr>
+            <tr class="detail-row">
+              <td colspan="3"><span class="muted">No failure detail.</span></td>
+            </tr>
+            
+        </tbody>
+      </table>
+    </details>
+    
+    <details class="suite" >
+      <summary>
+        <div class="suite-head">
+          <span class="pill pill-pass">PASS</span>
+          <span class="suite-name">06_Quan_Tri_He_Thong / [TC-ADM-006] Tim kiem khong co ket qua</span>
+          <span class="suite-meta">2 assertions | 0 failures | 7ms</span>
+        </div>
+      </summary>
+      <table>
+        <thead>
+          <tr>
+            <th>Status</th>
+            <th>Testcase</th>
+            <th>Time</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+            <tr>
+              <td><span class="pill pill-pass">PASS</span></td>
+              <td>[TC-ADM-006] Status 200</td>
+              <td>7ms</td>
+            </tr>
+            <tr class="detail-row">
+              <td colspan="3"><span class="muted">No failure detail.</span></td>
+            </tr>
+            
+            <tr>
+              <td><span class="pill pill-pass">PASS</span></td>
+              <td>[TC-ADM-006] Tra ve mang rong</td>
+              <td>7ms</td>
+            </tr>
+            <tr class="detail-row">
+              <td colspan="3"><span class="muted">No failure detail.</span></td>
+            </tr>
+            
+        </tbody>
+      </table>
+    </details>
+    
+    <details class="suite" >
+      <summary>
+        <div class="suite-head">
+          <span class="pill pill-pass">PASS</span>
+          <span class="suite-name">06_Quan_Tri_He_Thong / [TC-ADM-007] Them danh muc moi thanh cong</span>
+          <span class="suite-meta">2 assertions | 0 failures | 26ms</span>
+        </div>
+      </summary>
+      <table>
+        <thead>
+          <tr>
+            <th>Status</th>
+            <th>Testcase</th>
+            <th>Time</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+            <tr>
+              <td><span class="pill pill-pass">PASS</span></td>
+              <td>[TC-ADM-007] Status 201</td>
+              <td>26ms</td>
+            </tr>
+            <tr class="detail-row">
+              <td colspan="3"><span class="muted">No failure detail.</span></td>
+            </tr>
+            
+            <tr>
+              <td><span class="pill pill-pass">PASS</span></td>
+              <td>[TC-ADM-007] Category duoc tao</td>
+              <td>26ms</td>
+            </tr>
+            <tr class="detail-row">
+              <td colspan="3"><span class="muted">No failure detail.</span></td>
+            </tr>
+            
+        </tbody>
+      </table>
+    </details>
+    
+    <details class="suite" >
+      <summary>
+        <div class="suite-head">
+          <span class="pill pill-pass">PASS</span>
+          <span class="suite-name">06_Quan_Tri_He_Thong / [TC-ADM-011] Cap nhat danh muc thanh cong</span>
+          <span class="suite-meta">2 assertions | 0 failures | 40ms</span>
+        </div>
+      </summary>
+      <table>
+        <thead>
+          <tr>
+            <th>Status</th>
+            <th>Testcase</th>
+            <th>Time</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+            <tr>
+              <td><span class="pill pill-pass">PASS</span></td>
+              <td>[TC-ADM-011] Status 200</td>
+              <td>40ms</td>
+            </tr>
+            <tr class="detail-row">
+              <td colspan="3"><span class="muted">No failure detail.</span></td>
+            </tr>
+            
+            <tr>
+              <td><span class="pill pill-pass">PASS</span></td>
+              <td>[TC-ADM-011] Ten duoc cap nhat</td>
+              <td>40ms</td>
+            </tr>
+            <tr class="detail-row">
+              <td colspan="3"><span class="muted">No failure detail.</span></td>
+            </tr>
+            
+        </tbody>
+      </table>
+    </details>
+    
+    <details class="suite" >
+      <summary>
+        <div class="suite-head">
+          <span class="pill pill-pass">PASS</span>
+          <span class="suite-name">06_Quan_Tri_He_Thong / [TC-ADM-013] Xoa danh muc khong co khoa hoc</span>
+          <span class="suite-meta">1 assertions | 0 failures | 37ms</span>
+        </div>
+      </summary>
+      <table>
+        <thead>
+          <tr>
+            <th>Status</th>
+            <th>Testcase</th>
+            <th>Time</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+            <tr>
+              <td><span class="pill pill-pass">PASS</span></td>
+              <td>[TC-ADM-013] Status 200 or 204</td>
+              <td>37ms</td>
+            </tr>
+            <tr class="detail-row">
+              <td colspan="3"><span class="muted">No failure detail.</span></td>
+            </tr>
+            
+        </tbody>
+      </table>
+    </details>
+    
+    <details class="suite" >
+      <summary>
+        <div class="suite-head">
+          <span class="pill pill-pass">PASS</span>
+          <span class="suite-name">06_Quan_Tri_He_Thong / [TC-ADM-014] Tim kiem hoc vien theo ten hoac email</span>
+          <span class="suite-meta">2 assertions | 0 failures | 36ms</span>
+        </div>
+      </summary>
+      <table>
+        <thead>
+          <tr>
+            <th>Status</th>
+            <th>Testcase</th>
+            <th>Time</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+            <tr>
+              <td><span class="pill pill-pass">PASS</span></td>
+              <td>[TC-ADM-014] Status 200</td>
+              <td>36ms</td>
+            </tr>
+            <tr class="detail-row">
+              <td colspan="3"><span class="muted">No failure detail.</span></td>
+            </tr>
+            
+            <tr>
+              <td><span class="pill pill-pass">PASS</span></td>
+              <td>[TC-ADM-014] Co ket qua hoc vien</td>
+              <td>36ms</td>
+            </tr>
+            <tr class="detail-row">
+              <td colspan="3"><span class="muted">No failure detail.</span></td>
+            </tr>
+            
+        </tbody>
+      </table>
+    </details>
+    
+    <details class="suite" >
+      <summary>
+        <div class="suite-head">
+          <span class="pill pill-pass">PASS</span>
+          <span class="suite-name">06_Quan_Tri_He_Thong / [TC-ADM-017] Tim kiem giang vien theo ten</span>
+          <span class="suite-meta">2 assertions | 0 failures | 33ms</span>
+        </div>
+      </summary>
+      <table>
+        <thead>
+          <tr>
+            <th>Status</th>
+            <th>Testcase</th>
+            <th>Time</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+            <tr>
+              <td><span class="pill pill-pass">PASS</span></td>
+              <td>[TC-ADM-017] Status 200</td>
+              <td>33ms</td>
+            </tr>
+            <tr class="detail-row">
+              <td colspan="3"><span class="muted">No failure detail.</span></td>
+            </tr>
+            
+            <tr>
+              <td><span class="pill pill-pass">PASS</span></td>
+              <td>[TC-ADM-017] Co ket qua giang vien</td>
+              <td>33ms</td>
+            </tr>
+            <tr class="detail-row">
+              <td colspan="3"><span class="muted">No failure detail.</span></td>
+            </tr>
+            
+        </tbody>
+      </table>
+    </details>
+    
+    <details class="suite" >
+      <summary>
+        <div class="suite-head">
+          <span class="pill pill-pass">PASS</span>
+          <span class="suite-name">06_Quan_Tri_He_Thong / [TC-ADM-020] Xem danh sach tat ca don hang</span>
+          <span class="suite-meta">2 assertions | 0 failures | 28ms</span>
+        </div>
+      </summary>
+      <table>
+        <thead>
+          <tr>
+            <th>Status</th>
+            <th>Testcase</th>
+            <th>Time</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+            <tr>
+              <td><span class="pill pill-pass">PASS</span></td>
+              <td>[TC-ADM-020] Status 200</td>
+              <td>28ms</td>
+            </tr>
+            <tr class="detail-row">
+              <td colspan="3"><span class="muted">No failure detail.</span></td>
+            </tr>
+            
+            <tr>
+              <td><span class="pill pill-pass">PASS</span></td>
+              <td>[TC-ADM-020] Danh sach don hang hien thi dung</td>
+              <td>28ms</td>
+            </tr>
+            <tr class="detail-row">
+              <td colspan="3"><span class="muted">No failure detail.</span></td>
+            </tr>
+            
+        </tbody>
+      </table>
+    </details>
+    
+    <details class="suite" >
+      <summary>
+        <div class="suite-head">
+          <span class="pill pill-pass">PASS</span>
+          <span class="suite-name">06_Quan_Tri_He_Thong / [TC-ADM-022] Tim kiem don hang theo ma don - KNOWN FAIL FE</span>
+          <span class="suite-meta">1 assertions | 0 failures | 22ms</span>
+        </div>
+      </summary>
+      <table>
+        <thead>
+          <tr>
+            <th>Status</th>
+            <th>Testcase</th>
+            <th>Time</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+            <tr>
+              <td><span class="pill pill-pass">PASS</span></td>
+              <td>[TC-ADM-022] KNOWN FAIL: FE khong co o tim kiem don hang</td>
+              <td>22ms</td>
+            </tr>
+            <tr class="detail-row">
+              <td colspan="3"><span class="muted">No failure detail.</span></td>
+            </tr>
+            
+        </tbody>
+      </table>
+    </details>
+    
+    <details class="suite" >
+      <summary>
+        <div class="suite-head">
+          <span class="pill pill-pass">PASS</span>
+          <span class="suite-name">06_Quan_Tri_He_Thong / [ROLLBACK-ADM] [ROLLBACK] Khoi phuc trang thai course admin</span>
+          <span class="suite-meta">1 assertions | 0 failures | 11.301s</span>
+        </div>
+      </summary>
+      <table>
+        <thead>
+          <tr>
+            <th>Status</th>
+            <th>Testcase</th>
+            <th>Time</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+            <tr>
+              <td><span class="pill pill-pass">PASS</span></td>
+              <td>[ROLLBACK-ADM] Status 200</td>
+              <td>11.301s</td>
+            </tr>
+            <tr class="detail-row">
+              <td colspan="3"><span class="muted">No failure detail.</span></td>
+            </tr>
+            
+        </tbody>
+      </table>
+    </details>
+    
+      </section>
+    </div>
+
+    <div class="footer">Generated by tooltest/postman/xml_to_html.py</div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,7 @@
+tc_id,email,password,expected_result,expected_message
+TC-AUTH-019,learner_test@gmail.com,Test@1234,PASS,Đăng nhập thành công
+TC-AUTH-020,learner_test@gmail.com,wrongpassword,FAIL,Email hoặc mật khẩu không đúng
+TC-AUTH-021,notexist@gmail.com,Test@1234,FAIL,Email hoặc mật khẩu không đúng
+TC-AUTH-022,unverified@gmail.com,Test@1234,FAIL,Email chưa được xác thực
+TC-AUTH-023,,Test@1234,FAIL,Vui lòng nhập email
+TC-AUTH-024,learner_test@gmail.com,,FAIL,Vui lòng nhập mật khẩu

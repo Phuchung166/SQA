@@ -1,0 +1,3066 @@
+{
+  "info": {
+    "name": "Online Learning System - API Tests (13_system_test.xlsx)",
+    "description": "Postman collection mapping 13_system_test.xlsx. Covers TC-AUTH, TC-COURSE, TC-ORDER, TC-INS, TC-ADM. Includes rollback scripts and DB verification notes.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://127.0.0.1:8080/api/v1",
+      "type": "string"
+    },
+    {
+      "key": "learner_token",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "instructor_token",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "admin_token",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "free_course_id",
+      "value": "5",
+      "type": "string"
+    },
+    {
+      "key": "paid_course_id",
+      "value": "1",
+      "type": "string"
+    },
+    {
+      "key": "draft_course_id",
+      "value": "10",
+      "type": "string"
+    },
+    {
+      "key": "enrolled_course_id",
+      "value": "6",
+      "type": "string"
+    },
+    {
+      "key": "course_group_id",
+      "value": "3",
+      "type": "string"
+    },
+    {
+      "key": "admin_course_id",
+      "value": "5",
+      "type": "string"
+    },
+    {
+      "key": "created_course_id",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "created_enrollment_id",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "created_category_id",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "created_cart_item_id",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "empty_course_id",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "sample_order_number",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "01_Xac_Thuc",
+      "item": [
+        {
+          "name": "[TC-AUTH-001] Dang ky thanh cong",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/auth/register",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "auth",
+                "register"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"account_name\": \"{{reg_account_001}}\",\n  \"email\": \"{{reg_email_001}}\",\n  \"password\": \"Test@1234\",\n  \"role\": \"STUDENT\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "const suffix001 = Date.now().toString().slice(-6);",
+                  "pm.environment.set(\"reg_account_001\", \"tca\" + suffix001);",
+                  "pm.environment.set(\"reg_email_001\", \"tc_auth_001_\" + suffix001 + \"@test.local\");"
+                ],
+                "type": "text/javascript"
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"[TC-AUTH-001] Status 200 or 201\", function() {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+                  "});",
+                  "pm.test(\"[TC-AUTH-001] Response co message\", function() {",
+                  "    var json = pm.response.json();",
+                  "    pm.expect(json).to.have.property(\"message\");",
+                  "});",
+                  "if([200,201].includes(pm.response.code)) {",
+                  "    pm.environment.set(\"created_user_email_001\", \"tc_auth_001_api@gmail.com\");",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "[TC-AUTH-002] Dang ky username qua ngan 4 ky tu - KNOWN FAIL",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/auth/register",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "auth",
+                "register"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"account_name\": \"abcd\",\n  \"email\": \"tc002api@test.local\",\n  \"password\": \"Test@1234\",\n  \"role\": \"STUDENT\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"[TC-AUTH-002] KNOWN FAIL: BE khong validate username length\", function() {",
+                  "    var code = pm.response.code;",
+                  "    if(code === 400) { console.log(\"PASS: BE tra 400\"); }",
+                  "    else { console.log(\"FAIL: BE tra \" + code + \" - khong validate username < 5 chars\"); }",
+                  "    pm.expect(code).to.equal(400, \"BE should return 400 for username < 5 chars\");",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "[TC-AUTH-003] Dang ky username dung 5 ky tu bien hop le",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/auth/register",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "auth",
+                "register"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"account_name\": \"{{reg_account_003}}\",\n  \"email\": \"{{reg_email_003}}\",\n  \"password\": \"Test@1234\",\n  \"role\": \"STUDENT\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "const suffix003 = (Date.now() % 10000).toString().padStart(4, \"0\");",
+                  "pm.environment.set(\"reg_account_003\", \"a\" + suffix003);",
+                  "pm.environment.set(\"reg_email_003\", \"tc_auth_003_\" + suffix003 + \"@test.local\");"
+                ],
+                "type": "text/javascript"
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"[TC-AUTH-003] Status 200 or 201\", function() {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+                  "});",
+                  "if([200,201].includes(pm.response.code)) {",
+                  "    pm.environment.set(\"created_user_email_003\", \"tc003api@gmail.com\");",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "[TC-AUTH-004] Dang ky username 21 ky tu vuot toi da 20",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/auth/register",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "auth",
+                "register"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"account_name\": \"abcdefghijklmnopqrstu\",\n  \"email\": \"tc004api@test.local\",\n  \"password\": \"Test@1234\",\n  \"role\": \"STUDENT\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"[TC-AUTH-004] BE tra 400 cho username > 20 chars\", function() {",
+                  "    pm.expect(pm.response.code).to.equal(400);",
+                  "});",
+                  "pm.test(\"[TC-AUTH-004] Response co thong bao loi\", function() {",
+                  "    var body = JSON.stringify(pm.response.json()).toLowerCase();",
+                  "    pm.expect(body).to.satisfy(b => b.includes(\"account\") || b.includes(\"20\") || b.includes(\"size\"));",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "[TC-AUTH-006] Dang ky email khong co @",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/auth/register",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "auth",
+                "register"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"account_name\": \"validuser6\",\n  \"email\": \"invalidemail\",\n  \"password\": \"Test@1234\",\n  \"role\": \"STUDENT\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"[TC-AUTH-006] BE tra 400 cho email sai dinh dang\", function() {",
+                  "    pm.expect(pm.response.code).to.equal(400);",
+                  "});",
+                  "pm.test(\"[TC-AUTH-006] Response co thong bao loi email\", function() {",
+                  "    var body = JSON.stringify(pm.response.json()).toLowerCase();",
+                  "    pm.expect(body).to.satisfy(b => b.includes(\"email\") || b.includes(\"invalid\") || b.includes(\"format\"));",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "[TC-AUTH-007] Dang ky email khong co domain",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/auth/register",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "auth",
+                "register"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"account_name\": \"validuser7\",\n  \"email\": \"user@\",\n  \"password\": \"Test@1234\",\n  \"role\": \"STUDENT\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"[TC-AUTH-007] BE tra 400 cho email thieu domain\", function() {",
+                  "    pm.expect(pm.response.code).to.equal(400);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "[TC-AUTH-008] Dang ky email khong co domain extension - KNOWN FAIL",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/auth/register",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "auth",
+                "register"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"account_name\": \"validuser8\",\n  \"email\": \"user@test\",\n  \"password\": \"Test@1234\",\n  \"role\": \"STUDENT\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"[TC-AUTH-008] KNOWN FAIL: BE chap nhan email @test\", function() {",
+                  "    var code = pm.response.code;",
+                  "    if(code === 400) { console.log(\"PASS: BE tra 400\"); }",
+                  "    else { console.log(\"FAIL: BE tra \" + code + \" - chap nhan email @test khong hop le\"); }",
+                  "    pm.expect(code).to.equal(400, \"BE should reject email without TLD\");",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "[TC-AUTH-009] Dang ky email da ton tai",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/auth/register",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "auth",
+                "register"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"account_name\": \"newuser009\",\n  \"email\": \"student09@test.local\",\n  \"password\": \"password123\",\n  \"role\": \"STUDENT\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"[TC-AUTH-009] BE tra 400 cho email trung\", function() {",
+                  "    pm.expect(pm.response.code).to.equal(400);",
+                  "});",
+                  "pm.test(\"[TC-AUTH-009] Response co thong bao email da ton tai\", function() {",
+                  "    var body = pm.response.text().toLowerCase();",
+                  "    pm.expect(body).to.satisfy(b => b.includes(\"email\") || b.includes(\"exist\") || b.includes(\"used\"));",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "[TC-AUTH-010] Dang ky password qua ngan 7 ky tu - KNOWN FAIL",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/auth/register",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "auth",
+                "register"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"account_name\": \"validuser10\",\n  \"email\": \"tc010api@test.local\",\n  \"password\": \"abc1234\",\n  \"role\": \"STUDENT\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"[TC-AUTH-010] KNOWN FAIL: BE khong validate password length\", function() {",
+                  "    var code = pm.response.code;",
+                  "    if(code === 400) { console.log(\"PASS: BE tra 400\"); }",
+                  "    else { console.log(\"FAIL: BE tra \" + code + \" - khong validate password < 8 chars\"); }",
+                  "    pm.expect(code).to.equal(400, \"BE should return 400 for password < 8 chars\");",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "[TC-AUTH-011] Dang ky password dung 8 ky tu bien hop le",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/auth/register",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "auth",
+                "register"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"account_name\": \"{{reg_account_011}}\",\n  \"email\": \"{{reg_email_011}}\",\n  \"password\": \"Test1234\",\n  \"role\": \"STUDENT\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "const suffix011 = Date.now().toString().slice(-6);",
+                  "pm.environment.set(\"reg_account_011\", \"valid\" + suffix011.slice(-4));",
+                  "pm.environment.set(\"reg_email_011\", \"tc_auth_011_\" + suffix011 + \"@test.local\");"
+                ],
+                "type": "text/javascript"
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"[TC-AUTH-011] Status 200 or 201\", function() {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+                  "});",
+                  "if([200,201].includes(pm.response.code)) {",
+                  "    pm.environment.set(\"created_user_email_011\", \"tc011api@gmail.com\");",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "[TC-AUTH-019] Dang nhap thanh cong - Lay token",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/auth/login",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "auth",
+                "login"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"student09@test.local\",\n  \"password\": \"password123\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"[TC-AUTH-019] Status 200\", function() {",
+                  "    pm.expect(pm.response.code).to.equal(200);",
+                  "});",
+                  "pm.test(\"[TC-AUTH-019] Response co token\", function() {",
+                  "    var json = pm.response.json();",
+                  "    pm.expect(json).to.have.property(\"token\").that.is.a(\"string\").and.not.empty;",
+                  "    pm.environment.set(\"learner_token\", json.token);",
+                  "    console.log(\"[TC-AUTH-019] Saved learner_token\");",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "[TC-AUTH-020] Dang nhap sai password - KNOWN FAIL",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/auth/login",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "auth",
+                "login"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"student09@test.local\",\n  \"password\": \"wrongpassword\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"[TC-AUTH-020] KNOWN FAIL: BE tra 404 thay vi 400\", function() {",
+                  "    var code = pm.response.code;",
+                  "    if(code === 400) { console.log(\"PASS: BE tra 400 voi thong bao chung\"); }",
+                  "    else { console.log(\"FAIL: BE tra \" + code + \" (expected 400)\"); }",
+                  "    pm.expect(code).to.equal(400, \"Should return 400 not \" + code);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "[TC-AUTH-021] Dang nhap email khong ton tai - KNOWN FAIL",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/auth/login",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "auth",
+                "login"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"notexist_xyz@gmail.com\",\n  \"password\": \"Test@1234\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"[TC-AUTH-021] KNOWN FAIL: BE lo thong tin email ton tai\", function() {",
+                  "    var code = pm.response.code;",
+                  "    if(code === 400) { console.log(\"PASS: BE tra 400 voi thong bao chung\"); }",
+                  "    else { console.log(\"FAIL: BE tra \" + code + \" - lo thong tin email\"); }",
+                  "    pm.expect(code).to.equal(400, \"Should not reveal if email exists\");",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "[SETUP-AUTH-022] [SETUP] Tao user chua xac thuc OTP",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/auth/register",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "auth",
+                "register"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"account_name\": \"{{unverified_account}}\",\n  \"email\": \"{{unverified_email}}\",\n  \"password\": \"password123\",\n  \"role\": \"STUDENT\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "const suffix022 = Date.now().toString().slice(-6);",
+                  "pm.environment.set(\"unverified_account\", \"unv\" + suffix022.slice(-3));",
+                  "pm.environment.set(\"unverified_email\", \"unverified_\" + suffix022 + \"@test.local\");"
+                ],
+                "type": "text/javascript"
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"[SETUP-AUTH-022] Status 200 or 201\", function() {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "[TC-AUTH-022] Dang nhap email chua xac thuc OTP",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/auth/login",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "auth",
+                "login"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"{{unverified_email}}\",\n  \"password\": \"password123\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"[TC-AUTH-022] BE tra 400 cho email chua xac thuc\", function() {",
+                  "    pm.expect(pm.response.code).to.equal(400);",
+                  "});",
+                  "pm.test(\"[TC-AUTH-022] Response co thong bao chua xac thuc\", function() {",
+                  "    var body = pm.response.text().toLowerCase();",
+                  "    pm.expect(body).to.satisfy(b => b.includes(\"verif\") || b.includes(\"xac thuc\") || b.includes(\"otp\"));",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "[TC-AUTH-025] Gui yeu cau reset password email ton tai",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/auth/forgot-password",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "auth",
+                "forgot-password"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"student09@test.local\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"[TC-AUTH-025] Status 200\", function() {",
+                  "    pm.expect(pm.response.code).to.equal(200);",
+                  "});",
+                  "pm.test(\"[TC-AUTH-025] Response co message\", function() {",
+                  "    var json = pm.response.json();",
+                  "    pm.expect(json).to.have.property(\"message\");",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "[TC-AUTH-026] Gui yeu cau reset password email khong ton tai",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/auth/forgot-password",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "auth",
+                "forgot-password"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"notexist123@gmail.com\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"[TC-AUTH-026] Status 200 - thong bao chung bao mat\", function() {",
+                  "    // Security: should return 200 with generic message regardless of email existence",
+                  "    pm.expect(pm.response.code).to.equal(200);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "[TC-AUTH-029] Dang xuat FE-only, API chua ho tro",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{learner_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/auth/logout",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "auth",
+                "logout"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"[TC-AUTH-029] API logout chua ho tro\", function() {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([404, 405, 500]);",
+                  "});",
+                  "pm.environment.unset(\"learner_token\");",
+                  "console.log(\"[TC-AUTH-029] FE logout chi clear token local; BE chua co endpoint logout\");"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "[ROLLBACK-AUTH] [ROLLBACK] Clear env; API chua ho tro xoa user test",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/courses?page=1&pageSize=1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "courses?page=1&pageSize=1"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"[ROLLBACK-AUTH] Public endpoint van truy cap duoc\", function() {",
+                  "    pm.expect(pm.response.code).to.equal(200);",
+                  "});",
+                  "pm.environment.unset(\"created_user_email_001\");",
+                  "pm.environment.unset(\"created_user_email_003\");",
+                  "pm.environment.unset(\"created_user_email_011\");",
+                  "pm.environment.unset(\"unverified_email\");",
+                  "pm.environment.unset(\"unverified_account\");",
+                  "console.log(\"[ROLLBACK-AUTH] API chua ho tro delete user; cleanup that su se xu ly bang DB neu can\");"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "02_Kham_Pha_Khoa_Hoc",
+      "item": [
+        {
+          "name": "[SETUP-LOGIN] [SETUP] Login lay learner_token",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/auth/login",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "auth",
+                "login"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"student09@test.local\",\n  \"password\": \"password123\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var json = pm.response.json();",
+                  "if(json.token) { pm.environment.set(\"learner_token\", json.token); }"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "[TC-COURSE-001] Tim kiem khoa hoc tu khoa ton tai",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/courses?search=Spring+Boot&status=ACTIVE&page=1&pageSize=10",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "courses?search=Spring+Boot&status=ACTIVE&page=1&pageSize=10"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"[TC-COURSE-001] Status 200\", function() {",
+                  "    pm.expect(pm.response.code).to.equal(200);",
+                  "});",
+                  "pm.test(\"[TC-COURSE-001] Co ket qua tra ve\", function() {",
+                  "    var json = pm.response.json();",
+                  "    pm.expect(json).to.have.property(\"data\");",
+                  "    pm.expect(json.data).to.be.an(\"array\").and.not.empty;",
+                  "    console.log(\"[TC-COURSE-001] Found \" + json.data.length + \" courses\");",
+                  "});",
+                  "pm.test(\"[TC-COURSE-001] Ket qua chua tu khoa Spring Boot\", function() {",
+                  "    var json = pm.response.json();",
+                  "    var found = json.data.some(c => c.title && c.title.toLowerCase().includes(\"spring\"));",
+                  "    pm.expect(found).to.be.true;",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "[TC-COURSE-002] Tim kiem tu khoa khong ton tai - KNOWN FAIL",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/courses?search=xyznonexistentcourse123&page=1&pageSize=10",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "courses?search=xyznonexistentcourse123&page=1&pageSize=10"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"[TC-COURSE-002] Status 200\", function() {",
+                  "    pm.expect(pm.response.code).to.equal(200);",
+                  "});",
+                  "pm.test(\"[TC-COURSE-002] KNOWN FAIL: FE khong hien thi thong bao trong\", function() {",
+                  "    var json = pm.response.json();",
+                  "    var count = json.data ? json.data.length : 0;",
+                  "    pm.expect(count).to.equal(0, \"Should return empty array\");",
+                  "    if(count === 0) { console.log(\"PASS: API tra mang rong - FE can hien thi thong bao\"); }",
+                  "    else { console.log(\"FAIL: API tra \" + count + \" ket qua\"); }",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "[TC-COURSE-003] Xem chi tiet khoa hoc ton tai",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/courses/{{free_course_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "courses",
+                "{{free_course_id}}"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"[TC-COURSE-003] Status 200\", function() {",
+                  "    pm.expect(pm.response.code).to.equal(200);",
+                  "});",
+                  "pm.test(\"[TC-COURSE-003] Response co day du thong tin\", function() {",
+                  "    var json = pm.response.json();",
+                  "    pm.expect(json).to.have.property(\"id\");",
+                  "    pm.expect(json).to.have.property(\"title\").that.is.not.empty;",
+                  "    pm.expect(json).to.have.property(\"instructor\");",
+                  "    pm.expect(json).to.have.property(\"status\");",
+                  "    console.log(\"[TC-COURSE-003] Course: \" + json.title + \" | Status: \" + json.status);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "[TC-COURSE-004] Xem khoa hoc ID khong ton tai",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/courses/99999",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "courses",
+                "99999"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"[TC-COURSE-004] Status 404\", function() {",
+                  "    pm.expect(pm.response.code).to.equal(404);",
+                  "});",
+                  "pm.test(\"[TC-COURSE-004] Response co thong bao khong tim thay\", function() {",
+                  "    var body = pm.response.text().toLowerCase();",
+                  "    pm.expect(body).to.satisfy(b => b.includes(\"not found\") || b.includes(\"khong\") || b.includes(\"404\"));",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "[TC-COURSE-006] Xem chi tiet khoa hoc nhom",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/course-groups/{{course_group_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "course-groups",
+                "{{course_group_id}}"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"[TC-COURSE-006] Status 200\", function() {",
+                  "    pm.expect(pm.response.code).to.equal(200);",
+                  "});",
+                  "pm.test(\"[TC-COURSE-006] Response co danh sach khoa hoc thanh phan\", function() {",
+                  "    var json = pm.response.json();",
+                  "    pm.expect(json).to.have.property(\"title\");",
+                  "    pm.expect(json).to.satisfy(j => j.courses || j.list_of_courses || j.data);",
+                  "    console.log(\"[TC-COURSE-006] Group: \" + json.title);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "03_Thanh_Toan_Dang_Ky_Hoc",
+      "item": [
+        {
+          "name": "[SETUP-LOGIN-ORDER] [SETUP] Login lay learner_token",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/auth/login",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "auth",
+                "login"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"student09@test.local\",\n  \"password\": \"password123\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var json = pm.response.json();",
+                  "if(json.token) { pm.environment.set(\"learner_token\", json.token); }"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "[TC-ORDER-001] Dang ky khoa hoc mien phi thanh cong",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{learner_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/enrollments",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "enrollments"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"course_id\": \"{{free_course_id}}\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "// Pre-check: xoa enrollment cu neu co",
+                  "pm.environment.set(\"rollback_enrollment_course\", pm.environment.get(\"free_course_id\"));"
+                ],
+                "type": "text/javascript"
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"[TC-ORDER-001] Status 200 or 201\", function() {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+                  "});",
+                  "pm.test(\"[TC-ORDER-001] Enrollment duoc tao\", function() {",
+                  "    var json = pm.response.json();",
+                  "    pm.expect(json).to.satisfy(j => j.id || j.enrollment_id || j.message);",
+                  "    if(json.id) pm.environment.set(\"created_enrollment_id\", json.id);",
+                  "    console.log(\"[TC-ORDER-001] Enrollment created\");",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "[TC-ORDER-002] Dang ky khoa hoc da dang ky truoc do",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{learner_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/enrollments",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "enrollments"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"course_id\": \"{{free_course_id}}\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"[TC-ORDER-002] He thong bao da dang ky hoac tra 409\", function() {",
+                  "    var code = pm.response.code;",
+                  "    pm.expect(code).to.be.oneOf([200, 400, 409]);",
+                  "    var body = pm.response.text().toLowerCase();",
+                  "    if(code === 400 || code === 409) {",
+                  "        pm.expect(body).to.satisfy(b => b.includes(\"enroll\") || b.includes(\"da\") || b.includes(\"exist\"));",
+                  "        console.log(\"[TC-ORDER-002] PASS: He thong bao da dang ky\");",
+                  "    } else {",
+                  "        console.log(\"[TC-ORDER-002] INFO: He thong cho phep dang ky lai (code=\" + code + \")\");",
+                  "    }",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "[TC-ORDER-003] Dang ky khi chua dang nhap - 401",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/enrollments",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "enrollments"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"course_id\": \"{{free_course_id}}\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"[TC-ORDER-003] Status 401 hoac 403 khi chua dang nhap\", function() {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([401, 403]);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "[TC-ORDER-007] VNPay gia qua thap - KNOWN FAIL",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{learner_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/payments/init",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "payments",
+                "init"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"course_id\": \"{{paid_course_id}}\",\n  \"amount\": 1,\n  \"currency\": \"VND\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"[TC-ORDER-007] KNOWN FAIL: BE cho phep gia 1 VND\", function() {",
+                  "    var code = pm.response.code;",
+                  "    if(code === 400) { console.log(\"PASS: BE chặn gia qua thap\"); }",
+                  "    else { console.log(\"FAIL: BE tra \" + code + \" - cho phep gia 1 VND\"); }",
+                  "    pm.expect(code).to.equal(400, \"Should reject price below VNPay minimum\");",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "[TC-ORDER-008] Them khoa hoc vao gio hang",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{learner_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/cart_items",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "cart_items"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"course_id\": \"{{paid_course_id}}\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "pm.environment.set(\"rollback_cart_course\", pm.environment.get(\"paid_course_id\"));"
+                ],
+                "type": "text/javascript"
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"[TC-ORDER-008] Status 200 or 201\", function() {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+                  "});",
+                  "pm.test(\"[TC-ORDER-008] Cart item duoc tao\", function() {",
+                  "    var json = pm.response.json();",
+                  "    pm.expect(json).to.satisfy(j => j.id || j.cart_item_id || j.message);",
+                  "    if(json.id) pm.environment.set(\"created_cart_item_id\", json.id);",
+                  "    console.log(\"[TC-ORDER-008] Cart item created\");",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "[TC-ORDER-009] Xoa khoa hoc khoi gio hang",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{learner_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/cart_items/{{created_cart_item_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "cart_items",
+                "{{created_cart_item_id}}"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"[TC-ORDER-009] Status 200 or 204\", function() {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 204]);",
+                  "});",
+                  "pm.environment.unset(\"created_cart_item_id\");",
+                  "console.log(\"[TC-ORDER-009] Cart item removed\");"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "[TC-ORDER-012] Xem lich su mua hang chua co don",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{learner_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/orders/user?page=1&size=10",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "orders",
+                "user?page=1&size=10"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"[TC-ORDER-012] Status 200\", function() {",
+                  "    pm.expect(pm.response.code).to.equal(200);",
+                  "});",
+                  "pm.test(\"[TC-ORDER-012] Trang load khong loi\", function() {",
+                  "    var json = pm.response.json();",
+                  "    pm.expect(json).to.have.property(\"data\");",
+                  "    console.log(\"[TC-ORDER-012] Orders count: \" + (json.data ? json.data.length : 0));",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "[TC-ORDER-013] Xem lich su mua hang co don hang",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{learner_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/orders/user?page=1&size=10",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "orders",
+                "user?page=1&size=10"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"[TC-ORDER-013] Status 200\", function() {",
+                  "    pm.expect(pm.response.code).to.equal(200);",
+                  "});",
+                  "pm.test(\"[TC-ORDER-013] Co don hang trong lich su\", function() {",
+                  "    var json = pm.response.json();",
+                  "    pm.expect(json.data).to.be.an(\"array\");",
+                  "    if(json.data.length > 0) {",
+                  "        var order = json.data[0];",
+                  "        pm.expect(order).to.have.property(\"order_number\");",
+                  "        pm.expect(order).to.have.property(\"total_money\");",
+                  "        pm.expect(order).to.have.property(\"payment_status\");",
+                  "        console.log(\"[TC-ORDER-013] PASS: \" + json.data.length + \" orders found\");",
+                  "    } else {",
+                  "        console.log(\"[TC-ORDER-013] INFO: No orders - seed data needed\");",
+                  "    }",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "[TC-ORDER-014] Xem danh sach khoa hoc da dang ky - KNOWN FAIL tab nhom",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{learner_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/enrollments/user-courses?page=1&pageSize=10",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "enrollments",
+                "user-courses?page=1&pageSize=10"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"[TC-ORDER-014] Status 200\", function() {",
+                  "    pm.expect(pm.response.code).to.equal(200);",
+                  "});",
+                  "pm.test(\"[TC-ORDER-014] Tab khoa hoc doc lap load duoc\", function() {",
+                  "    var json = pm.response.json();",
+                  "    pm.expect(json).to.have.property(\"data\");",
+                  "    pm.expect(json.data).to.be.an(\"array\");",
+                  "    console.log(\"[TC-ORDER-014] Standalone courses: \" + json.data.length);",
+                  "});",
+                  "pm.sendRequest({",
+                  "    url: pm.variables.replaceIn(\"{{base_url}}/enrollments/user-courses-groups?page=1&pageSize=10\"),",
+                  "    method: \"GET\",",
+                  "    header: { Authorization: \"Bearer \" + pm.environment.get(\"learner_token\") }",
+                  "}, function (err, res) {",
+                  "    pm.test(\"[TC-ORDER-014] Tab khoa hoc nhom load duoc\", function () {",
+                  "        pm.expect(err).to.equal(null);",
+                  "        pm.expect(res.code).to.equal(200);",
+                  "        var groupJson = res.json();",
+                  "        pm.expect(groupJson).to.have.property(\"data\");",
+                  "        pm.expect(groupJson.data).to.be.an(\"array\");",
+                  "        console.log(\"[TC-ORDER-014] Group courses: \" + groupJson.data.length);",
+                  "    });",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "[ROLLBACK-ORDER] [ROLLBACK] Clear env; API chua ho tro xoa enrollment",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{learner_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/enrollments/check-enrollment?courseId={{free_course_id}}&courseType=STANDALONE",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "enrollments",
+                "check-enrollment?courseId={{free_course_id}}&courseType=STANDALONE"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"[ROLLBACK-ORDER] Check enrollment endpoint hoat dong\", function() {",
+                  "    pm.expect(pm.response.code).to.equal(200);",
+                  "});",
+                  "pm.environment.unset(\"created_enrollment_id\");",
+                  "pm.environment.unset(\"rollback_enrollment_course\");",
+                  "console.log(\"[ROLLBACK-ORDER] API chua ho tro delete enrollment; cleanup that su se xu ly bang DB\");"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "05_QL_Noi_Dung_Khoa_Hoc",
+      "item": [
+        {
+          "name": "[SETUP-LOGIN-INS] [SETUP] Login lay instructor_token",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/auth/login",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "auth",
+                "login"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"instructor.john@test.local\",\n  \"password\": \"password123\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var json = pm.response.json();",
+                  "if(json.token) { pm.environment.set(\"instructor_token\", json.token); }"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "[TC-INS-001] Tao khoa hoc doc lap thanh cong",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{instructor_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/courses",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "courses"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"code\": \"TC_INS_001_TEST\",\n  \"title\": \"Khoa hoc React tu Zero den Hero\",\n  \"description\": \"Hoc React JS tu co ban den nang cao\",\n  \"short_description\": \"React JS course\",\n  \"category_id\": 1,\n  \"level\": \"BEGINNER\",\n  \"language\": \"vi\",\n  \"price\": 299000,\n  \"currency\": \"VND\",\n  \"is_free\": false,\n  \"enrollment_type\": \"LIFETIME\",\n  \"thumbnail\": \"https://example.com/thumb.jpg\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "pm.environment.set(\"rollback_course_code\", \"TC_INS_001_TEST\");"
+                ],
+                "type": "text/javascript"
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"[TC-INS-001] Status 201\", function() {",
+                  "    pm.expect(pm.response.code).to.equal(201);",
+                  "});",
+                  "pm.test(\"[TC-INS-001] Khoa hoc duoc tao voi status DRAFT\", function() {",
+                  "    var json = pm.response.json();",
+                  "    pm.expect(json).to.have.property(\"id\");",
+                  "    pm.expect(json.status).to.equal(\"DRAFT\");",
+                  "    pm.environment.set(\"created_course_id\", json.id);",
+                  "    console.log(\"[TC-INS-001] Created course id=\" + json.id);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "[TC-INS-002] Tao khoa hoc mien phi isFree=true",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{instructor_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/courses",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "courses"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"code\": \"TC_INS_002_FREE\",\n  \"title\": \"Khoa hoc mien phi test\",\n  \"description\": \"Free course test\",\n  \"short_description\": \"Free\",\n  \"category_id\": 1,\n  \"level\": \"BEGINNER\",\n  \"language\": \"vi\",\n  \"price\": 0,\n  \"currency\": \"VND\",\n  \"is_free\": true,\n  \"enrollment_type\": \"LIFETIME\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"[TC-INS-002] Status 201\", function() {",
+                  "    pm.expect(pm.response.code).to.equal(201);",
+                  "});",
+                  "pm.test(\"[TC-INS-002] is_free=true va price=0\", function() {",
+                  "    var json = pm.response.json();",
+                  "    pm.expect(json.is_free).to.be.true;",
+                  "    pm.expect(Number(json.price)).to.equal(0);",
+                  "    pm.environment.set(\"created_free_course_id\", json.id);",
+                  "    console.log(\"[TC-INS-002] Free course id=\" + json.id);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "[TC-INS-007] Tao khoa hoc tieu de trong - KNOWN FAIL BE",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{instructor_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/courses",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "courses"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"code\": \"{{ins_007_code}}\",\n  \"title\": \"\",\n  \"description\": \"Test empty title\",\n  \"category_id\": 1,\n  \"level\": \"BEGINNER\",\n  \"language\": \"vi\",\n  \"price\": 100000,\n  \"currency\": \"VND\",\n  \"is_free\": false,\n  \"enrollment_type\": \"LIFETIME\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "pm.environment.set(\"ins_007_code\", \"TC_INS_007_\" + Date.now().toString().slice(-6));"
+                ],
+                "type": "text/javascript"
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"[TC-INS-007] KNOWN FAIL: BE khong validate title rong\", function() {",
+                  "    var code = pm.response.code;",
+                  "    if(code === 201) {",
+                  "        var json = pm.response.json();",
+                  "        if(json.id) pm.environment.set(\"created_invalid_course_id\", json.id);",
+                  "    }",
+                  "    if(code === 400) {",
+                  "        console.log(\"PASS: BE tra 400 cho title rong\");",
+                  "        var body = pm.response.text().toLowerCase();",
+                  "        pm.expect(body).to.satisfy(b => b.includes(\"title\") || b.includes(\"blank\") || b.includes(\"empty\"));",
+                  "    } else {",
+                  "        console.log(\"FAIL: BE tra \" + code + \" - chap nhan title rong (thieu @NotBlank)\");",
+                  "        pm.expect(code).to.equal(400, \"BE should reject empty title - missing @NotBlank annotation\");",
+                  "    }",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "[TC-INS-008] Tao khoa hoc gia am so - BE validate dung",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{instructor_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/courses",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "courses"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"code\": \"TC_INS_008_NEG\",\n  \"title\": \"Test negative price\",\n  \"description\": \"Test\",\n  \"category_id\": 1,\n  \"level\": \"BEGINNER\",\n  \"language\": \"vi\",\n  \"price\": -50000,\n  \"currency\": \"VND\",\n  \"is_free\": false,\n  \"enrollment_type\": \"LIFETIME\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"[TC-INS-008] BE tra 400 cho gia am\", function() {",
+                  "    pm.expect(pm.response.code).to.equal(400);",
+                  "});",
+                  "pm.test(\"[TC-INS-008] Response co thong bao loi gia\", function() {",
+                  "    var body = JSON.stringify(pm.response.json()).toLowerCase();",
+                  "    pm.expect(body).to.satisfy(b => b.includes(\"price\") || b.includes(\"0\") || b.includes(\"greater\"));",
+                  "    console.log(\"[TC-INS-008] PASS: BE validate gia am\");",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "[TC-INS-009] Cap nhat khoa hoc thanh cong - KNOWN FAIL FE cache",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{instructor_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/courses/{{created_course_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "courses",
+                "{{created_course_id}}"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"React.js Complete Course - 2026\",\n  \"price\": 399000\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"[TC-INS-009] Status 200\", function() {",
+                  "    pm.expect(pm.response.code).to.equal(200);",
+                  "});",
+                  "pm.test(\"[TC-INS-009] DB cap nhat dung - FE cache van hien cu\", function() {",
+                  "    var json = pm.response.json();",
+                  "    pm.expect(json.title).to.equal(\"React.js Complete Course - 2026\");",
+                  "    pm.expect(Number(json.price)).to.equal(399000);",
+                  "    console.log(\"[TC-INS-009] PASS API: title=\" + json.title);",
+                  "    console.log(\"[TC-INS-009] KNOWN FAIL FE: Next.js router cache khong refresh sau update\");",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "[TC-INS-010] Xoa khoa hoc khong co hoc vien",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{instructor_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/courses/{{created_course_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "courses",
+                "{{created_course_id}}"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"[TC-INS-010] Status 204\", function() {",
+                  "    pm.expect(pm.response.code).to.equal(204);",
+                  "});",
+                  "pm.environment.unset(\"created_course_id\");",
+                  "console.log(\"[TC-INS-010] Course deleted\");"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "[TC-INS-011] Xoa khoa hoc co hoc vien - KNOWN FAIL BE",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{instructor_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/courses/{{enrolled_course_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "courses",
+                "{{enrolled_course_id}}"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"[TC-INS-011] BE chan xoa course da co hoc vien\", function() {",
+                  "    var code = pm.response.code;",
+                  "    if([400, 403, 409].includes(code)) {",
+                  "        console.log(\"PASS: BE chặn xoa course co enrollment\");",
+                  "    } else {",
+                  "        console.log(\"FAIL: BE tra \" + code + \" - xoa duoc course co enrollment\");",
+                  "        pm.expect(code).to.be.oneOf([400, 403, 409], \"BE should reject delete when enrollments exist\");",
+                  "    }",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "[TC-INS-012] Xuat ban khoa hoc thanh cong",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{instructor_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/courses/{{draft_course_id}}/publish",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "courses",
+                "{{draft_course_id}}",
+                "publish"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"[TC-INS-012] Status 200\", function() {",
+                  "    pm.expect(pm.response.code).to.equal(200);",
+                  "});",
+                  "pm.test(\"[TC-INS-012] Response xac nhan da publish\", function() {",
+                  "    var json = pm.response.json();",
+                  "    pm.expect(Number(json.course_id)).to.equal(Number(pm.variables.get(\"draft_course_id\")));",
+                  "    pm.expect((json.message || \"\").toLowerCase()).to.include(\"published\");",
+                  "    console.log(\"[TC-INS-012] PASS: Course published\");",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "[TC-INS-013] Xuat ban khoa hoc chua co module - KNOWN FAIL BE",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{instructor_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/courses",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "courses"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"code\": \"{{ins_013_code}}\",\n  \"title\": \"Empty course no module\",\n  \"description\": \"Test\",\n  \"category_id\": 1,\n  \"level\": \"BEGINNER\",\n  \"language\": \"vi\",\n  \"price\": 100000,\n  \"currency\": \"VND\",\n  \"is_free\": false,\n  \"enrollment_type\": \"LIFETIME\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "pm.environment.set(\"ins_013_code\", \"TC_INS_013_\" + Date.now().toString().slice(-6));",
+                  "pm.environment.set(\"rollback_empty_course\", pm.environment.get(\"ins_013_code\"));"
+                ],
+                "type": "text/javascript"
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if(pm.response.code === 201) {",
+                  "    var json = pm.response.json();",
+                  "    pm.environment.set(\"empty_course_id\", json.id);",
+                  "    console.log(\"[TC-INS-013] Created empty course id=\" + json.id + \" - will test publish next\");",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "[TC-INS-013b] Xuat ban khoa hoc chua co module - PATCH publish",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{instructor_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/courses/{{empty_course_id}}/publish",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "courses",
+                "{{empty_course_id}}",
+                "publish"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"[TC-INS-013] KNOWN FAIL: BE cho phep publish khong co module\", function() {",
+                  "    var code = pm.response.code;",
+                  "    if(code === 400) {",
+                  "        console.log(\"PASS: BE chặn publish course khong co module\");",
+                  "    } else {",
+                  "        console.log(\"FAIL: BE tra \" + code + \" - cho phep publish course rong (thieu validation module)\");",
+                  "        pm.expect(code).to.equal(400, \"BE should reject publish for course with no modules\");",
+                  "    }",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "[TC-INS-029] Them cau hoi voi it hon 4 dap an - KNOWN FAIL BE",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{instructor_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/quizzes/1/questions",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "quizzes",
+                "1",
+                "questions"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"question_text\": \"Test question with 3 options\",\n  \"options\": [\n    {\n      \"option_text\": \"Option A\",\n      \"is_correct\": true,\n      \"sort_order\": 1\n    },\n    {\n      \"option_text\": \"Option B\",\n      \"is_correct\": false,\n      \"sort_order\": 2\n    },\n    {\n      \"option_text\": \"Option C\",\n      \"is_correct\": false,\n      \"sort_order\": 3\n    }\n  ]\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"[TC-INS-029] KNOWN FAIL: BE cho phep < 4 dap an\", function() {",
+                  "    var code = pm.response.code;",
+                  "    if(code === 400) {",
+                  "        console.log(\"PASS: BE chặn < 4 dap an\");",
+                  "    } else {",
+                  "        console.log(\"FAIL: BE tra \" + code + \" - cho phep tao cau hoi voi 3 dap an\");",
+                  "        pm.expect(code).to.equal(400, \"BE should require exactly 4 options\");",
+                  "    }",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "[ROLLBACK-INS] [ROLLBACK] Xoa cac course test",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/courses?page=1&pageSize=1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "courses?page=1&pageSize=1"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"[ROLLBACK-INS] Public course endpoint hoat dong\", function() {",
+                  "    pm.expect(pm.response.code).to.equal(200);",
+                  "});",
+                  "[\"created_free_course_id\", \"empty_course_id\", \"created_course_id\", \"created_invalid_course_id\"].forEach(function(key) {",
+                  "    var courseId = pm.environment.get(key);",
+                  "    if (!courseId) return;",
+                  "    pm.sendRequest({",
+                  "        url: pm.variables.replaceIn(\"{{base_url}}/courses/\" + courseId),",
+                  "        method: \"DELETE\",",
+                  "        header: { Authorization: \"Bearer \" + pm.environment.get(\"instructor_token\") }",
+                  "    }, function (err, res) {",
+                  "        console.log(\"[ROLLBACK-INS] delete \" + key + \"=\" + courseId + \" => \" + (err ? err : res.code));",
+                  "    });",
+                  "    pm.environment.unset(key);",
+                  "});",
+                  "pm.environment.unset(\"rollback_empty_course\");",
+                  "console.log(\"[ROLLBACK-INS] Instructor cleanup dispatched\");"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "06_Quan_Tri_He_Thong",
+      "item": [
+        {
+          "name": "[SETUP-LOGIN-ADM] [SETUP] Login lay admin_token",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/auth/login",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "auth",
+                "login"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"admin@test.local\",\n  \"password\": \"password123\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var json = pm.response.json();",
+                  "if(json.token) { pm.environment.set(\"admin_token\", json.token); }"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "[TC-ADM-001] Duyet khoa hoc PUBLISHED -> ACTIVE",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/courses/{{admin_course_id}}/status",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "courses",
+                "{{admin_course_id}}",
+                "status"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"course_status\": \"ACTIVE\",\n  \"reason\": \"Approved by admin test\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"[TC-ADM-001] Status 200\", function() {",
+                  "    pm.expect(pm.response.code).to.equal(200);",
+                  "});",
+                  "pm.test(\"[TC-ADM-001] Status chuyen sang ACTIVE\", function() {",
+                  "    var json = pm.response.json();",
+                  "    pm.expect(json.status).to.equal(\"ACTIVE\");",
+                  "    console.log(\"[TC-ADM-001] PASS: Course approved -> ACTIVE\");",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "[TC-ADM-002] Tam dung khoa hoc PUBLISHED -> SUSPENDED - KNOWN FAIL",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/courses/{{admin_course_id}}/status",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "courses",
+                "{{admin_course_id}}",
+                "status"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"course_status\": \"DEACTIVATED\",\n  \"reason\": \"Violation test\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"[TC-ADM-002] KNOWN FAIL: Khong co trang thai SUSPENDED\", function() {",
+                  "    var code = pm.response.code;",
+                  "    var json = pm.response.json();",
+                  "    if(code === 200 && json.status === \"DEACTIVATED\") {",
+                  "        console.log(\"INFO: BE dung DEACTIVATED thay vi SUSPENDED - nut FE bi nham\");",
+                  "    }",
+                  "    pm.expect(code).to.equal(200);",
+                  "    console.log(\"[TC-ADM-002] FAIL: FE nut Tam dung dang goi logic Xoa, khong co SUSPENDED state\");",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "[TC-ADM-005] Tim kiem khoa hoc voi bo loc day du",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/courses?search=React&status=ACTIVE&page=1&pageSize=10",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "courses?search=React&status=ACTIVE&page=1&pageSize=10"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"[TC-ADM-005] Status 200\", function() {",
+                  "    pm.expect(pm.response.code).to.equal(200);",
+                  "});",
+                  "pm.test(\"[TC-ADM-005] Ket qua khop dieu kien loc\", function() {",
+                  "    var json = pm.response.json();",
+                  "    pm.expect(json).to.have.property(\"data\");",
+                  "    if(json.data.length > 0) {",
+                  "        json.data.forEach(c => {",
+                  "            pm.expect(c.status).to.equal(\"ACTIVE\");",
+                  "        });",
+                  "        console.log(\"[TC-ADM-005] PASS: \" + json.data.length + \" courses found\");",
+                  "    }",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "[TC-ADM-006] Tim kiem khong co ket qua",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/courses?search=xyzabc123&page=1&pageSize=10",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "courses?search=xyzabc123&page=1&pageSize=10"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"[TC-ADM-006] Status 200\", function() {",
+                  "    pm.expect(pm.response.code).to.equal(200);",
+                  "});",
+                  "pm.test(\"[TC-ADM-006] Tra ve mang rong\", function() {",
+                  "    var json = pm.response.json();",
+                  "    var count = json.data ? json.data.length : 0;",
+                  "    pm.expect(count).to.equal(0);",
+                  "    console.log(\"[TC-ADM-006] PASS: Empty result\");",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "[TC-ADM-007] Them danh muc moi thanh cong",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/categories",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "categories"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"TC_ADM_007_DataScience\",\n  \"description\": \"Test category\",\n  \"image\": \"https://example.com/img.jpg\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "pm.environment.set(\"rollback_category_name\", \"TC_ADM_007_DataScience\");"
+                ],
+                "type": "text/javascript"
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"[TC-ADM-007] Status 201\", function() {",
+                  "    pm.expect(pm.response.code).to.equal(201);",
+                  "});",
+                  "pm.test(\"[TC-ADM-007] Category duoc tao\", function() {",
+                  "    var json = pm.response.json();",
+                  "    pm.expect(json).to.have.property(\"id\");",
+                  "    pm.environment.set(\"created_category_id\", json.id);",
+                  "    console.log(\"[TC-ADM-007] Created category id=\" + json.id);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "[TC-ADM-009] Them danh muc trung ten - KNOWN FAIL BE",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/categories",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "categories"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Programming\",\n  \"description\": \"Duplicate test\",\n  \"image\": \"https://example.com/img.jpg\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"[TC-ADM-009] KNOWN FAIL: BE cho phep tao danh muc trung ten\", function() {",
+                  "    var code = pm.response.code;",
+                  "    if(code === 400 || code === 409) {",
+                  "        console.log(\"PASS: BE chặn danh muc trung ten\");",
+                  "    } else {",
+                  "        console.log(\"FAIL: BE tra \" + code + \" - cho phep tao danh muc trung ten\");",
+                  "        pm.expect(code).to.be.oneOf([400, 409], \"BE should reject duplicate category name\");",
+                  "    }",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "[TC-ADM-011] Cap nhat danh muc thanh cong",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/categories/{{created_category_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "categories",
+                "{{created_category_id}}"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"TC_ADM_007_DataScience_Updated\",\n  \"description\": \"Updated\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"[TC-ADM-011] Status 200\", function() {",
+                  "    pm.expect(pm.response.code).to.equal(200);",
+                  "});",
+                  "pm.test(\"[TC-ADM-011] Ten duoc cap nhat\", function() {",
+                  "    var json = pm.response.json();",
+                  "    pm.expect(json.name).to.include(\"Updated\");",
+                  "    console.log(\"[TC-ADM-011] PASS: Category updated\");",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "[TC-ADM-013] Xoa danh muc khong co khoa hoc",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/categories/{{created_category_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "categories",
+                "{{created_category_id}}"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"[TC-ADM-013] Status 200 or 204\", function() {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 204]);",
+                  "});",
+                  "pm.environment.unset(\"created_category_id\");",
+                  "console.log(\"[TC-ADM-013] Category deleted\");"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "[TC-ADM-014] Tim kiem hoc vien theo ten hoac email",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/admin/students?search=student&page=1&pageSize=10",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "admin",
+                "students?search=student&page=1&pageSize=10"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"[TC-ADM-014] Status 200\", function() {",
+                  "    pm.expect(pm.response.code).to.equal(200);",
+                  "});",
+                  "pm.test(\"[TC-ADM-014] Co ket qua hoc vien\", function() {",
+                  "    var json = pm.response.json();",
+                  "    pm.expect(json).to.have.property(\"data\");",
+                  "    console.log(\"[TC-ADM-014] Students found: \" + (json.data ? json.data.length : 0));",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "[TC-ADM-017] Tim kiem giang vien theo ten",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/admin/instructors?search=instructor&page=1&pageSize=10",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "admin",
+                "instructors?search=instructor&page=1&pageSize=10"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"[TC-ADM-017] Status 200\", function() {",
+                  "    pm.expect(pm.response.code).to.equal(200);",
+                  "});",
+                  "pm.test(\"[TC-ADM-017] Co ket qua giang vien\", function() {",
+                  "    var json = pm.response.json();",
+                  "    pm.expect(json).to.have.property(\"data\");",
+                  "    console.log(\"[TC-ADM-017] Instructors found: \" + (json.data ? json.data.length : 0));",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "[TC-ADM-020] Xem danh sach tat ca don hang",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/orders/admin?page=1&pageSize=10",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "orders",
+                "admin?page=1&pageSize=10"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"[TC-ADM-020] Status 200\", function() {",
+                  "    pm.expect(pm.response.code).to.equal(200);",
+                  "});",
+                  "pm.test(\"[TC-ADM-020] Danh sach don hang hien thi dung\", function() {",
+                  "    var json = pm.response.json();",
+                  "    pm.expect(json).to.have.property(\"data\");",
+                  "    if(json.data && json.data.length > 0) {",
+                  "        var order = json.data[0];",
+                  "        pm.expect(order).to.have.property(\"order_number\");",
+                  "        pm.expect(order).to.have.property(\"total_money\");",
+                  "        pm.expect(order).to.have.property(\"payment_status\");",
+                  "        pm.environment.set(\"sample_order_number\", order.order_number);",
+                  "        console.log(\"[TC-ADM-020] PASS: \" + json.data.length + \" orders\");",
+                  "    }",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "[TC-ADM-022] Tim kiem don hang theo ma don - KNOWN FAIL FE",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/orders/admin?search={{sample_order_number}}&page=1&pageSize=10",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "orders",
+                "admin?search={{sample_order_number}}&page=1&pageSize=10"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"[TC-ADM-022] KNOWN FAIL: FE khong co o tim kiem don hang\", function() {",
+                  "    var code = pm.response.code;",
+                  "    if(code === 200) {",
+                  "        var json = pm.response.json();",
+                  "        var hasSearch = json.data && json.data.length > 0;",
+                  "        if(hasSearch) {",
+                  "            console.log(\"PASS API: Tim kiem don hang hoat dong\");",
+                  "        } else {",
+                  "            console.log(\"INFO: API ho tro search nhung FE chua implement o tim kiem\");",
+                  "        }",
+                  "    }",
+                  "    pm.expect(code).to.equal(200);",
+                  "    console.log(\"[TC-ADM-022] KNOWN FAIL FE: Man orders chi co filter paymentStatus, khong co search\");",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "[TC-ADM-023] Xem danh sach thu nhap giang vien - KNOWN FAIL mock",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/admin/instructor-earnings?month=5&year=2026&page=1&pageSize=10",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "admin",
+                "instructor-earnings?month=5&year=2026&page=1&pageSize=10"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"[TC-ADM-023] KNOWN FAIL: Du lieu dang mock\", function() {",
+                  "    var code = pm.response.code;",
+                  "    pm.expect(code).to.equal(200);",
+                  "    var json = pm.response.json();",
+                  "    pm.expect(json).to.have.property(\"data\");",
+                  "    console.log(\"[TC-ADM-023] KNOWN FAIL: FE dang dung mock data thay vi API that\");",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "[ROLLBACK-ADM] [ROLLBACK] Khoi phuc trang thai course admin",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/courses/{{admin_course_id}}/status",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "courses",
+                "{{admin_course_id}}",
+                "status"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"course_status\": \"ACTIVE\",\n  \"reason\": \"Rollback after Postman run\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"[ROLLBACK-ADM] Status 200\", function() {",
+                  "    pm.expect(pm.response.code).to.equal(200);",
+                  "});",
+                  "console.log(\"[ROLLBACK-ADM] Restored admin course to ACTIVE\");"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
