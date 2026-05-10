@@ -32,7 +32,7 @@ COURSE_GROUP_ID = 3
 # Selenium
 IMPLICIT_WAIT = 10
 PAGE_LOAD_TIMEOUT = 30
-HEADLESS = True
+HEADLESS = False
 
 # Report output
 REPORT_DIR = "../reports"
