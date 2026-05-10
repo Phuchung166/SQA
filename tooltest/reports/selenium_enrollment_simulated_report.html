@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Selenium Enrollment Report - Simulated Sample</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; color: #222; }
+    h1, h2 { color: #333; }
+    .summary { background: #f0f0f0; padding: 15px; border-radius: 5px; margin-bottom: 20px; }
+    .note { background: #eef6ff; padding: 12px; border-left: 4px solid #2f6fdb; margin-bottom: 20px; }
+    .warning { background: #fff3cd; padding: 14px; border-left: 5px solid #d39e00; margin-bottom: 20px; }
+    .actual { color: #0f5132; font-weight: bold; }
+    .simulated { color: #8a3b12; font-weight: bold; }
+    table { border-collapse: collapse; width: 100%; table-layout: fixed; }
+    th, td { border: 1px solid #ddd; padding: 8px; text-align: left; vertical-align: top; word-wrap: break-word; }
+    th { background: #4CAF50; color: white; }
+    .pass { background: #d4edda; }
+    .fail { background: #f8d7da; }
+    .pending { background: #fff3cd; }
+  </style>
+</head>
+<body>
+  <h1>Selenium Test Report - Online Learning System</h1>
+
+  <div class="warning">
+    <b>SIMULATED / SAMPLE REPORT</b><br>
+    This file is a presentation sample for documentation layout only.<br>
+    Only <b>TC-ORDER-001</b> below is based on an actual local Selenium execution on <b>2026-05-10</b>.<br>
+    All rows marked <span class="simulated">SIMULATED</span> are illustrative placeholders and must not be used as execution evidence.
+  </div>
+
+  <div class="summary">
+    <b>Scope:</b> Enrollment / Cart / Order learner flows (sheet 03 in <code>13_system_test.xlsx</code>)<br>
+    <b>Total rows shown:</b> 8<br>
+    <b>Actual executed rows:</b> 1<br>
+    <b>Simulated sample rows:</b> 7<br>
+    <b>Generated:</b> 2026-05-10 23:35:00<br>
+    <b>Purpose:</b> Sample HTML output for Selenium reporting layout
+  </div>
+
+  <div class="note">
+    <b>Execution note:</b><br>
+    The actual learner enrollment flow was being repaired for current local selectors and seed data.<br>
+    Current verified real result: <b>TC-ORDER-001 PASS</b>, with DB rollback executed after the test.
+  </div>
+
+  <table>
+    <tr>
+      <th>TC ID</th>
+      <th>Sheet</th>
+      <th>Scenario</th>
+      <th>Expected</th>
+      <th>Input Data</th>
+      <th>Status</th>
+      <th>Actual</th>
+      <th>Source</th>
+      <th>DB Check</th>
+      <th>Rollback</th>
+      <th>Screenshot</th>
+      <th>Time</th>
+    </tr>
+
+    <tr class="pass">
+      <td>TC-ORDER-001</td>
+      <td>03_Thanh toan_Dang ky hoc</td>
+      <td>Dang ky khoa hoc mien phi</td>
+      <td>User co the dang ky khoa hoc mien phi thanh cong</td>
+      <td>student09@test.local, course_id=5</td>
+      <td><b>PASS</b></td>
+      <td>Enroll button was found on course detail, enrollment was created, DB verification returned true, and rollback removed the enrollment after execution.</td>
+      <td class="actual">ACTUAL</td>
+      <td>enrollment_exists=True</td>
+      <td>Deleted enrollment: student09@test.local -> course 5</td>
+      <td>N/A</td>
+      <td>2026-05-10 23:22:29</td>
+    </tr>
+
+    <tr class="pass">
+      <td>TC-ORDER-002</td>
+      <td>03_Thanh toan_Dang ky hoc</td>
+      <td>Dang ky khoa hoc da dang ky</td>
+      <td>He thong hien thi trang thai da dang ky hoac dieu huong den khoa hoc cua toi</td>
+      <td>student09@test.local, course_id=5</td>
+      <td><b>PASS</b></td>
+      <td>Sample output: enrolled state is shown after the user already owns the course.</td>
+      <td class="simulated">SIMULATED</td>
+      <td>Sample: enrollment_exists=True</td>
+      <td>Sample: cleanup not required</td>
+      <td>N/A</td>
+      <td>2026-05-10 23:24:10</td>
+    </tr>
+
+    <tr class="pass">
+      <td>TC-ORDER-003</td>
+      <td>03_Thanh toan_Dang ky hoc</td>
+      <td>Dang ky khi chua dang nhap</td>
+      <td>User chua dang nhap phai bi chan va duoc yeu cau dang nhap</td>
+      <td>anonymous user, course_id=5</td>
+      <td><b>PASS</b></td>
+      <td>Sample output: unauthenticated user is blocked by disabled action or redirected to sign-in.</td>
+      <td class="simulated">SIMULATED</td>
+      <td>Sample: no enrollment created</td>
+      <td>Sample: not applicable</td>
+      <td>N/A</td>
+      <td>2026-05-10 23:25:02</td>
+    </tr>
+
+    <tr class="pass">
+      <td>TC-ORDER-008</td>
+      <td>03_Thanh toan_Dang ky hoc</td>
+      <td>Them khoa hoc vao gio hang</td>
+      <td>Cart count tang sau khi them khoa hoc tra phi</td>
+      <td>student09@test.local, course_id=1</td>
+      <td><b>PASS</b></td>
+      <td>Sample output: cart count increased and add-to-cart action completed successfully.</td>
+      <td class="simulated">SIMULATED</td>
+      <td>Sample: cart_before=0, cart_after=1</td>
+      <td>Sample: cart cleanup executed</td>
+      <td>N/A</td>
+      <td>2026-05-10 23:26:20</td>
+    </tr>
+
+    <tr class="pass">
+      <td>TC-ORDER-009</td>
+      <td>03_Thanh toan_Dang ky hoc</td>
+      <td>Xoa khoa hoc khoi gio hang</td>
+      <td>Cart count giam sau khi xoa item</td>
+      <td>student09@test.local, course_id=1</td>
+      <td><b>PASS</b></td>
+      <td>Sample output: remove-cart action was triggered and cart count decreased.</td>
+      <td class="simulated">SIMULATED</td>
+      <td>Sample: cart_before=1, cart_after=0</td>
+      <td>Sample: cart cleanup executed</td>
+      <td>N/A</td>
+      <td>2026-05-10 23:27:11</td>
+    </tr>
+
+    <tr class="pending">
+      <td>TC-ORDER-011</td>
+      <td>03_Thanh toan_Dang ky hoc</td>
+      <td>Checkout voi gio hang trong</td>
+      <td>He thong hien thi trang thai gio hang trong va khong cho checkout</td>
+      <td>student09@test.local, empty cart</td>
+      <td><b>PENDING</b></td>
+      <td>Sample placeholder: empty-state and checkout button behavior need final rerun after selector stabilization.</td>
+      <td class="simulated">SIMULATED</td>
+      <td>Sample: cart_count=0</td>
+      <td>Sample: not applicable</td>
+      <td>N/A</td>
+      <td>2026-05-10 23:28:05</td>
+    </tr>
+
+    <tr class="pass">
+      <td>TC-ORDER-012</td>
+      <td>03_Thanh toan_Dang ky hoc</td>
+      <td>Xem lich su mua hang</td>
+      <td>Trang don hang cua hoc vien load duoc khong loi</td>
+      <td>student09@test.local</td>
+      <td><b>PASS</b></td>
+      <td>Sample output: order history page loads without server error and renders user order content.</td>
+      <td class="simulated">SIMULATED</td>
+      <td>Sample: UI load only</td>
+      <td>Sample: not applicable</td>
+      <td>N/A</td>
+      <td>2026-05-10 23:28:44</td>
+    </tr>
+
+    <tr class="fail">
+      <td>TC-ORDER-014</td>
+      <td>03_Thanh toan_Dang ky hoc</td>
+      <td>Xem danh sach khoa hoc da dang ky theo tab</td>
+      <td>Tab khoa hoc doc lap va chuong trinh hoc deu hien thi va load dung</td>
+      <td>student09@test.local</td>
+      <td><b>FAIL</b></td>
+      <td>Sample output: standalone tab is visible, but group-learning tab behavior is unstable and needs follow-up.</td>
+      <td class="simulated">SIMULATED</td>
+      <td>Sample: UI tab load issue</td>
+      <td>Sample: not applicable</td>
+      <td>N/A</td>
+      <td>2026-05-10 23:29:37</td>
+    </tr>
+  </table>
+</body>
+</html>

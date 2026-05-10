@@ -1,0 +1,9 @@
+tc_id,user_email,user_password,course_id,is_free,expected_result,expected_message,rollback_needed
+TC-ORDER-001,learner_test@gmail.com,Test@1234,1,true,PASS,Đăng ký thành công,true
+TC-ORDER-002,learner_test@gmail.com,Test@1234,1,true,PASS,Bạn đã đăng ký khóa học này,false
+TC-ORDER-003,,,,true,FAIL,Vui lòng đăng nhập,false
+TC-ORDER-008,learner_test@gmail.com,Test@1234,2,false,PASS,Đã thêm vào giỏ hàng,true
+TC-ORDER-009,learner_test@gmail.com,Test@1234,2,false,PASS,Đã xóa khỏi giỏ hàng,false
+TC-ORDER-011,learner_test@gmail.com,Test@1234,,,PASS,Giỏ hàng trống,false
+TC-ORDER-012,learner_test@gmail.com,Test@1234,,,PASS,Chưa có đơn hàng,false
+TC-ORDER-013,learner_has_order@gmail.com,Test@1234,,,PASS,Hiển thị lịch sử mua hàng,false

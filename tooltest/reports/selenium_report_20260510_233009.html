@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Selenium Test Report</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    h1, h2 { color: #333; }
+    .summary { background: #f0f0f0; padding: 15px; border-radius: 5px; margin-bottom: 20px; }
+    .note { background: #eef6ff; padding: 12px; border-left: 4px solid #2f6fdb; margin-bottom: 20px; }
+    table { border-collapse: collapse; width: 100%; table-layout: fixed; }
+    th, td { border: 1px solid #ddd; padding: 8px; text-align: left; vertical-align: top; word-wrap: break-word; }
+    th { background: #4CAF50; color: white; }
+    .missing { white-space: pre-wrap; line-height: 1.5; }
+  </style>
+</head>
+<body>
+  <h1>Selenium Test Report - Online Learning System</h1>
+  <div class="summary">
+    <b>Total executed:</b> 1<br>
+    <b style="color:green">PASS:</b> 1<br>
+    <b style="color:red">FAIL:</b> 0<br>
+    <b>Other:</b> 0<br>
+    <b>Execution rate:</b> 100.0%<br>
+    <b>Workbook scope:</b> 61 cases from 13_system_test.xlsx<br>
+    <b>Executed in this run:</b> 1 / 61<br>
+    <b>Generated:</b> 2026-05-10 23:30:09
+  </div>
+  <div class="note">
+    <b>Missing Selenium coverage in workbook scope:</b><br>
+    <span class="missing">TC-AUTH-001<br>TC-AUTH-002<br>TC-AUTH-003<br>TC-AUTH-004<br>TC-AUTH-005<br>TC-AUTH-006<br>TC-AUTH-007<br>TC-AUTH-008<br>TC-AUTH-009<br>TC-AUTH-010<br>TC-AUTH-011<br>TC-AUTH-012<br>TC-AUTH-013<br>TC-AUTH-014<br>TC-AUTH-015<br>TC-AUTH-016<br>TC-AUTH-017<br>TC-AUTH-018<br>TC-AUTH-019<br>TC-AUTH-020<br>TC-AUTH-021<br>TC-AUTH-022<br>TC-AUTH-023<br>TC-AUTH-024<br>TC-AUTH-025<br>TC-AUTH-026<br>TC-AUTH-027<br>TC-AUTH-028<br>TC-AUTH-029<br>TC-COURSE-001<br>TC-COURSE-002<br>TC-COURSE-003<br>TC-COURSE-004<br>TC-COURSE-005<br>TC-COURSE-006<br>TC-ORDER-002<br>TC-ORDER-003<br>TC-ORDER-004<br>TC-ORDER-005<br>TC-ORDER-006<br>TC-ORDER-007<br>TC-ORDER-008<br>TC-ORDER-009<br>TC-ORDER-010<br>TC-ORDER-011<br>TC-ORDER-012<br>TC-ORDER-013<br>TC-ORDER-014<br>TC-STUDY-001<br>TC-STUDY-002<br>TC-STUDY-003<br>TC-STUDY-004<br>TC-STUDY-005<br>TC-STUDY-006<br>TC-STUDY-007<br>TC-STUDY-008<br>TC-STUDY-009<br>TC-STUDY-010<br>TC-STUDY-011<br>TC-STUDY-012</span>
+  </div>
+  <table>
+    <tr>
+      <th>TC ID</th>
+      <th>Sheet</th>
+      <th>Scenario</th>
+      <th>Expected</th>
+      <th>Input Data</th>
+      <th>Status</th>
+      <th>Actual</th>
+      <th>Workbook Status</th>
+      <th>DB Check</th>
+      <th>Rollback</th>
+      <th>Screenshot</th>
+      <th>Time</th>
+    </tr>
+    
+                <tr style="background:#d4edda">
+                    <td>TC-ORDER-001</td>
+                    <td>03_Thanh toán_Đăng ký học</td>
+                    <td>Đăng ký khóa học miễn phí</td>
+                    <td>1. Hiển thị thông báo: &#x27;Đăng ký thành công!&#x27;<br>2. Enrollment record được tạo trong database<br>3. Trạng thái enrollment: &#x27;ENROLLED&#x27;<br>4. Chuyển hướng đến trang học hoặc trang khóa học<br>5. Nút chuyển thành &#x27;Tiếp tục học&#x27;<br>6. Email thông báo (tùy chọn)</td>
+                    <td>user_email=learner_test@gmail.com; user_password=Test@1234; course_id=1; is_free=true; expected_result=PASS; expected_message=Đăng ký thành công; rollback_needed=true; csv_file=enrollment_test_data.csv</td>
+                    <td><b>PASS</b></td>
+                    <td>Enrollment created successfully. DB=True</td>
+                    <td>PASS</td>
+                    <td>enrollment_exists=True</td>
+                    <td></td>
+                    <td><a href="TC-ORDER-001_20260510_232754.png" target="_blank">Screenshot</a></td>
+                    <td>2026-05-10 23:28:03</td>
+                </tr>
+                
+  </table>
+</body>
+</html>

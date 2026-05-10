@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="Online Learning System - API Tests (13_system_test.xlsx)" tests="64" time="65.607">
+  <testsuite name="01_Xac_Thuc / [TC-AUTH-001] Dang ky thanh cong" id="b48e2bb8-346a-4042-8895-03e2d17acacf" timestamp="2026-05-10T15:36:24.920Z" tests="2" failures="0" errors="0" time="0.217">
+    <testcase name="[TC-AUTH-001] Status 200 or 201" time="0.217" classname="01XacThucTcAuth001DangKyThanhCong"/>
+    <testcase name="[TC-AUTH-001] Response co message" time="0.217" classname="01XacThucTcAuth001DangKyThanhCong"/>
+  </testsuite>
+  <testsuite name="01_Xac_Thuc / [TC-AUTH-002] Dang ky username qua ngan 4 ky tu - KNOWN FAIL" id="b44bcd89-1f89-44a7-b891-94c4e1e63c46" timestamp="2026-05-10T15:36:24.920Z" tests="1" failures="0" errors="0" time="0.009">
+    <testcase name="[TC-AUTH-002] KNOWN FAIL: BE khong validate username length" time="0.009" classname="01XacThucTcAuth002DangKyUsernameQuaNgan4KyTuKnownFail"/>
+  </testsuite>
+  <testsuite name="01_Xac_Thuc / [TC-AUTH-003] Dang ky username dung 5 ky tu bien hop le" id="01d8c49b-889f-42bc-bf5a-67b94bb24ad5" timestamp="2026-05-10T15:36:24.920Z" tests="1" failures="0" errors="0" time="0.121">
+    <testcase name="[TC-AUTH-003] Status 200 or 201" time="0.121" classname="01XacThucTcAuth003DangKyUsernameDung5KyTuBienHopLe"/>
+  </testsuite>
+  <testsuite name="01_Xac_Thuc / [TC-AUTH-004] Dang ky username 21 ky tu vuot toi da 20" id="c4986de9-59bd-422e-9cf0-4f8d94762a2c" timestamp="2026-05-10T15:36:24.920Z" tests="2" failures="0" errors="0" time="0.007">
+    <testcase name="[TC-AUTH-004] BE tra 400 cho username > 20 chars" time="0.007" classname="01XacThucTcAuth004DangKyUsername21KyTuVuotToiDa20"/>
+    <testcase name="[TC-AUTH-004] Response co thong bao loi" time="0.007" classname="01XacThucTcAuth004DangKyUsername21KyTuVuotToiDa20"/>
+  </testsuite>
+  <testsuite name="01_Xac_Thuc / [TC-AUTH-006] Dang ky email khong co @" id="af5979e0-5148-4d44-aaf2-e191b46a2f2e" timestamp="2026-05-10T15:36:24.920Z" tests="2" failures="0" errors="0" time="0.008">
+    <testcase name="[TC-AUTH-006] BE tra 400 cho email sai dinh dang" time="0.008" classname="01XacThucTcAuth006DangKyEmailKhongCo"/>
+    <testcase name="[TC-AUTH-006] Response co thong bao loi email" time="0.008" classname="01XacThucTcAuth006DangKyEmailKhongCo"/>
+  </testsuite>
+  <testsuite name="01_Xac_Thuc / [TC-AUTH-007] Dang ky email khong co domain" id="8cc466b8-7908-490f-b1cf-dccba8016718" timestamp="2026-05-10T15:36:24.920Z" tests="1" failures="0" errors="0" time="0.008">
+    <testcase name="[TC-AUTH-007] BE tra 400 cho email thieu domain" time="0.008" classname="01XacThucTcAuth007DangKyEmailKhongCoDomain"/>
+  </testsuite>
+  <testsuite name="01_Xac_Thuc / [TC-AUTH-008] Dang ky email khong co domain extension - KNOWN FAIL" id="4ccdd7af-9f97-4e2d-9204-5f208d8263b7" timestamp="2026-05-10T15:36:24.920Z" tests="1" failures="1" errors="0" time="0.016">
+    <testcase name="[TC-AUTH-008] KNOWN FAIL: BE chap nhan email @test" time="0.016" classname="01XacThucTcAuth008DangKyEmailKhongCoDomainExtensionKnownFail">
+      <failure type="AssertionFailure" message="BE should reject email without TLD: expected 200 to equal 400">
+        <![CDATA[Failed 1 times.]]>
+        <![CDATA[Collection JSON ID: 6050124b-c576-4181-b9ad-56351ea2a1c8.]]>
+        <![CDATA[Collection name: Online Learning System - API Tests (13_system_test.xlsx).]]>
+        <![CDATA[Request name: 01_Xac_Thuc / [TC-AUTH-008] Dang ky email khong co domain extension - KNOWN FAIL.]]>
+        <![CDATA[Test description: [TC-AUTH-008] KNOWN FAIL: BE chap nhan email @test.]]>
+        <![CDATA[Error message: BE should reject email without TLD: expected 200 to equal 400.]]>
+        <![CDATA[Stacktrace: AssertionError: BE should reject email without TLD: expected 200 to equal 400
+   at Object.eval sandbox-script.js:1:7).]]>
+      </failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="01_Xac_Thuc / [TC-AUTH-009] Dang ky email da ton tai" id="26cbfb64-d69d-484f-ab32-669f9c89e8f7" timestamp="2026-05-10T15:36:24.920Z" tests="2" failures="0" errors="0" time="0.012">
+    <testcase name="[TC-AUTH-009] BE tra 400 cho email trung" time="0.012" classname="01XacThucTcAuth009DangKyEmailDaTonTai"/>
+    <testcase name="[TC-AUTH-009] Response co thong bao email da ton tai" time="0.012" classname="01XacThucTcAuth009DangKyEmailDaTonTai"/>
+  </testsuite>
+  <testsuite name="01_Xac_Thuc / [TC-AUTH-010] Dang ky password qua ngan 7 ky tu - KNOWN FAIL" id="abab8563-43c6-4197-8579-3567154f87ba" timestamp="2026-05-10T15:36:24.920Z" tests="1" failures="0" errors="0" time="0.013">
+    <testcase name="[TC-AUTH-010] KNOWN FAIL: BE khong validate password length" time="0.013" classname="01XacThucTcAuth010DangKyPasswordQuaNgan7KyTuKnownFail"/>
+  </testsuite>
+  <testsuite name="01_Xac_Thuc / [TC-AUTH-011] Dang ky password dung 8 ky tu bien hop le" id="e8f65490-87cc-4e98-879c-ec3f352b4f9e" timestamp="2026-05-10T15:36:24.920Z" tests="1" failures="0" errors="0" time="0.144">
+    <testcase name="[TC-AUTH-011] Status 200 or 201" time="0.144" classname="01XacThucTcAuth011DangKyPasswordDung8KyTuBienHopLe"/>
+  </testsuite>
+  <testsuite name="01_Xac_Thuc / [TC-AUTH-019] Dang nhap thanh cong - Lay token" id="69397389-c459-4313-8abe-d115b216d7ae" timestamp="2026-05-10T15:36:24.920Z" tests="2" failures="0" errors="0" time="0.327">
+    <testcase name="[TC-AUTH-019] Status 200" time="0.327" classname="01XacThucTcAuth019DangNhapThanhCongLayToken"/>
+    <testcase name="[TC-AUTH-019] Response co token" time="0.327" classname="01XacThucTcAuth019DangNhapThanhCongLayToken"/>
+  </testsuite>
+  <testsuite name="01_Xac_Thuc / [TC-AUTH-020] Dang nhap sai password - KNOWN FAIL" id="4ab73c17-6ece-4c58-861d-d9b3c761144f" timestamp="2026-05-10T15:36:24.920Z" tests="1" failures="0" errors="0" time="0.142">
+    <testcase name="[TC-AUTH-020] KNOWN FAIL: BE tra 404 thay vi 400" time="0.142" classname="01XacThucTcAuth020DangNhapSaiPasswordKnownFail"/>
+  </testsuite>
+  <testsuite name="01_Xac_Thuc / [TC-AUTH-021] Dang nhap email khong ton tai - KNOWN FAIL" id="2902bbfa-b58e-4ee5-89ae-c7e1ef9487d2" timestamp="2026-05-10T15:36:24.920Z" tests="1" failures="1" errors="0" time="0.012">
+    <testcase name="[TC-AUTH-021] KNOWN FAIL: BE lo thong tin email ton tai" time="0.012" classname="01XacThucTcAuth021DangNhapEmailKhongTonTaiKnownFail">
+      <failure type="AssertionFailure" message="Should not reveal if email exists: expected 404 to equal 400">
+        <![CDATA[Failed 1 times.]]>
+        <![CDATA[Collection JSON ID: 6050124b-c576-4181-b9ad-56351ea2a1c8.]]>
+        <![CDATA[Collection name: Online Learning System - API Tests (13_system_test.xlsx).]]>
+        <![CDATA[Request name: 01_Xac_Thuc / [TC-AUTH-021] Dang nhap email khong ton tai - KNOWN FAIL.]]>
+        <![CDATA[Test description: [TC-AUTH-021] KNOWN FAIL: BE lo thong tin email ton tai.]]>
+        <![CDATA[Error message: Should not reveal if email exists: expected 404 to equal 400.]]>
+        <![CDATA[Stacktrace: AssertionError: Should not reveal if email exists: expected 404 to equal 400
+   at Object.eval sandbox-script.js:1:13).]]>
+      </failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="01_Xac_Thuc / [SETUP-AUTH-022] [SETUP] Tao user chua xac thuc OTP" id="9309a246-dc07-4b0a-a5e5-b731f32ce9fb" timestamp="2026-05-10T15:36:24.920Z" tests="1" failures="0" errors="0" time="0.122">
+    <testcase name="[SETUP-AUTH-022] Status 200 or 201" time="0.122" classname="01XacThucSetupAuth022SetupTaoUserChuaXacThucOtp"/>
+  </testsuite>
+  <testsuite name="01_Xac_Thuc / [TC-AUTH-022] Dang nhap email chua xac thuc OTP" id="eafc3a18-0046-4ea1-af1a-7c88c9ea94c9" timestamp="2026-05-10T15:36:24.920Z" tests="2" failures="0" errors="0" time="0.198">
+    <testcase name="[TC-AUTH-022] BE tra 400 cho email chua xac thuc" time="0.198" classname="01XacThucTcAuth022DangNhapEmailChuaXacThucOtp"/>
+    <testcase name="[TC-AUTH-022] Response co thong bao chua xac thuc" time="0.198" classname="01XacThucTcAuth022DangNhapEmailChuaXacThucOtp"/>
+  </testsuite>
+  <testsuite name="01_Xac_Thuc / [TC-AUTH-025] Gui yeu cau reset password email ton tai" id="97de2ae0-6598-4391-8afb-d188773dbaa0" timestamp="2026-05-10T15:36:24.920Z" tests="2" failures="0" errors="0" time="0.017">
+    <testcase name="[TC-AUTH-025] Status 200" time="0.017" classname="01XacThucTcAuth025GuiYeuCauResetPasswordEmailTonTai"/>
+    <testcase name="[TC-AUTH-025] Response co message" time="0.017" classname="01XacThucTcAuth025GuiYeuCauResetPasswordEmailTonTai"/>
+  </testsuite>
+  <testsuite name="01_Xac_Thuc / [TC-AUTH-026] Gui yeu cau reset password email khong ton tai" id="474508a4-5a86-4205-ad01-3668cf3ef76f" timestamp="2026-05-10T15:36:24.920Z" tests="1" failures="0" errors="0" time="0.012">
+    <testcase name="[TC-AUTH-026] Status 200 - thong bao chung bao mat" time="0.012" classname="01XacThucTcAuth026GuiYeuCauResetPasswordEmailKhongTonTai"/>
+  </testsuite>
+  <testsuite name="01_Xac_Thuc / [TC-AUTH-029] Dang xuat FE-only, API chua ho tro" id="f5824120-301e-45cd-94b6-51dbea029561" timestamp="2026-05-10T15:36:24.920Z" tests="1" failures="0" errors="0" time="0.019">
+    <testcase name="[TC-AUTH-029] API logout chua ho tro" time="0.019" classname="01XacThucTcAuth029DangXuatFeOnlyApiChuaHoTro"/>
+  </testsuite>
+  <testsuite name="01_Xac_Thuc / [ROLLBACK-AUTH] [ROLLBACK] Clear env; API chua ho tro xoa user test" id="eebf7a01-960b-4432-88a9-67b0d48250c1" timestamp="2026-05-10T15:36:24.920Z" tests="1" failures="0" errors="0" time="0.032">
+    <testcase name="[ROLLBACK-AUTH] Public endpoint van truy cap duoc" time="0.032" classname="01XacThucRollbackAuthRollbackClearEnvApiChuaHoTroXoaUserTest"/>
+  </testsuite>
+  <testsuite name="02_Kham_Pha_Khoa_Hoc / [SETUP-LOGIN] [SETUP] Login lay learner_token" id="b11686a0-6ce1-4cc5-bc51-afd4938ba02b" timestamp="2026-05-10T15:36:24.920Z" tests="0" failures="0" errors="0" time="0.314"/>
+  <testsuite name="02_Kham_Pha_Khoa_Hoc / [TC-COURSE-001] Tim kiem khoa hoc tu khoa ton tai" id="797694bc-fa0b-439b-a184-232d34dfd3f8" timestamp="2026-05-10T15:36:24.920Z" tests="3" failures="0" errors="0" time="0.020">
+    <testcase name="[TC-COURSE-001] Status 200" time="0.020" classname="02KhamPhaKhoaHocTcCourse001TimKiemKhoaHocTuKhoaTonTai"/>
+    <testcase name="[TC-COURSE-001] Co ket qua tra ve" time="0.020" classname="02KhamPhaKhoaHocTcCourse001TimKiemKhoaHocTuKhoaTonTai"/>
+    <testcase name="[TC-COURSE-001] Ket qua chua tu khoa Spring Boot" time="0.020" classname="02KhamPhaKhoaHocTcCourse001TimKiemKhoaHocTuKhoaTonTai"/>
+  </testsuite>
+  <testsuite name="02_Kham_Pha_Khoa_Hoc / [TC-COURSE-002] Tim kiem tu khoa khong ton tai - KNOWN FAIL" id="4143e65b-e789-4501-b38b-70dbc0972be9" timestamp="2026-05-10T15:36:24.920Z" tests="2" failures="0" errors="0" time="0.010">
+    <testcase name="[TC-COURSE-002] Status 200" time="0.010" classname="02KhamPhaKhoaHocTcCourse002TimKiemTuKhoaKhongTonTaiKnownFail"/>
+    <testcase name="[TC-COURSE-002] KNOWN FAIL: FE khong hien thi thong bao trong" time="0.010" classname="02KhamPhaKhoaHocTcCourse002TimKiemTuKhoaKhongTonTaiKnownFail"/>
+  </testsuite>
+  <testsuite name="02_Kham_Pha_Khoa_Hoc / [TC-COURSE-003] Xem chi tiet khoa hoc ton tai" id="53d23342-3950-44c4-969d-ebd79e8481d6" timestamp="2026-05-10T15:36:24.920Z" tests="2" failures="0" errors="0" time="0.012">
+    <testcase name="[TC-COURSE-003] Status 200" time="0.012" classname="02KhamPhaKhoaHocTcCourse003XemChiTietKhoaHocTonTai"/>
+    <testcase name="[TC-COURSE-003] Response co day du thong tin" time="0.012" classname="02KhamPhaKhoaHocTcCourse003XemChiTietKhoaHocTonTai"/>
+  </testsuite>
+  <testsuite name="02_Kham_Pha_Khoa_Hoc / [TC-COURSE-004] Xem khoa hoc ID khong ton tai" id="27c2d9c3-0fb5-4804-8ca5-fbf783b27b9f" timestamp="2026-05-10T15:36:24.920Z" tests="2" failures="0" errors="0" time="0.009">
+    <testcase name="[TC-COURSE-004] Status 404" time="0.009" classname="02KhamPhaKhoaHocTcCourse004XemKhoaHocIdKhongTonTai"/>
+    <testcase name="[TC-COURSE-004] Response co thong bao khong tim thay" time="0.009" classname="02KhamPhaKhoaHocTcCourse004XemKhoaHocIdKhongTonTai"/>
+  </testsuite>
+  <testsuite name="02_Kham_Pha_Khoa_Hoc / [TC-COURSE-006] Xem chi tiet khoa hoc nhom" id="6f2e672f-4dc8-4de2-bf69-0802f4820d47" timestamp="2026-05-10T15:36:24.920Z" tests="2" failures="0" errors="0" time="0.017">
+    <testcase name="[TC-COURSE-006] Status 200" time="0.017" classname="02KhamPhaKhoaHocTcCourse006XemChiTietKhoaHocNhom"/>
+    <testcase name="[TC-COURSE-006] Response co danh sach khoa hoc thanh phan" time="0.017" classname="02KhamPhaKhoaHocTcCourse006XemChiTietKhoaHocNhom"/>
+  </testsuite>
+  <testsuite name="03_Thanh_Toan_Dang_Ky_Hoc / [SETUP-LOGIN-ORDER] [SETUP] Login lay learner_token" id="3c0418ba-7849-49bc-a8fa-ed01597825db" timestamp="2026-05-10T15:36:24.920Z" tests="0" failures="0" errors="0" time="0.296"/>
+  <testsuite name="03_Thanh_Toan_Dang_Ky_Hoc / [TC-ORDER-001] Dang ky khoa hoc mien phi thanh cong" id="cec343a2-5655-42a7-bbbb-1cbb9b533491" timestamp="2026-05-10T15:36:24.920Z" tests="2" failures="0" errors="0" time="0.029">
+    <testcase name="[TC-ORDER-001] Status 200 or 201" time="0.029" classname="03ThanhToanDangKyHocTcOrder001DangKyKhoaHocMienPhiThanhCong"/>
+    <testcase name="[TC-ORDER-001] Enrollment duoc tao" time="0.029" classname="03ThanhToanDangKyHocTcOrder001DangKyKhoaHocMienPhiThanhCong"/>
+  </testsuite>
+  <testsuite name="03_Thanh_Toan_Dang_Ky_Hoc / [TC-ORDER-002] Dang ky khoa hoc da dang ky truoc do" id="955104e2-9e40-445a-b8ef-63a6d85fa570" timestamp="2026-05-10T15:36:24.920Z" tests="1" failures="0" errors="0" time="0.027">
+    <testcase name="[TC-ORDER-002] He thong bao da dang ky hoac tra 409" time="0.027" classname="03ThanhToanDangKyHocTcOrder002DangKyKhoaHocDaDangKyTruocDo"/>
+  </testsuite>
+  <testsuite name="03_Thanh_Toan_Dang_Ky_Hoc / [TC-ORDER-003] Dang ky khi chua dang nhap - 401" id="11082fac-c7c0-4d8d-b81b-54f755eb8de3" timestamp="2026-05-10T15:36:24.920Z" tests="1" failures="0" errors="0" time="0.011">
+    <testcase name="[TC-ORDER-003] Status 401 hoac 403 khi chua dang nhap" time="0.011" classname="03ThanhToanDangKyHocTcOrder003DangKyKhiChuaDangNhap401"/>
+  </testsuite>
+  <testsuite name="03_Thanh_Toan_Dang_Ky_Hoc / [TC-ORDER-007] VNPay gia qua thap - KNOWN FAIL" id="9bf839c2-ad82-4d45-bb64-085bf620fe72" timestamp="2026-05-10T15:36:24.920Z" tests="1" failures="1" errors="0" time="0.023">
+    <testcase name="[TC-ORDER-007] KNOWN FAIL: BE cho phep gia 1 VND" time="0.023" classname="03ThanhToanDangKyHocTcOrder007VnPayGiaQuaThapKnownFail">
+      <failure type="AssertionFailure" message="Should reject price below VNPay minimum: expected 500 to equal 400">
+        <![CDATA[Failed 1 times.]]>
+        <![CDATA[Collection JSON ID: 6050124b-c576-4181-b9ad-56351ea2a1c8.]]>
+        <![CDATA[Collection name: Online Learning System - API Tests (13_system_test.xlsx).]]>
+        <![CDATA[Request name: 03_Thanh_Toan_Dang_Ky_Hoc / [TC-ORDER-007] VNPay gia qua thap - KNOWN FAIL.]]>
+        <![CDATA[Test description: [TC-ORDER-007] KNOWN FAIL: BE cho phep gia 1 VND.]]>
+        <![CDATA[Error message: Should reject price below VNPay minimum: expected 500 to equal 400.]]>
+        <![CDATA[Stacktrace: AssertionError: Should reject price below VNPay minimum: expected 500 to equal 400
+   at Object.eval sandbox-script.js:1:30).]]>
+      </failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="03_Thanh_Toan_Dang_Ky_Hoc / [TC-ORDER-008] Them khoa hoc vao gio hang" id="dad448d6-8a71-4fe3-8bf2-9b3319cbf0c1" timestamp="2026-05-10T15:36:24.920Z" tests="2" failures="0" errors="0" time="0.037">
+    <testcase name="[TC-ORDER-008] Status 200 or 201" time="0.037" classname="03ThanhToanDangKyHocTcOrder008ThemKhoaHocVaoGioHang"/>
+    <testcase name="[TC-ORDER-008] Cart item duoc tao" time="0.037" classname="03ThanhToanDangKyHocTcOrder008ThemKhoaHocVaoGioHang"/>
+  </testsuite>
+  <testsuite name="03_Thanh_Toan_Dang_Ky_Hoc / [TC-ORDER-009] Xoa khoa hoc khoi gio hang" id="25b1887c-7d74-4b4d-a9c0-579e96ce92f8" timestamp="2026-05-10T15:36:24.920Z" tests="1" failures="0" errors="0" time="0.027">
+    <testcase name="[TC-ORDER-009] Status 200 or 204" time="0.027" classname="03ThanhToanDangKyHocTcOrder009XoaKhoaHocKhoiGioHang"/>
+  </testsuite>
+  <testsuite name="03_Thanh_Toan_Dang_Ky_Hoc / [TC-ORDER-012] Xem lich su mua hang chua co don" id="9800a25e-f65c-4afc-996f-266a54ff8db0" timestamp="2026-05-10T15:36:24.920Z" tests="2" failures="0" errors="0" time="0.027">
+    <testcase name="[TC-ORDER-012] Status 200" time="0.027" classname="03ThanhToanDangKyHocTcOrder012XemLichSuMuaHangChuaCoDon"/>
+    <testcase name="[TC-ORDER-012] Trang load khong loi" time="0.027" classname="03ThanhToanDangKyHocTcOrder012XemLichSuMuaHangChuaCoDon"/>
+  </testsuite>
+  <testsuite name="03_Thanh_Toan_Dang_Ky_Hoc / [TC-ORDER-013] Xem lich su mua hang co don hang" id="b50bd1d4-556b-445b-8a78-685d284f8a45" timestamp="2026-05-10T15:36:24.920Z" tests="2" failures="0" errors="0" time="0.023">
+    <testcase name="[TC-ORDER-013] Status 200" time="0.023" classname="03ThanhToanDangKyHocTcOrder013XemLichSuMuaHangCoDonHang"/>
+    <testcase name="[TC-ORDER-013] Co don hang trong lich su" time="0.023" classname="03ThanhToanDangKyHocTcOrder013XemLichSuMuaHangCoDonHang"/>
+  </testsuite>
+  <testsuite name="03_Thanh_Toan_Dang_Ky_Hoc / [TC-ORDER-014] Xem danh sach khoa hoc da dang ky - KNOWN FAIL tab nhom" id="6c22e57a-177f-41ef-977d-5acae7ce0c61" timestamp="2026-05-10T15:36:24.920Z" tests="3" failures="0" errors="0" time="0.020">
+    <testcase name="[TC-ORDER-014] Status 200" time="0.020" classname="03ThanhToanDangKyHocTcOrder014XemDanhSachKhoaHocDaDangKyKnownFailTabNhom"/>
+    <testcase name="[TC-ORDER-014] Tab khoa hoc doc lap load duoc" time="0.020" classname="03ThanhToanDangKyHocTcOrder014XemDanhSachKhoaHocDaDangKyKnownFailTabNhom"/>
+    <testcase name="[TC-ORDER-014] Tab khoa hoc nhom load duoc" time="0.020" classname="03ThanhToanDangKyHocTcOrder014XemDanhSachKhoaHocDaDangKyKnownFailTabNhom"/>
+  </testsuite>
+  <testsuite name="03_Thanh_Toan_Dang_Ky_Hoc / [ROLLBACK-ORDER] [ROLLBACK] Clear env; API chua ho tro xoa enrollment" id="937192e3-4766-4b38-b47a-dd8cc9bae850" timestamp="2026-05-10T15:36:24.920Z" tests="1" failures="0" errors="0" time="0.027">
+    <testcase name="[ROLLBACK-ORDER] Check enrollment endpoint hoat dong" time="0.027" classname="03ThanhToanDangKyHocRollbackOrderRollbackClearEnvApiChuaHoTroXoaEnrollment"/>
+  </testsuite>
+  <testsuite name="05_QL_Noi_Dung_Khoa_Hoc / [SETUP-LOGIN-INS] [SETUP] Login lay instructor_token" id="0a95c752-1236-4ded-a489-2d83adb1c8c1" timestamp="2026-05-10T15:36:24.920Z" tests="0" failures="0" errors="0" time="0.287"/>
+  <testsuite name="05_QL_Noi_Dung_Khoa_Hoc / [TC-INS-001] Tao khoa hoc doc lap thanh cong" id="0155537e-46ca-445d-8720-31ea61f166fe" timestamp="2026-05-10T15:36:24.920Z" tests="2" failures="0" errors="0" time="0.050">
+    <testcase name="[TC-INS-001] Status 201" time="0.050" classname="05QlNoiDungKhoaHocTcIns001TaoKhoaHocDocLapThanhCong"/>
+    <testcase name="[TC-INS-001] Khoa hoc duoc tao voi status DRAFT" time="0.050" classname="05QlNoiDungKhoaHocTcIns001TaoKhoaHocDocLapThanhCong"/>
+  </testsuite>
+  <testsuite name="05_QL_Noi_Dung_Khoa_Hoc / [TC-INS-002] Tao khoa hoc mien phi isFree=true" id="9e900b9d-08b6-4ea7-9dd7-dcddbf6d15ad" timestamp="2026-05-10T15:36:24.920Z" tests="2" failures="0" errors="0" time="0.032">
+    <testcase name="[TC-INS-002] Status 201" time="0.032" classname="05QlNoiDungKhoaHocTcIns002TaoKhoaHocMienPhiIsFreeTrue"/>
+    <testcase name="[TC-INS-002] is_free=true va price=0" time="0.032" classname="05QlNoiDungKhoaHocTcIns002TaoKhoaHocMienPhiIsFreeTrue"/>
+  </testsuite>
+  <testsuite name="05_QL_Noi_Dung_Khoa_Hoc / [TC-INS-007] Tao khoa hoc tieu de trong - KNOWN FAIL BE" id="7cf1b41b-726a-4755-a19f-4e5732e10289" timestamp="2026-05-10T15:36:24.920Z" tests="1" failures="1" errors="0" time="0.033">
+    <testcase name="[TC-INS-007] KNOWN FAIL: BE khong validate title rong" time="0.033" classname="05QlNoiDungKhoaHocTcIns007TaoKhoaHocTieuDeTrongKnownFailBe">
+      <failure type="AssertionFailure" message="BE should reject empty title - missing @NotBlank annotation: expected 201 to equal 400">
+        <![CDATA[Failed 1 times.]]>
+        <![CDATA[Collection JSON ID: 6050124b-c576-4181-b9ad-56351ea2a1c8.]]>
+        <![CDATA[Collection name: Online Learning System - API Tests (13_system_test.xlsx).]]>
+        <![CDATA[Request name: 05_QL_Noi_Dung_Khoa_Hoc / [TC-INS-007] Tao khoa hoc tieu de trong - KNOWN FAIL BE.]]>
+        <![CDATA[Test description: [TC-INS-007] KNOWN FAIL: BE khong validate title rong.]]>
+        <![CDATA[Error message: BE should reject empty title - missing @NotBlank annotation: expected 201 to equal 400.]]>
+        <![CDATA[Stacktrace: AssertionError: BE should reject empty title - missing @NotBlank annotation: expected 201 to equal 400
+   at Object.eval sandbox-script.js:1:40).]]>
+      </failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="05_QL_Noi_Dung_Khoa_Hoc / [TC-INS-008] Tao khoa hoc gia am so - BE validate dung" id="4497d5d9-a008-4196-bdb9-c163a69912ac" timestamp="2026-05-10T15:36:24.920Z" tests="2" failures="0" errors="0" time="0.024">
+    <testcase name="[TC-INS-008] BE tra 400 cho gia am" time="0.024" classname="05QlNoiDungKhoaHocTcIns008TaoKhoaHocGiaAmSoBeValidateDung"/>
+    <testcase name="[TC-INS-008] Response co thong bao loi gia" time="0.024" classname="05QlNoiDungKhoaHocTcIns008TaoKhoaHocGiaAmSoBeValidateDung"/>
+  </testsuite>
+  <testsuite name="05_QL_Noi_Dung_Khoa_Hoc / [TC-INS-009] Cap nhat khoa hoc thanh cong - KNOWN FAIL FE cache" id="5e4de562-f24d-415b-a5c6-f4371d949da8" timestamp="2026-05-10T15:36:24.920Z" tests="2" failures="0" errors="0" time="0.032">
+    <testcase name="[TC-INS-009] Status 200" time="0.032" classname="05QlNoiDungKhoaHocTcIns009CapNhatKhoaHocThanhCongKnownFailFeCache"/>
+    <testcase name="[TC-INS-009] DB cap nhat dung - FE cache van hien cu" time="0.032" classname="05QlNoiDungKhoaHocTcIns009CapNhatKhoaHocThanhCongKnownFailFeCache"/>
+  </testsuite>
+  <testsuite name="05_QL_Noi_Dung_Khoa_Hoc / [TC-INS-010] Xoa khoa hoc khong co hoc vien" id="3ef16224-206a-41fd-a1e7-341df51790a6" timestamp="2026-05-10T15:36:24.920Z" tests="1" failures="0" errors="0" time="0.035">
+    <testcase name="[TC-INS-010] Status 204" time="0.035" classname="05QlNoiDungKhoaHocTcIns010XoaKhoaHocKhongCoHocVien"/>
+  </testsuite>
+  <testsuite name="05_QL_Noi_Dung_Khoa_Hoc / [TC-INS-011] Xoa khoa hoc co hoc vien - KNOWN FAIL BE" id="67bba15a-3f7d-4ba2-a76c-6a7109a38416" timestamp="2026-05-10T15:36:24.920Z" tests="1" failures="0" errors="0" time="0.026">
+    <testcase name="[TC-INS-011] BE chan xoa course da co hoc vien" time="0.026" classname="05QlNoiDungKhoaHocTcIns011XoaKhoaHocCoHocVienKnownFailBe"/>
+  </testsuite>
+  <testsuite name="05_QL_Noi_Dung_Khoa_Hoc / [TC-INS-012] Xuat ban khoa hoc thanh cong" id="ca2a83e3-ecf4-46e2-928c-845ecb2e8b9a" timestamp="2026-05-10T15:36:24.920Z" tests="2" failures="0" errors="0" time="18.996">
+    <testcase name="[TC-INS-012] Status 200" time="18.996" classname="05QlNoiDungKhoaHocTcIns012XuatBanKhoaHocThanhCong"/>
+    <testcase name="[TC-INS-012] Response xac nhan da publish" time="18.996" classname="05QlNoiDungKhoaHocTcIns012XuatBanKhoaHocThanhCong"/>
+  </testsuite>
+  <testsuite name="05_QL_Noi_Dung_Khoa_Hoc / [TC-INS-013] Xuat ban khoa hoc chua co module - KNOWN FAIL BE" id="967a15d1-616b-495e-a171-51515e640be5" timestamp="2026-05-10T15:36:24.920Z" tests="0" failures="0" errors="0" time="0.058"/>
+  <testsuite name="05_QL_Noi_Dung_Khoa_Hoc / [TC-INS-013b] Xuat ban khoa hoc chua co module - PATCH publish" id="0609fcac-1029-46fe-9749-b8a201e5d8d6" timestamp="2026-05-10T15:36:24.920Z" tests="1" failures="1" errors="0" time="20.810">
+    <testcase name="[TC-INS-013] KNOWN FAIL: BE cho phep publish khong co module" time="20.810" classname="05QlNoiDungKhoaHocTcIns013BXuatBanKhoaHocChuaCoModulePatchPublish">
+      <failure type="AssertionFailure" message="BE should reject publish for course with no modules: expected 200 to equal 400">
+        <![CDATA[Failed 1 times.]]>
+        <![CDATA[Collection JSON ID: 6050124b-c576-4181-b9ad-56351ea2a1c8.]]>
+        <![CDATA[Collection name: Online Learning System - API Tests (13_system_test.xlsx).]]>
+        <![CDATA[Request name: 05_QL_Noi_Dung_Khoa_Hoc / [TC-INS-013b] Xuat ban khoa hoc chua co module - PATCH publish.]]>
+        <![CDATA[Test description: [TC-INS-013] KNOWN FAIL: BE cho phep publish khong co module.]]>
+        <![CDATA[Error message: BE should reject publish for course with no modules: expected 200 to equal 400.]]>
+        <![CDATA[Stacktrace: AssertionError: BE should reject publish for course with no modules: expected 200 to equal 400
+   at Object.eval sandbox-script.js:1:47).]]>
+      </failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="05_QL_Noi_Dung_Khoa_Hoc / [TC-INS-029] Them cau hoi voi it hon 4 dap an - KNOWN FAIL BE" id="a72fb61c-4e32-456f-aa4c-44f4282a7e20" timestamp="2026-05-10T15:36:24.920Z" tests="1" failures="1" errors="0" time="0.019">
+    <testcase name="[TC-INS-029] KNOWN FAIL: BE cho phep &lt; 4 dap an" time="0.019" classname="05QlNoiDungKhoaHocTcIns029ThemCauHoiVoiItHon4DapAnKnownFailBe">
+      <failure type="AssertionFailure" message="BE should require exactly 4 options: expected 500 to equal 400">
+        <![CDATA[Failed 1 times.]]>
+        <![CDATA[Collection JSON ID: 6050124b-c576-4181-b9ad-56351ea2a1c8.]]>
+        <![CDATA[Collection name: Online Learning System - API Tests (13_system_test.xlsx).]]>
+        <![CDATA[Request name: 05_QL_Noi_Dung_Khoa_Hoc / [TC-INS-029] Them cau hoi voi it hon 4 dap an - KNOWN FAIL BE.]]>
+        <![CDATA[Test description: [TC-INS-029] KNOWN FAIL: BE cho phep < 4 dap an.]]>
+        <![CDATA[Error message: BE should require exactly 4 options: expected 500 to equal 400.]]>
+        <![CDATA[Stacktrace: AssertionError: BE should require exactly 4 options: expected 500 to equal 400
+   at Object.eval sandbox-script.js:1:48).]]>
+      </failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="05_QL_Noi_Dung_Khoa_Hoc / [ROLLBACK-INS] [ROLLBACK] Xoa cac course test" id="5436a1fd-ae90-4c1b-858b-543b35c786d1" timestamp="2026-05-10T15:36:24.920Z" tests="1" failures="0" errors="0" time="0.070">
+    <testcase name="[ROLLBACK-INS] Public course endpoint hoat dong" time="0.070" classname="05QlNoiDungKhoaHocRollbackInsRollbackXoaCacCourseTest"/>
+  </testsuite>
+  <testsuite name="06_Quan_Tri_He_Thong / [SETUP-LOGIN-ADM] [SETUP] Login lay admin_token" id="8091fd30-f39e-4fc0-88bf-033eb038cd7b" timestamp="2026-05-10T15:36:24.920Z" tests="0" failures="0" errors="0" time="0.267"/>
+  <testsuite name="06_Quan_Tri_He_Thong / [TC-ADM-001] Duyet khoa hoc PUBLISHED -> ACTIVE" id="c9875f44-b1b6-465c-9880-88d65b31e511" timestamp="2026-05-10T15:36:24.920Z" tests="2" failures="0" errors="0" time="10.878">
+    <testcase name="[TC-ADM-001] Status 200" time="10.878" classname="06QuanTriHeThongTcAdm001DuyetKhoaHocPublishedActive"/>
+    <testcase name="[TC-ADM-001] Status chuyen sang ACTIVE" time="10.878" classname="06QuanTriHeThongTcAdm001DuyetKhoaHocPublishedActive"/>
+  </testsuite>
+  <testsuite name="06_Quan_Tri_He_Thong / [TC-ADM-002] Tam dung khoa hoc PUBLISHED -> SUSPENDED - KNOWN FAIL" id="14e82750-44c4-4367-ba0a-f7fd60216cf7" timestamp="2026-05-10T15:36:24.920Z" tests="1" failures="0" errors="0" time="0.033">
+    <testcase name="[TC-ADM-002] KNOWN FAIL: Khong co trang thai SUSPENDED" time="0.033" classname="06QuanTriHeThongTcAdm002TamDungKhoaHocPublishedSuspendedKnownFail"/>
+  </testsuite>
+  <testsuite name="06_Quan_Tri_He_Thong / [TC-ADM-005] Tim kiem khoa hoc voi bo loc day du" id="f711dc25-cbc0-434f-8571-31380c4f778d" timestamp="2026-05-10T15:36:24.920Z" tests="2" failures="0" errors="0" time="0.014">
+    <testcase name="[TC-ADM-005] Status 200" time="0.014" classname="06QuanTriHeThongTcAdm005TimKiemKhoaHocVoiBoLocDayDu"/>
+    <testcase name="[TC-ADM-005] Ket qua khop dieu kien loc" time="0.014" classname="06QuanTriHeThongTcAdm005TimKiemKhoaHocVoiBoLocDayDu"/>
+  </testsuite>
+  <testsuite name="06_Quan_Tri_He_Thong / [TC-ADM-006] Tim kiem khong co ket qua" id="9b670bff-7a04-4cd0-9b8e-c7bd6ddeda9c" timestamp="2026-05-10T15:36:24.920Z" tests="2" failures="0" errors="0" time="0.007">
+    <testcase name="[TC-ADM-006] Status 200" time="0.007" classname="06QuanTriHeThongTcAdm006TimKiemKhongCoKetQua"/>
+    <testcase name="[TC-ADM-006] Tra ve mang rong" time="0.007" classname="06QuanTriHeThongTcAdm006TimKiemKhongCoKetQua"/>
+  </testsuite>
+  <testsuite name="06_Quan_Tri_He_Thong / [TC-ADM-007] Them danh muc moi thanh cong" id="5f1c2e35-3cec-4eba-89e2-cec5a868aa08" timestamp="2026-05-10T15:36:24.920Z" tests="2" failures="0" errors="0" time="0.026">
+    <testcase name="[TC-ADM-007] Status 201" time="0.026" classname="06QuanTriHeThongTcAdm007ThemDanhMucMoiThanhCong"/>
+    <testcase name="[TC-ADM-007] Category duoc tao" time="0.026" classname="06QuanTriHeThongTcAdm007ThemDanhMucMoiThanhCong"/>
+  </testsuite>
+  <testsuite name="06_Quan_Tri_He_Thong / [TC-ADM-009] Them danh muc trung ten - KNOWN FAIL BE" id="30d27e92-b7ec-447d-9538-17f0b5bb4e26" timestamp="2026-05-10T15:36:24.920Z" tests="1" failures="1" errors="0" time="0.034">
+    <testcase name="[TC-ADM-009] KNOWN FAIL: BE cho phep tao danh muc trung ten" time="0.034" classname="06QuanTriHeThongTcAdm009ThemDanhMucTrungTenKnownFailBe">
+      <failure type="AssertionFailure" message="BE should reject duplicate category name: expected 201 to be one of [ 400, 409 ]">
+        <![CDATA[Failed 1 times.]]>
+        <![CDATA[Collection JSON ID: 6050124b-c576-4181-b9ad-56351ea2a1c8.]]>
+        <![CDATA[Collection name: Online Learning System - API Tests (13_system_test.xlsx).]]>
+        <![CDATA[Request name: 06_Quan_Tri_He_Thong / [TC-ADM-009] Them danh muc trung ten - KNOWN FAIL BE.]]>
+        <![CDATA[Test description: [TC-ADM-009] KNOWN FAIL: BE cho phep tao danh muc trung ten.]]>
+        <![CDATA[Error message: BE should reject duplicate category name: expected 201 to be one of [ 400, 409 ].]]>
+        <![CDATA[Stacktrace: AssertionError: BE should reject duplicate category name: expected 201 to be one of [ 400, 409 ]
+   at Object.eval sandbox-script.js:1:56).]]>
+      </failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="06_Quan_Tri_He_Thong / [TC-ADM-011] Cap nhat danh muc thanh cong" id="f14d2909-ae9b-4545-aa0a-6125fc2ac487" timestamp="2026-05-10T15:36:24.920Z" tests="2" failures="0" errors="0" time="0.040">
+    <testcase name="[TC-ADM-011] Status 200" time="0.040" classname="06QuanTriHeThongTcAdm011CapNhatDanhMucThanhCong"/>
+    <testcase name="[TC-ADM-011] Ten duoc cap nhat" time="0.040" classname="06QuanTriHeThongTcAdm011CapNhatDanhMucThanhCong"/>
+  </testsuite>
+  <testsuite name="06_Quan_Tri_He_Thong / [TC-ADM-013] Xoa danh muc khong co khoa hoc" id="0df13427-8548-4590-9796-e7fd5f3dac7b" timestamp="2026-05-10T15:36:24.920Z" tests="1" failures="0" errors="0" time="0.037">
+    <testcase name="[TC-ADM-013] Status 200 or 204" time="0.037" classname="06QuanTriHeThongTcAdm013XoaDanhMucKhongCoKhoaHoc"/>
+  </testsuite>
+  <testsuite name="06_Quan_Tri_He_Thong / [TC-ADM-014] Tim kiem hoc vien theo ten hoac email" id="c71571a3-78cd-43b2-b68c-06ada4a17e78" timestamp="2026-05-10T15:36:24.920Z" tests="2" failures="0" errors="0" time="0.036">
+    <testcase name="[TC-ADM-014] Status 200" time="0.036" classname="06QuanTriHeThongTcAdm014TimKiemHocVienTheoTenHoacEmail"/>
+    <testcase name="[TC-ADM-014] Co ket qua hoc vien" time="0.036" classname="06QuanTriHeThongTcAdm014TimKiemHocVienTheoTenHoacEmail"/>
+  </testsuite>
+  <testsuite name="06_Quan_Tri_He_Thong / [TC-ADM-017] Tim kiem giang vien theo ten" id="c064427a-3730-4cf7-bc80-4ab540c681d7" timestamp="2026-05-10T15:36:24.920Z" tests="2" failures="0" errors="0" time="0.033">
+    <testcase name="[TC-ADM-017] Status 200" time="0.033" classname="06QuanTriHeThongTcAdm017TimKiemGiangVienTheoTen"/>
+    <testcase name="[TC-ADM-017] Co ket qua giang vien" time="0.033" classname="06QuanTriHeThongTcAdm017TimKiemGiangVienTheoTen"/>
+  </testsuite>
+  <testsuite name="06_Quan_Tri_He_Thong / [TC-ADM-020] Xem danh sach tat ca don hang" id="a7bfd073-ebcb-4246-8bc3-0275a99e8c22" timestamp="2026-05-10T15:36:24.920Z" tests="2" failures="0" errors="0" time="0.028">
+    <testcase name="[TC-ADM-020] Status 200" time="0.028" classname="06QuanTriHeThongTcAdm020XemDanhSachTatCaDonHang"/>
+    <testcase name="[TC-ADM-020] Danh sach don hang hien thi dung" time="0.028" classname="06QuanTriHeThongTcAdm020XemDanhSachTatCaDonHang"/>
+  </testsuite>
+  <testsuite name="06_Quan_Tri_He_Thong / [TC-ADM-022] Tim kiem don hang theo ma don - KNOWN FAIL FE" id="dfa7dc35-6537-4653-9dbe-19900c60738c" timestamp="2026-05-10T15:36:24.920Z" tests="1" failures="0" errors="0" time="0.022">
+    <testcase name="[TC-ADM-022] KNOWN FAIL: FE khong co o tim kiem don hang" time="0.022" classname="06QuanTriHeThongTcAdm022TimKiemDonHangTheoMaDonKnownFailFe"/>
+  </testsuite>
+  <testsuite name="06_Quan_Tri_He_Thong / [TC-ADM-023] Xem danh sach thu nhap giang vien - KNOWN FAIL mock" id="8e657e33-285a-4d84-84c6-631c3fe05cb1" timestamp="2026-05-10T15:36:24.920Z" tests="1" failures="1" errors="0" time="0.014">
+    <testcase name="[TC-ADM-023] KNOWN FAIL: Du lieu dang mock" time="0.014" classname="06QuanTriHeThongTcAdm023XemDanhSachThuNhapGiangVienKnownFailMock">
+      <failure type="AssertionFailure" message="expected 500 to equal 200">
+        <![CDATA[Failed 1 times.]]>
+        <![CDATA[Collection JSON ID: 6050124b-c576-4181-b9ad-56351ea2a1c8.]]>
+        <![CDATA[Collection name: Online Learning System - API Tests (13_system_test.xlsx).]]>
+        <![CDATA[Request name: 06_Quan_Tri_He_Thong / [TC-ADM-023] Xem danh sach thu nhap giang vien - KNOWN FAIL mock.]]>
+        <![CDATA[Test description: [TC-ADM-023] KNOWN FAIL: Du lieu dang mock.]]>
+        <![CDATA[Error message: expected 500 to equal 200.]]>
+        <![CDATA[Stacktrace: AssertionError: expected 500 to equal 200
+   at Object.eval sandbox-script.js:1:63).]]>
+      </failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="06_Quan_Tri_He_Thong / [ROLLBACK-ADM] [ROLLBACK] Khoi phuc trang thai course admin" id="d9b5f83e-09d5-4817-8929-2b2b8707e0d0" timestamp="2026-05-10T15:36:24.920Z" tests="1" failures="0" errors="0" time="11.301">
+    <testcase name="[ROLLBACK-ADM] Status 200" time="11.301" classname="06QuanTriHeThongRollbackAdmRollbackKhoiPhucTrangThaiCourseAdmin"/>
+  </testsuite>
+</testsuites>

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>JMeter Analysis Report</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    table { border-collapse: collapse; width: 100%; }
+    th, td { border: 1px solid #ddd; padding: 8px; text-align: left; vertical-align: top; }
+    th { background: #4CAF50; color: white; }
+    .summary { background: #f0f0f0; padding: 15px; border-radius: 5px; margin-bottom: 20px; }
+  </style>
+</head>
+<body>
+  <h1>JMeter Performance Analysis</h1>
+  <div class="summary">
+    <b>File:</b> ..\reports\jmeter_results_20260510_221258.csv<br>
+    <b>Generated:</b> 2026-05-10 22:13:52<br>
+    <b>Overall:</b> FAIL<br>
+    <b>Evidence markdown:</b> jmeter_results_20260510_221258_evidence.md
+  </div>
+  <table>
+    <tr>
+      <th>Label</th>
+      <th>Req</th>
+      <th>Avg</th>
+      <th>P95</th>
+      <th>P99</th>
+      <th>Err%</th>
+      <th>TPS</th>
+      <th>Status</th>
+      <th>Notes</th>
+    </tr>
+    
+            <tr style="background:#f8d7da">
+              <td>Step1 - Admin Login</td>
+              <td>100</td>
+              <td>622</td>
+              <td>899</td>
+              <td>953</td>
+              <td>0.0%</td>
+              <td>8.3</td>
+              <td><b>FAIL</b></td>
+              <td>throughput_rps:8.3 < 20.0<br>Check auth query latency, password hashing cost, and connection pool size.<br>Review ramp-up, connection reuse, and server concurrency limits.</td>
+            </tr>
+            
+            <tr style="background:#f8d7da">
+              <td>Step1 - Login</td>
+              <td>21</td>
+              <td>474</td>
+              <td>746</td>
+              <td>746</td>
+              <td>0.0%</td>
+              <td>0.7</td>
+              <td><b>FAIL</b></td>
+              <td>throughput_rps:0.7 < 20.0<br>Check auth query latency, password hashing cost, and connection pool size.<br>Review ramp-up, connection reuse, and server concurrency limits.</td>
+            </tr>
+            
+            <tr style="background:#f8d7da">
+              <td>TC-ADM-020 GET /orders/admin</td>
+              <td>100</td>
+              <td>149</td>
+              <td>311</td>
+              <td>376</td>
+              <td>0.0%</td>
+              <td>8.6</td>
+              <td><b>FAIL</b></td>
+              <td>throughput_rps:8.6 < 20.0<br>Review joins, filter columns, and admin query indexes.<br>Review ramp-up, connection reuse, and server concurrency limits.</td>
+            </tr>
+            
+            <tr style="background:#f8d7da">
+              <td>TC-AUTH-019 POST /auth/login</td>
+              <td>150</td>
+              <td>454</td>
+              <td>748</td>
+              <td>788</td>
+              <td>0.0%</td>
+              <td>5.0</td>
+              <td><b>FAIL</b></td>
+              <td>throughput_rps:5.0 < 20.0<br>Check auth query latency, password hashing cost, and connection pool size.<br>Review ramp-up, connection reuse, and server concurrency limits.</td>
+            </tr>
+            
+            <tr style="background:#f8d7da">
+              <td>TC-COURSE-001 GET /courses?search=Spring+Boot</td>
+              <td>500</td>
+              <td>43</td>
+              <td>140</td>
+              <td>227</td>
+              <td>0.0%</td>
+              <td>17.0</td>
+              <td><b>FAIL</b></td>
+              <td>throughput_rps:17.0 < 20.0<br>Check search indexes and pagination query plans.<br>Review course list caching and N+1 lookups on course details.<br>Review ramp-up, connection reuse, and server concurrency limits.</td>
+            </tr>
+            
+            <tr style="background:#d4edda">
+              <td>TC-COURSE-003 GET /courses/{id}</td>
+              <td>1000</td>
+              <td>48</td>
+              <td>141</td>
+              <td>219</td>
+              <td>0.0%</td>
+              <td>51.1</td>
+              <td><b>PASS</b></td>
+              <td><br>Review course list caching and N+1 lookups on course details.</td>
+            </tr>
+            
+            <tr style="background:#f8d7da">
+              <td>TC-ORDER-001 POST /enrollments</td>
+              <td>21</td>
+              <td>72</td>
+              <td>175</td>
+              <td>175</td>
+              <td>0.0%</td>
+              <td>0.7</td>
+              <td><b>FAIL</b></td>
+              <td>throughput_rps:0.7 < 20.0<br>Check transaction contention and duplicate enrollment validation.<br>Review ramp-up, connection reuse, and server concurrency limits.</td>
+            </tr>
+            
+  </table>
+</body>
+</html>

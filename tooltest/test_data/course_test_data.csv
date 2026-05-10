@@ -1,0 +1,6 @@
+tc_id,action,keyword,course_id,expected_result,expected_message
+TC-COURSE-001,search,Spring Boot,,PASS,Hiển thị danh sách khóa học
+TC-COURSE-002,search,xyznonexistentcourse123,,FAIL,Không tìm thấy khóa học nào
+TC-COURSE-003,view_detail,,1,PASS,Hiển thị đầy đủ thông tin khóa học
+TC-COURSE-004,view_detail,,99999,FAIL,Khóa học không tồn tại
+TC-COURSE-006,view_group,,1,PASS,Hiển thị thông tin khóa học nhóm
