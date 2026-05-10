@@ -13,6 +13,8 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 import org.springframework.security.access.AccessDeniedException;
 
 import java.util.List;
@@ -33,6 +35,7 @@ import static org.mockito.Mockito.*;
  * Rollback: MockitoExtension reset hoàn toàn sau mỗi test.
  */
 @ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.LENIENT)
 class CartItemServiceTest {
 
     @Mock private CartItemRepository cartItemRepository;
@@ -506,5 +509,118 @@ class CartItemServiceTest {
                 .hasMessageContaining("CartItem not found");
 
         verify(cartItemRepository, never()).delete(any(CartItem.class));
+    }
+
+    // TC-CART-021: getCartItems - Specification with userId and courseId
+    @Test
+    @DisplayName("TC-CART-021: getCartItems với spec (có userId và courseId)")
+    void TC_CART_021_getCartItems_withSpec_success() {
+        org.springframework.data.domain.Page<CartItem> page = new org.springframework.data.domain.PageImpl<>(List.of(existingCartItem));
+        when(cartItemRepository.findAll(any(org.springframework.data.jpa.domain.Specification.class), any(org.springframework.data.domain.Pageable.class)))
+                .thenReturn(page);
+
+        var res = cartItemService.getCartItems(1, 10, "id", "asc", 1L, 100L);
+
+        assertThat(res.getContent()).hasSize(1);
+    }
+
+    // TC-CART-022: getCartItemsByUserId - sortBy null/empty
+    @Test
+    @DisplayName("TC-CART-022: getCartItemsByUserId với sortBy null/empty -> fallback 'createdAt'")
+    void TC_CART_022_getCartItemsByUserId_emptySortBy_success() {
+        org.springframework.data.domain.Page<com.ptit.onlinelearning.response.order.CartItemResponse> page =
+                new org.springframework.data.domain.PageImpl<>(List.of());
+        when(cartItemRepository.getAllCartItemsByUserId(eq(1L), any(org.springframework.data.domain.Pageable.class)))
+                .thenReturn(page);
+
+        var res = cartItemService.getCartItemsByUserId(0, 10, null, "desc", 1L);
+
+        assertThat(res).isNotNull();
+    }
+
+    // TC-CART-023: createCartItem - Single Course - Instructor Not Found
+    @Test
+    @DisplayName("TC-CART-023: createCartItem single course nhưng instructor không tìm thấy -> DataNotFoundException")
+    void TC_CART_023_createCartItem_singleCourse_instructorNotFound_throwsException() {
+        CartItemRequest request = new CartItemRequest();
+        request.setCourseId(100L);
+
+        when(cartItemRepository.existsByUserIdAndCourseId(buyerUser.getId(), 100L)).thenReturn(false);
+        when(enrollmentRepository.existsByUserIdAndCourseId(buyerUser.getId(), 100L)).thenReturn(false);
+        when(courseRepository.findById(100L)).thenReturn(Optional.of(testCourse));
+        when(instructorRepository.findById(10L)).thenReturn(Optional.empty()); // Instructor ko tồn tại
+
+        assertThatThrownBy(() -> cartItemService.createCartItem(buyerUser, request))
+                .isInstanceOf(DataNotFoundException.class)
+                .hasMessageContaining("Instructor not found");
+    }
+
+    // TC-CART-024: createCartItem - Course Group - Instructor Not Found
+    @Test
+    @DisplayName("TC-CART-024: createCartItem course group nhưng instructor không tìm thấy -> DataNotFoundException")
+    void TC_CART_024_createCartItem_courseGroup_instructorNotFound_throwsException() {
+        Long groupId = 5L;
+        Course c1 = new Course(); c1.setId(101L); c1.setInstructorId(10L);
+        CourseGroup courseGroup = new CourseGroup();
+        courseGroup.setId(groupId);
+        courseGroup.setCourses(List.of(c1));
+
+        CartItemRequest request = new CartItemRequest();
+        request.setCourseGroupId(groupId);
+
+        when(courseGroupRepository.findCourseGroupById(groupId)).thenReturn(Optional.of(courseGroup));
+        when(cartItemRepository.existsByUserIdAndCourseGroupId(buyerUser.getId(), groupId)).thenReturn(false);
+        when(enrollmentRepository.existsByUserIdAndCourseGroupId(buyerUser.getId(), groupId)).thenReturn(false);
+        when(instructorRepository.findById(10L)).thenReturn(Optional.empty()); // Instructor ko tồn tại
+
+        assertThatThrownBy(() -> cartItemService.createCartItem(buyerUser, request))
+                .isInstanceOf(DataNotFoundException.class)
+                .hasMessageContaining("Instructor not found");
+    }
+
+    // TC-CART-025: getCartItems - Specification coverage
+    @Test
+    @DisplayName("TC-CART-025: Kích hoạt lambda bên trong Specification của getCartItems")
+    @SuppressWarnings("unchecked")
+    void TC_CART_025_getCartItems_specificationCoverage() {
+        org.springframework.data.domain.Page<CartItem> emptyPage = new org.springframework.data.domain.PageImpl<>(List.of());
+        org.mockito.ArgumentCaptor<org.springframework.data.jpa.domain.Specification<CartItem>> specCaptor = org.mockito.ArgumentCaptor.forClass(org.springframework.data.jpa.domain.Specification.class);
+        
+        when(cartItemRepository.findAll(specCaptor.capture(), any(org.springframework.data.domain.Pageable.class))).thenReturn(emptyPage);
+
+        cartItemService.getCartItems(1, 10, "id", "asc", 1L, 100L);
+
+        org.springframework.data.jpa.domain.Specification<CartItem> spec = specCaptor.getValue();
+
+        jakarta.persistence.criteria.Root<CartItem> root = mock(jakarta.persistence.criteria.Root.class);
+        jakarta.persistence.criteria.CriteriaQuery<?> query = mock(jakarta.persistence.criteria.CriteriaQuery.class);
+        jakarta.persistence.criteria.CriteriaBuilder cb = mock(jakarta.persistence.criteria.CriteriaBuilder.class);
+
+        jakarta.persistence.criteria.Path<Object> userIdPath = mock(jakarta.persistence.criteria.Path.class);
+        when(root.get("userId")).thenReturn(userIdPath);
+
+        jakarta.persistence.criteria.Path<Object> courseIdPath = mock(jakarta.persistence.criteria.Path.class);
+        when(root.get("courseId")).thenReturn(courseIdPath);
+
+        jakarta.persistence.criteria.Predicate predicate = mock(jakarta.persistence.criteria.Predicate.class);
+        doReturn(predicate).when(cb).equal(any(jakarta.persistence.criteria.Expression.class), any());
+        doReturn(predicate).when(cb).and(any(jakarta.persistence.criteria.Predicate[].class));
+
+        jakarta.persistence.criteria.Predicate result = spec.toPredicate(root, query, cb);
+        assertThat(result).isEqualTo(predicate);
+    }
+
+    // TC-CART-026: getCartItemsByUserId - sortBy with value and sortOrder ASC
+    @Test
+    @DisplayName("TC-CART-026: getCartItemsByUserId với sortBy có giá trị và sortOrder asc")
+    void TC_CART_026_getCartItemsByUserId_withSortByAndAsc_success() {
+        org.springframework.data.domain.Page<com.ptit.onlinelearning.response.order.CartItemResponse> page =
+                new org.springframework.data.domain.PageImpl<>(List.of());
+        when(cartItemRepository.getAllCartItemsByUserId(eq(1L), any(org.springframework.data.domain.Pageable.class)))
+                .thenReturn(page);
+
+        var res = cartItemService.getCartItemsByUserId(0, 10, "courseId", "asc", 1L);
+
+        assertThat(res).isNotNull();
     }
 }

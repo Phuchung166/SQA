@@ -2,6 +2,7 @@ package com.ptit.onlinelearning.service.auth;
 
 import com.ptit.onlinelearning.common.type.RoleName;
 import com.ptit.onlinelearning.common.type.UserRegisterRole;
+import com.ptit.onlinelearning.dto.EmailMessage;
 import com.ptit.onlinelearning.component.JwtTokenUtils;
 import com.ptit.onlinelearning.exception.DataNotFoundException;
 import com.ptit.onlinelearning.exception.InvalidParamException;
@@ -459,4 +460,185 @@ class AuthServiceTest {
 
         verify(userRepository, never()).saveAndFlush(any());
     }
+    // TC-AUTH-021: Verify user — Email không tồn tại
+    @Test
+    @DisplayName("TC-AUTH-021: Verify OTP cho email không tồn tại -> DataNotFoundException")
+    void verifyUser_emailNotFound_throwsException() {
+        VerifyRequest req = VerifyRequest.builder().email("ghost@test.com").code("123456").build();
+        when(verificationCode.verifyOtp("ghost@test.com", "123456")).thenReturn(true);
+        when(userRepository.findByEmail("ghost@test.com")).thenReturn(Optional.empty());
+
+        assertThatThrownBy(() -> authService.verifyUser(req))
+                .isInstanceOf(DataNotFoundException.class);
+    }
+
+    // TC-AUTH-022: Resend OTP — Email null hoặc rỗng
+    @Test
+    @DisplayName("TC-AUTH-022: Resend OTP với email rỗng/null -> Service vẫn gửi email (không có guard)")
+    void resendOtp_emptyEmail_doesNothing() {
+        doNothing().when(eventPublisher).sendEmail(any());
+
+        authService.resendOtp("");
+        authService.resendOtp(null);
+
+        // Service thực tế không có guard null/empty, vẫn gọi sendEmail 2 lần
+        verify(eventPublisher, times(2)).sendEmail(any());
+    }
+
+    // TC-AUTH-023: ChangePassword — Token đã hết hạn/không tồn tại (BVA)
+    @Test
+    @DisplayName("TC-AUTH-023: ChangePassword với token null -> ném InvalidParamException")
+    void changePassword_nullToken_throwsException() {
+        ChangePasswordWithTokenRequest req = ChangePasswordWithTokenRequest.builder()
+                .email("test@mail.com").resetToken(null)
+                .newPassword("123").retypePassword("123").build();
+
+        assertThatThrownBy(() -> authService.changePassword(req))
+                .isInstanceOf(InvalidParamException.class);
+    }
+
+    // TC-AUTH-024: login — Email null hoặc rỗng (BVA)
+    @Test
+    @DisplayName("TC-AUTH-024: Login với email rỗng -> ném BadCredentialsException")
+    void login_emptyEmail_throwsException() {
+        // Mong đợi ném Exception nếu code không check empty email
+        assertThatThrownBy(() -> authService.login("", "pass"))
+                .isInstanceOf(Exception.class);
+    }
+
+    // TC-AUTH-025: verifyForgotPassword — OTP null
+    @Test
+    @DisplayName("TC-AUTH-025: verifyForgotPassword với code null -> trả về null")
+    void verifyForgotPassword_nullCode_returnsNull() {
+        VerifyRequest req = VerifyRequest.builder().email("test@mail.com").code(null).build();
+        String result = authService.verifyForgotPassword(req);
+        assertThat(result).isNull();
+    }
+
+    // TC-AUTH-023: register - User tồn tại nhưng chưa verify + Sai Role
+    @Test
+    @DisplayName("TC-AUTH-023: Đăng ký lại với email chưa verify nhưng sai Role -> InvalidParamException")
+    void register_existingUnverified_roleMismatch_throwsException() {
+        User existing = User.builder().id(10L).email("unverified@test.com").emailVerified(false).build();
+        Role studentRole = Role.builder().name(com.ptit.onlinelearning.common.type.RoleName.STUDENT).build();
+        UserRole ur = new UserRole(); ur.setRole(studentRole);
+
+        when(userRepository.existsByEmail("unverified@test.com")).thenReturn(true);
+        when(userRepository.findByEmail("unverified@test.com")).thenReturn(Optional.of(existing));
+        when(userRoleRepository.findByUserId(10L)).thenReturn(List.of(ur));
+
+        studentRequest.setEmail("unverified@test.com");
+        studentRequest.setRole(UserRegisterRole.INSTRUCTOR); // Mismatch kiểu UserRegisterRole
+
+        assertThatThrownBy(() -> authService.register(studentRequest))
+                .isInstanceOf(InvalidParamException.class)
+                .hasMessageContaining("Role mismatch");
+    }
+
+    // TC-AUTH-024: register - Lỗi khi gán Role (try-catch coverage)
+    @Test
+    @DisplayName("TC-AUTH-024: Lỗi khi gán Role -> Chỉ log error, không dừng luồng")
+    void register_assignRoleError_continuesFlow() {
+        when(userRepository.existsByEmail(anyString())).thenReturn(false);
+        when(userRepository.save(any())).thenReturn(savedUser);
+        doThrow(new RuntimeException("DB Error")).when(roleService).assignRoleByName(any(), anyString());
+
+        authService.register(studentRequest);
+
+        verify(eventPublisher).sendEmail(any()); // Vẫn tiếp tục gửi email
+    }
+
+    // TC-AUTH-025: login - User chưa active
+    @Test
+    @DisplayName("TC-AUTH-025: Login khi tài khoản chưa active -> InvalidParamException")
+    void login_notActive_throwsException() {
+        savedUser.setIsActive(false);
+        when(userRepository.findByEmail(anyString())).thenReturn(Optional.of(savedUser));
+        when(passwordEncoder.matches(anyString(), anyString())).thenReturn(true);
+
+        assertThatThrownBy(() -> authService.login("test@test.com", "pass"))
+                .isInstanceOf(InvalidParamException.class)
+                .hasMessageContaining("not active");
+    }
+
+    // TC-AUTH-026: changePassword - AccountName null (Coverage dòng 247)
+    @Test
+    @DisplayName("TC-AUTH-026: Đổi mật khẩu khi accountName null -> Dùng email gửi mail")
+    void changePassword_nullAccountName_usesEmail() {
+        User userWithNullAccount = User.builder()
+                .id(2L).email("test@test.com").accountName(null)
+                .password("$encoded$").isActive(true).build();
+        userWithNullAccount.setUserRoles(Set.of());
+
+        ChangePasswordWithTokenRequest req = new ChangePasswordWithTokenRequest();
+        req.setEmail("test@test.com");
+        req.setNewPassword("NewPass123");
+        req.setRetypePassword("NewPass123");
+        req.setResetToken("valid-token");
+
+        when(verificationCode.verifyResetToken(anyString(), anyString())).thenReturn(true);
+        when(userRepository.findByEmail(anyString())).thenReturn(Optional.of(userWithNullAccount));
+        when(passwordEncoder.encode(anyString())).thenReturn("$new$");
+        when(userRepository.saveAndFlush(any(User.class))).thenReturn(userWithNullAccount);
+        doNothing().when(verificationCode).deleteResetToken(anyString());
+
+        authService.changePassword(req);
+
+        ArgumentCaptor<EmailMessage> captor = ArgumentCaptor.forClass(EmailMessage.class);
+        verify(eventPublisher).sendEmail(captor.capture());
+        assertThat(captor.getValue().getAccountName()).isEqualTo("test@test.com");
+    }
+
+    // TC-AUTH-027: register - Lỗi khi gửi email xác thực cho user mới (try-catch coverage)
+    @Test
+    @DisplayName("TC-AUTH-027: Lỗi khi gửi OTP cho user mới -> catch exception, vẫn trả về success")
+    void register_sendEmailError_continuesFlow() {
+        when(userRepository.existsByEmail(anyString())).thenReturn(false);
+        when(userRepository.save(any())).thenReturn(savedUser);
+        doThrow(new RuntimeException("RabbitMQ Error")).when(eventPublisher).sendEmail(any());
+
+        UserRegisterResponse response = authService.register(studentRequest);
+
+        assertThat(response.getMessage()).contains("successfully");
+    }
+
+    // TC-AUTH-028: processForgotPassword - Lỗi khi gửi email (try-catch coverage)
+    @Test
+    @DisplayName("TC-AUTH-028: Lỗi khi gửi OTP reset password -> catch exception, vẫn trả về success msg")
+    void processForgotPassword_sendEmailError_continuesFlow() {
+        User user = User.builder().id(1L).email("student@test.com").accountName("student01").build();
+        when(userRepository.findByEmail("student@test.com")).thenReturn(Optional.of(user));
+        doThrow(new RuntimeException("RabbitMQ Error")).when(eventPublisher).sendEmail(any());
+
+        String result = authService.processForgotPassword("student@test.com");
+
+        assertThat(result).contains("otp code has been sent");
+    }
+
+    // TC-AUTH-029: changePassword - Lỗi khi gửi email thông báo đổi mật khẩu (try-catch coverage)
+    @Test
+    @DisplayName("TC-AUTH-029: Lỗi khi gửi email thông báo đổi pass thành công -> catch exception, vẫn thành công")
+    void changePassword_sendEmailError_continuesFlow() {
+        ChangePasswordWithTokenRequest req = new ChangePasswordWithTokenRequest();
+        req.setEmail("test@test.com");
+        req.setNewPassword("NewPass123");
+        req.setRetypePassword("NewPass123");
+        req.setResetToken("valid-token");
+
+        User user = User.builder().id(1L).email("test@test.com").accountName("acc").password("$old$").isActive(true).build();
+        when(verificationCode.verifyResetToken(anyString(), anyString())).thenReturn(true);
+        when(userRepository.findByEmail(anyString())).thenReturn(Optional.of(user));
+        when(passwordEncoder.encode(anyString())).thenReturn("$new$");
+        when(userRepository.saveAndFlush(any(User.class))).thenReturn(user);
+        doNothing().when(verificationCode).deleteResetToken(anyString());
+        doThrow(new RuntimeException("RabbitMQ Error")).when(eventPublisher).sendEmail(any());
+
+        String result = authService.changePassword(req);
+
+        assertThat(result).contains("Password changed successfully");
+    }
 }
+
+
+
+

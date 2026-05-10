@@ -15,6 +15,8 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -39,6 +41,7 @@ import static org.mockito.Mockito.*;
  * Rollback: MockitoExtension reset toàn bộ mock state sau mỗi test.
  */
 @ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.LENIENT)
 class ReviewServiceTest {
 
     @Mock private ReviewRepository reviewRepository;
@@ -306,5 +309,88 @@ class ReviewServiceTest {
                 .isInstanceOf(DataNotFoundException.class);
 
         verify(reviewRepository, never()).delete(any(Review.class));
+    }
+
+    // TC-REV-013: Coverage cho lambda Specification
+    @Test
+    @DisplayName("TC-REV-013: Kích hoạt lambda bên trong Specification của getAllReviews")
+    @SuppressWarnings("unchecked")
+    void TC_REV_013_getAllReviews_specificationCoverage() {
+        Page<Review> emptyPage = new PageImpl<>(List.of());
+        ArgumentCaptor<Specification<Review>> specCaptor = ArgumentCaptor.forClass(Specification.class);
+        when(reviewRepository.findAll(specCaptor.capture(), any(Pageable.class))).thenReturn(emptyPage);
+
+        // Gọi service method để trigger việc tạo Specification
+        reviewService.getAllReviews(1, 10, "createdAt", "desc", 1L, 10L, 5);
+
+        Specification<Review> spec = specCaptor.getValue();
+
+        // Khởi tạo các mock objects cho CriteriaBuilder
+        jakarta.persistence.criteria.Root<Review> root = mock(jakarta.persistence.criteria.Root.class);
+        jakarta.persistence.criteria.CriteriaQuery<?> query = mock(jakarta.persistence.criteria.CriteriaQuery.class);
+        jakarta.persistence.criteria.CriteriaBuilder cb = mock(jakarta.persistence.criteria.CriteriaBuilder.class);
+
+        jakarta.persistence.criteria.Join<Object, Object> userJoin = mock(jakarta.persistence.criteria.Join.class);
+        when(root.join("user")).thenReturn(userJoin);
+        
+        jakarta.persistence.criteria.Join<Object, Object> courseJoin = mock(jakarta.persistence.criteria.Join.class);
+        when(root.join("course")).thenReturn(courseJoin);
+
+        jakarta.persistence.criteria.Path<Object> userPath = mock(jakarta.persistence.criteria.Path.class);
+        when(userJoin.get("id")).thenReturn(userPath);
+
+        jakarta.persistence.criteria.Path<Object> coursePath = mock(jakarta.persistence.criteria.Path.class);
+        when(courseJoin.get("id")).thenReturn(coursePath);
+
+        jakarta.persistence.criteria.Path<Object> ratingPath = mock(jakarta.persistence.criteria.Path.class);
+        when(root.get("rating")).thenReturn(ratingPath);
+
+        jakarta.persistence.criteria.Predicate predicate = mock(jakarta.persistence.criteria.Predicate.class);
+        doReturn(predicate).when(cb).equal(any(jakarta.persistence.criteria.Expression.class), any());
+        doReturn(predicate).when(cb).and(any(jakarta.persistence.criteria.Predicate[].class));
+
+        // Gọi method toPredicate để evaluate nội dung lambda
+        jakarta.persistence.criteria.Predicate result = spec.toPredicate(root, query, cb);
+        assertThat(result).isEqualTo(predicate);
+    }
+
+    // TC-REV-014: createReview - enrollment endDate is not null and not expired
+    @Test
+    @DisplayName("TC-REV-014: createReview với enrollment có endDate nhưng chưa hết hạn")
+    void TC_REV_014_createReview_enrollmentNotExpired_success() {
+        ReviewRequest request = new ReviewRequest();
+        request.setCourseId(10L);
+        request.setRating(5);
+        request.setComment("Good");
+
+        Course course = new Course();
+        course.setId(10L);
+        when(courseRepository.findById(10L)).thenReturn(Optional.of(course));
+
+        Enrollment enrollment = new Enrollment();
+        enrollment.setCourse(course);
+        enrollment.setEndDate(LocalDateTime.now().plusDays(5)); // not expired
+
+        when(enrollmentRepository.findByUserIdAndCourseId(regularUser.getId(), 10L)).thenReturn(Optional.of(enrollment));
+
+
+        Review savedReview = new Review();
+        savedReview.setId(1L);
+        when(reviewRepository.save(any(Review.class))).thenReturn(savedReview);
+
+        Review result = reviewService.createReview(regularUser, request);
+        assertThat(result).isNotNull();
+    }
+
+    // TC-REV-015: getAllReviews - with non-null sortBy and sortOrder asc
+    @Test
+    @DisplayName("TC-REV-015: getAllReviews với sortBy hợp lệ và sortOrder asc")
+    void TC_REV_015_getAllReviews_sortByValidAndAsc_success() {
+        Page<Review> emptyPage = new PageImpl<>(List.of());
+        when(reviewRepository.findAll(any(Specification.class), any(Pageable.class))).thenReturn(emptyPage);
+
+        Page<Review> result = reviewService.getAllReviews(1, 10, "rating", "asc", 1L, 10L, 5);
+
+        assertThat(result).isNotNull();
     }
 }

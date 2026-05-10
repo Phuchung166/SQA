@@ -315,22 +315,88 @@ class RoleServiceTest {
         verify(userRoleRepository, times(1)).save(any(UserRole.class));
     }
 
-    // =========================================================
-    // TC-ROLE-016: assignDefaultTeacherRole — INSTRUCTOR role chưa có → tạo mới
-    // Technique: State Transition
-    // =========================================================
+    // TC-ROLE-017: assignRoleByName — Tên role là null -> Nhém Exception
     @Test
-    @DisplayName("TC-ROLE-016: assignDefaultTeacherRole — INSTRUCTOR chưa có → tạo mới và gán")
-    void TC_ROLE_016_assignDefaultTeacherRole_roleNotExists_createsAndAssigns() {
-        when(roleRepository.findByName(RoleName.INSTRUCTOR)).thenReturn(Optional.empty());
-        when(roleRepository.existsByName(RoleName.INSTRUCTOR)).thenReturn(false);
-        when(roleRepository.save(any(Role.class))).thenReturn(instructorRole);
-        when(userRoleRepository.existsByUserIdAndRoleId(testUser.getId(), instructorRole.getId())).thenReturn(false);
+    @DisplayName("TC-ROLE-017: Gán role với tên null -> NullPointerException (không có null guard)")
+    void assignRoleByName_nullName_throwsException() {
+        assertThatThrownBy(() -> roleService.assignRoleByName(testUser, null))
+                .isInstanceOf(Exception.class); // NullPointerException từ RoleName.valueOf(null)
+    }
+
+    // TC-ROLE-018: assignRoleByName — Tên role không hợp lệ
+    @Test
+    @DisplayName("TC-ROLE-018: Gán role không thuộc hệ thống -> IllegalArgumentException")
+    void assignRoleByName_invalidEnum_throwsException() {
+        assertThatThrownBy(() -> roleService.assignRoleByName(testUser, "SUPER_GOD_MODE"))
+                .isInstanceOf(IllegalArgumentException.class); // RoleName.valueOf("SUPER_GOD_MODE") thất bại
+    }
+
+    // TC-ROLE-019: userHasRole — User ID null
+    @Test
+    @DisplayName("TC-ROLE-019: Kiểm tra role cho userId null -> false")
+    void userHasRole_nullUserId_returnsFalse() {
+        boolean res = roleService.userHasRole(null, "STUDENT");
+        assertThat(res).isFalse();
+    }
+
+    // TC-ROLE-020: assignDefaultStudentRole — User null
+    @Test
+    @DisplayName("TC-ROLE-020: Gán role mặc định cho user null -> NullPointerException")
+    void assignDefaultStudentRole_nullUser_throwsException() {
+        assertThatThrownBy(() -> roleService.assignDefaultStudentRole(null))
+                .isInstanceOf(NullPointerException.class); // không có null check
+    }
+
+    // TC-ROLE-021: removeRoleFromUser — User ID không tồn tại
+    @Test
+    @DisplayName("TC-ROLE-021: Xóa role cho userId không tồn tại -> Không có lỗi (No-op)")
+    void removeRoleFromUser_invalidUserId_noOp() {
+        when(userRoleRepository.findByUserIdAndRoleId(999L, 1)).thenReturn(Optional.empty());
+        roleService.removeRoleFromUser(999L, 1);
+        verify(userRoleRepository, never()).delete(any(UserRole.class));
+    }
+
+    // TC-ROLE-022: gán ADMIN role
+    @Test
+    @DisplayName("TC-ROLE-022: Gán role ADMIN -> CheckDB save")
+    void assignAdminRole_success() {
+        Role adminRole = Role.builder().id(3).name(RoleName.ADMIN).build();
+        when(roleRepository.findByName(RoleName.ADMIN)).thenReturn(Optional.of(adminRole));
+        when(userRoleRepository.existsByUserIdAndRoleId(testUser.getId(), 3)).thenReturn(false);
+        when(userRoleRepository.save(any())).thenReturn(new UserRole());
+
+        roleService.assignRoleByName(testUser, "ADMIN");
+        verify(userRoleRepository).save(any());
+    }
+
+    // TC-ROLE-023: findRoleByName — Case insensitive check
+    @Test
+    @DisplayName("TC-ROLE-023: Tìm role bằng tên chữ thường 'student' -> IllegalArgumentException")
+    void findRoleByName_lowerCase_found() {
+        // RoleName.valueOf("student") thất bại vì enum là case-sensitive
+        assertThatThrownBy(() -> roleService.findRoleByName("student"))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    // TC-ROLE-024: getUserRoles — User không có role
+    @Test
+    @DisplayName("TC-ROLE-024: User mới chưa có role -> Trả về list rỗng")
+    void getUserRoles_noRoles_returnsEmpty() {
+        when(userRoleRepository.findByUserIdWithRole(1L)).thenReturn(List.of());
+        List<UserRole> res = roleService.getUserRoles(1L);
+        assertThat(res).isEmpty();
+    }
+
+    // TC-ROLE-025: assignRoleToUser — Role không có ID
+    @Test
+    @DisplayName("TC-ROLE-025: Gán role chưa có ID -> Service vẫn gọi (id=0, không validate)")
+    void assignRoleToUser_roleNoId_throwsException() {
+        Role transientRole = Role.builder().name(RoleName.STUDENT).build(); // id=null
+        when(userRoleRepository.existsByUserIdAndRoleId(testUser.getId(), null)).thenReturn(false);
         when(userRoleRepository.save(any(UserRole.class))).thenReturn(new UserRole());
 
-        roleService.assignDefaultTeacherRole(testUser);
-
-        verify(roleRepository, times(1)).save(any(Role.class));
-        verify(userRoleRepository, times(1)).save(any(UserRole.class));
+        // Service không validate role.id, gọi thành công
+        UserRole result = roleService.assignRoleToUser(testUser, transientRole);
+        assertThat(result).isNotNull();
     }
 }

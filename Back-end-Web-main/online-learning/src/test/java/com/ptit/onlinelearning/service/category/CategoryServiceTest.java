@@ -214,4 +214,48 @@ class CategoryServiceTest {
         // Rollback verification: delete() không bao giờ được gọi
         verify(categoryRepository, never()).delete(any(Category.class));
     }
+
+    // =========================================================
+    // TC-CAT-007: getCategories - Lấy danh sách category với phân trang và filter
+    // =========================================================
+    @Test
+    @DisplayName("TC-CAT-007: getCategories phân trang và filter")
+    void TC_CAT_007_getCategories_success() {
+        org.springframework.data.domain.Page<Category> page = new org.springframework.data.domain.PageImpl<>(java.util.List.of(existingCategory));
+        when(categoryRepository.findAll(any(org.springframework.data.jpa.domain.Specification.class), any(org.springframework.data.domain.Pageable.class)))
+                .thenReturn(page);
+
+        org.springframework.data.domain.Page<Category> result = categoryService.getCategories(1, 10, "name", "asc", "search", true, 1L);
+
+        assertThat(result.getContent()).hasSize(1);
+        verify(categoryRepository, times(1)).findAll(any(org.springframework.data.jpa.domain.Specification.class), any(org.springframework.data.domain.Pageable.class));
+    }
+
+    // =========================================================
+    // TC-CAT-008: Cập nhật category toàn bộ field
+    // =========================================================
+    @Test
+    @DisplayName("TC-CAT-008: Cập nhật category toàn bộ field (name, description, image, parentId)")
+    void TC_CAT_008_updateCategory_fullUpdate_success() {
+        Long categoryId = 1L;
+        UpdateCategoryRequest updateRequest = new UpdateCategoryRequest();
+        updateRequest.setName("Python");
+        updateRequest.setDescription("Python desc");
+        updateRequest.setImage("python.png");
+        updateRequest.setParentId(2L);
+
+        when(categoryRepository.findById(categoryId)).thenReturn(Optional.of(existingCategory));
+        when(categoryRepository.save(any(Category.class))).thenReturn(existingCategory);
+
+        categoryService.updateCategory(categoryId, updateRequest);
+
+        ArgumentCaptor<Category> categoryCaptor = ArgumentCaptor.forClass(Category.class);
+        verify(categoryRepository, times(1)).save(categoryCaptor.capture());
+
+        Category capturedCategory = categoryCaptor.getValue();
+        assertThat(capturedCategory.getName()).isEqualTo("Python");
+        assertThat(capturedCategory.getDescription()).isEqualTo("Python desc");
+        assertThat(capturedCategory.getImage()).isEqualTo("python.png");
+        assertThat(capturedCategory.getParentId()).isEqualTo(2L);
+    }
 }

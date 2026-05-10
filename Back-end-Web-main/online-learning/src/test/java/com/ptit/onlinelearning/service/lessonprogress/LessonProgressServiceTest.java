@@ -205,4 +205,72 @@ class LessonProgressServiceTest {
         // === ASSERT ===
         assertThat(actualProgress).isEqualTo(0.0);
     }
+
+    // TC-LP-007: viewUserCourseProgress - trả về đúng tổng và số hoàn thành
+    @Test
+    @DisplayName("TC-LP-007: viewUserCourseProgress - trả về số bài và số đã hoàn thành")
+    void TC_LP_007_viewUserCourseProgress_returnsCorrectCounts() {
+        when(lessonProgressRepository.countByEnrollmentIdAndUserId(ENROLLMENT_ID, USER_ID)).thenReturn(3L);
+        when(courseRepository.countTotalLessonByCourseId(COURSE_ID)).thenReturn(8L);
+
+        var res = lessonProgressService.viewUserCourseProgress(USER_ID, COURSE_ID, ENROLLMENT_ID);
+
+        assertThat(res.getTotalLessons()).isEqualTo(8L);
+        assertThat(res.getCompletedLessons()).isEqualTo(3L);
+    }
+
+    // TC-LP-008: caculateUserCourseGroupProgress - không enrolled -> Exception
+    @Test
+    @DisplayName("TC-LP-008: calculateCourseGroupProgress chưa enroll -> InvalidParamException")
+    void TC_LP_008_caculateUserCourseGroupProgress_notEnrolled_throwsException() {
+        when(enrollmentRepository.findAllByUserIdAndCourseGroupId(USER_ID, 99L))
+                .thenReturn(java.util.List.of());
+
+        assertThatThrownBy(() ->
+                lessonProgressService.caculateUserCourseGroupProgress(USER_ID, 99L))
+                .isInstanceOf(InvalidParamException.class)
+                .hasMessageContaining("not enrolled in the course group");
+    }
+
+    // TC-LP-009: caculateUserCourseGroupProgress - group không có bài học -> 0.0
+    @Test
+    @DisplayName("TC-LP-009: caculateUserCourseGroupProgress không có bài học -> 0.0")
+    void TC_LP_009_caculateUserCourseGroupProgress_noLessons_returnsZero() {
+        com.ptit.onlinelearning.model.Course course = new com.ptit.onlinelearning.model.Course();
+        course.setId(COURSE_ID);
+
+        com.ptit.onlinelearning.model.Enrollment enrollment = new com.ptit.onlinelearning.model.Enrollment();
+        enrollment.setId(ENROLLMENT_ID);
+        enrollment.setCourse(course);
+
+        when(enrollmentRepository.findAllByUserIdAndCourseGroupId(USER_ID, 99L))
+                .thenReturn(java.util.List.of(enrollment));
+        when(lessonProgressRepository.countByEnrollmentIdAndUserId(ENROLLMENT_ID, USER_ID)).thenReturn(0L);
+        when(courseRepository.countTotalLessonByCourseId(COURSE_ID)).thenReturn(0L);
+
+        Double result = lessonProgressService.caculateUserCourseGroupProgress(USER_ID, 99L);
+
+        assertThat(result).isEqualTo(0.0);
+    }
+
+    // TC-LP-010: caculateUserCourseGroupProgress - tính chính xác 50%
+    @Test
+    @DisplayName("TC-LP-010: caculateUserCourseGroupProgress tính đúng 50% (5/10 bài)")
+    void TC_LP_010_caculateUserCourseGroupProgress_halfDone_returnsFiftyPercent() {
+        com.ptit.onlinelearning.model.Course course = new com.ptit.onlinelearning.model.Course();
+        course.setId(COURSE_ID);
+
+        com.ptit.onlinelearning.model.Enrollment enrollment = new com.ptit.onlinelearning.model.Enrollment();
+        enrollment.setId(ENROLLMENT_ID);
+        enrollment.setCourse(course);
+
+        when(enrollmentRepository.findAllByUserIdAndCourseGroupId(USER_ID, 99L))
+                .thenReturn(java.util.List.of(enrollment));
+        when(lessonProgressRepository.countByEnrollmentIdAndUserId(ENROLLMENT_ID, USER_ID)).thenReturn(5L);
+        when(courseRepository.countTotalLessonByCourseId(COURSE_ID)).thenReturn(10L);
+
+        Double result = lessonProgressService.caculateUserCourseGroupProgress(USER_ID, 99L);
+
+        assertThat(result).isEqualTo(50.0);
+    }
 }

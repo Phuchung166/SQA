@@ -625,4 +625,250 @@ class CourseServiceTest {
 
         verify(courseRepository, never()).saveAndFlush(any(Course.class));
     }
+
+    // TC-CRS-025: getCourses - Filter kết hợp Category và Search
+    @Test
+    @DisplayName("TC-CRS-025: getCourses kết hợp CategoryId và Search keyword")
+    void getCourses_withCategoryAndSearch_callsFindAllWithPredicates() {
+        org.springframework.data.domain.Page<Course> page = new org.springframework.data.domain.PageImpl<>(List.of(draftCourse));
+        when(courseRepository.findAll(any(org.springframework.data.jpa.domain.Specification.class), any(org.springframework.data.domain.Pageable.class)))
+                .thenReturn(page);
+
+        var res = courseService.getCourses(1, 10, 5L, "java", CourseStatus.ACTIVE, "title", "asc", EnrollmentType.LIFETIME);
+
+        assertThat(res.getContent()).hasSize(1);
+        verify(courseRepository).findAll(any(org.springframework.data.jpa.domain.Specification.class), any(org.springframework.data.domain.Pageable.class));
+    }
+
+    // TC-CRS-026: createCourse - Goals (whatYouLearn) là list rỗng
+    @Test
+    @DisplayName("TC-CRS-026: whatYouLearn là list rỗng -> Phát hiện cách code xử lý (Bug nếu ra null\\nnull)")
+    void createCourse_emptyGoals_checkLogic() {
+        basicRequest.setWhatYouLearn(List.of());
+        basicRequest.setTargetAudiences(List.of());
+        when(categoryService.getCategoryById(5L)).thenReturn(new Category());
+        when(courseRepository.existsByCode(anyString())).thenReturn(false);
+        when(courseRepository.save(any(Course.class))).thenAnswer(i -> i.getArgument(0));
+
+        Course result = courseService.createCourse(basicRequest, testInstructor);
+
+        // Chúng ta mong đợi nó không bị lỗi null\nnull
+        assertThat(result.getWhatYouLearn()).isNotEqualTo("null\nnull");
+    }
+
+    // TC-CRS-027: Pre-order với totalSlots = 0 (BVA)
+    @Test
+    @DisplayName("TC-CRS-027: Pre-order với totalSlots = 0 (BVA biên dưới)")
+    void createCourse_preOrderZeroSlots_success() {
+        basicRequest.setIsPreOrder(true);
+        basicRequest.setPreOrderTotalSlots(0);
+        basicRequest.setPreOrderStartDate(LocalDateTime.now().plusDays(1));
+        basicRequest.setPreOrderEndDate(LocalDateTime.now().plusDays(5));
+        basicRequest.setPreOrderPrice(new BigDecimal("100000"));
+
+        when(categoryService.getCategoryById(5L)).thenReturn(new Category());
+        when(courseRepository.existsByCode(anyString())).thenReturn(false);
+        when(courseRepository.save(any(Course.class))).thenAnswer(i -> i.getArgument(0));
+
+        Course result = courseService.createCourse(basicRequest, testInstructor);
+        assertThat(result.getPreOrderTotalSlots()).isEqualTo(0);
+    }
+
+    // TC-CRS-028: updateCourse - regular price nhỏ hơn pre-order price hiện tại
+    @Test
+    @DisplayName("TC-CRS-028: Phát hiện lỗi logic: Update regular price < pre-order price")
+    void updateCourse_regularPriceLowerThanPreOrderPrice_detectBug() {
+        draftCourse.setIsPreOrder(true);
+        draftCourse.setPreOrderPrice(new BigDecimal("200000"));
+        
+        UpdateCourseRequest updateReq = new UpdateCourseRequest();
+        updateReq.setPrice(new BigDecimal("150000")); // Nhỏ hơn pre-order price (200k)
+
+        when(courseRepository.findById(1L)).thenReturn(Optional.of(draftCourse));
+        when(courseRepository.saveAndFlush(any(Course.class))).thenAnswer(inv -> inv.getArgument(0));
+
+        // BUG: Service không validate price >= preOrderPrice khi update
+        // Test này xác nhận bug tồn tại: update thành công mà không ném exception
+        Course result = courseService.updateCourse(1L, updateReq, testInstructor);
+        assertThat(result.getPrice()).isEqualByComparingTo(new BigDecimal("150000"));
+    }
+
+    // TC-CRS-029: publishCourse - Khóa học thiếu giá (Price null)
+    @Test
+    @DisplayName("TC-CRS-029: publishCourse khi giá null -> NullPointerException (bug: không có null-check)")
+    void publishCourse_nullPrice_detectBug() {
+        draftCourse.setPrice(null);
+        draftCourse.setIsFree(false);
+        when(courseRepository.findById(1L)).thenReturn(Optional.of(draftCourse));
+
+        // BUG: Service không kiểm tra price null trước khi publish
+        // Nhém NullPointerException thay vì InvalidParamException
+        assertThatThrownBy(() -> courseService.publishCourse(1L))
+                .isInstanceOf(Exception.class); // chấp nhận bất kỳ exception
+    }
+
+    // TC-CRS-030: updateCourseStatus - Chuyển sang trạng thái DEACTIVATED
+    @Test
+    @DisplayName("TC-CRS-030: Admin chuyển status sang DEACTIVATED")
+    void updateCourseStatus_toDeactivated_success() {
+        UpdateCourseStatusRequest req = new UpdateCourseStatusRequest();
+        req.setCourseStatus(CourseStatus.DEACTIVATED);
+
+        when(courseRepository.findById(1L)).thenReturn(Optional.of(draftCourse));
+        when(courseRepository.saveAndFlush(any(Course.class))).thenAnswer(i -> i.getArgument(0));
+
+        Course result = courseService.updateCourseStatus(1L, req);
+        assertThat(result.getStatus()).isEqualTo(CourseStatus.DEACTIVATED);
+    }
+
+    // TC-CRS-031: getAllCourseOfInstructorBySlug
+    @Test
+    @DisplayName("TC-CRS-031: getAllCourseOfInstructorBySlug thành công")
+    void getAllCourseOfInstructorBySlug_success() {
+        when(instructorRepository.findBySlug("slug-01")).thenReturn(Optional.of(testInstructor));
+        org.springframework.data.domain.Page<Course> page = new org.springframework.data.domain.PageImpl<>(List.of(draftCourse));
+        when(courseRepository.findAll(any(org.springframework.data.jpa.domain.Specification.class), any(org.springframework.data.domain.Pageable.class)))
+                .thenReturn(page);
+
+        var res = courseService.getAllCourseOfInstructorBySlug(1, 10, "slug-01", 1L);
+
+        assertThat(res.getContent()).hasSize(1);
+    }
+
+    // TC-CRS-032: getAllCourseOfInstructorBySlug - Instructor not found
+    @Test
+    @DisplayName("TC-CRS-032: getAllCourseOfInstructorBySlug không tìm thấy instructor -> DataNotFoundException")
+    void getAllCourseOfInstructorBySlug_notFound_throwsException() {
+        when(instructorRepository.findBySlug("unknown")).thenReturn(Optional.empty());
+
+        assertThatThrownBy(() -> courseService.getAllCourseOfInstructorBySlug(1, 10, "unknown", 1L))
+                .isInstanceOf(DataNotFoundException.class);
+    }
+
+    // TC-CRS-033: getAllCourseOfInstructorByInstructorId - isGrouped = true
+    @Test
+    @DisplayName("TC-CRS-033: getAllCourseOfInstructorByInstructorId với isGrouped=true")
+    void getAllCourseOfInstructorByInstructorId_isGroupedTrue_success() {
+        org.springframework.data.domain.Page<Course> page = new org.springframework.data.domain.PageImpl<>(List.of(draftCourse));
+        when(courseRepository.findAll(any(org.springframework.data.jpa.domain.Specification.class), any(org.springframework.data.domain.Pageable.class)))
+                .thenReturn(page);
+
+        var res = courseService.getAllCourseOfInstructorByInstructorId(1, 10, 1L, 10L, true);
+
+        assertThat(res.getContent()).hasSize(1);
+    }
+
+    // TC-CRS-034: getAllCourseOfInstructorByInstructorId - isGrouped = false
+    @Test
+    @DisplayName("TC-CRS-034: getAllCourseOfInstructorByInstructorId với isGrouped=false")
+    void getAllCourseOfInstructorByInstructorId_isGroupedFalse_success() {
+        org.springframework.data.domain.Page<Course> page = new org.springframework.data.domain.PageImpl<>(List.of(draftCourse));
+        when(courseRepository.findAll(any(org.springframework.data.jpa.domain.Specification.class), any(org.springframework.data.domain.Pageable.class)))
+                .thenReturn(page);
+
+        var res = courseService.getAllCourseOfInstructorByInstructorId(1, 10, null, 10L, false);
+
+        assertThat(res.getContent()).hasSize(1);
+    }
+
+    // TC-CRS-035: getPreOrderCourses
+    @Test
+    @DisplayName("TC-CRS-035: getPreOrderCourses trả về đúng Spec")
+    void getPreOrderCourses_success() {
+        org.springframework.data.domain.Page<Course> page = new org.springframework.data.domain.PageImpl<>(List.of(draftCourse));
+        when(courseRepository.findAll(any(org.springframework.data.jpa.domain.Specification.class), any(org.springframework.data.domain.Pageable.class)))
+                .thenReturn(page);
+
+        var res = courseService.getPreOrderCourses(1, 10, "title", "asc");
+
+        assertThat(res.getContent()).hasSize(1);
+    }
+
+    // TC-CRS-036: deleteCourse bởi admin
+    @Test
+    @DisplayName("TC-CRS-036: deleteCourse bởi admin thì pass mà không cần owner check")
+    void deleteCourse_byAdmin_success() {
+        User adminUser = User.builder().id(99L).build();
+        Role adminRole = new Role();
+        adminRole.setId(1);
+        adminRole.setName(RoleName.ADMIN);
+        UserRole adminUserRole = new UserRole();
+        adminUserRole.setId(1L);
+        adminUserRole.setUser(adminUser);
+        adminUserRole.setRole(adminRole);
+        adminUser.setUserRoles(Set.of(adminUserRole));
+
+        when(courseRepository.findById(1L)).thenReturn(Optional.of(draftCourse));
+
+        courseService.deleteCourse(1L, adminUser);
+
+        verify(courseRepository, times(1)).delete(draftCourse);
+    }
+
+    // TC-CRS-037: publishCourse - Instructor null
+    @Test
+    @DisplayName("TC-CRS-037: publishCourse instructor user null -> Exception")
+    void publishCourse_noInstructorUser_throwsException() {
+        draftCourse.setInstructor(new Instructor()); // user null
+        when(courseRepository.findById(1L)).thenReturn(Optional.of(draftCourse));
+        when(courseRepository.saveAndFlush(any())).thenAnswer(i -> i.getArgument(0));
+
+        assertThatThrownBy(() -> courseService.publishCourse(1L))
+                .isInstanceOf(DataNotFoundException.class)
+                .hasMessageContaining("Instructor or Instructor's user not found");
+    }
+
+    // TC-CRS-038: createCourse - with CourseModuleDTOs
+    @Test
+    @DisplayName("TC-CRS-038: createCourse có CourseModuleDTOs -> gọi module service")
+    void createCourse_withModules_success() {
+        CourseRequest.CourseModuleDTO modDTO = new CourseRequest.CourseModuleDTO();
+        basicRequest.setCourseModuleDTOs(List.of(modDTO));
+
+        when(categoryService.getCategoryById(5L)).thenReturn(new Category());
+        when(courseRepository.existsByCode(anyString())).thenReturn(false);
+        when(courseRepository.save(any())).thenAnswer(i -> {
+            Course c = i.getArgument(0); c.setId(100L); return c;
+        });
+
+        Course result = courseService.createCourse(basicRequest, testInstructor);
+
+        verify(courseModuleService, times(1)).createCourseModule(eq(100L), any());
+        assertThat(result.getCourseModules()).hasSize(1);
+    }
+
+    // TC-CRS-039: updateCourse - update remaining fields
+    @Test
+    @DisplayName("TC-CRS-039: updateCourse tất cả các trường (description, thumbnail, previewVideo, isFree, currency)")
+    void updateCourse_allFields_success() {
+        UpdateCourseRequest updateReq = new UpdateCourseRequest();
+        updateReq.setDescription("New Desc");
+        updateReq.setThumbnail("thumb.jpg");
+        updateReq.setPreviewVideo("vid.mp4");
+        updateReq.setCategoryId(2L);
+        updateReq.setLevel(CourseLevel.ADVANCED);
+        updateReq.setLanguage("en");
+        updateReq.setPrice(new BigDecimal("1000"));
+        updateReq.setIsFree(true);
+        updateReq.setCurrency(Currency.USD);
+        updateReq.setWhatYouLearn(List.of("A", "B"));
+        updateReq.setTargetAudiences(List.of("X", "Y"));
+        updateReq.setEnrollmentType(EnrollmentType.SUBSCRIPTION);
+        
+        draftCourse.setExpiredDays(30); // để pass check expiredDays != null
+
+        when(courseRepository.findById(1L)).thenReturn(Optional.of(draftCourse));
+        when(courseRepository.saveAndFlush(any())).thenAnswer(i -> i.getArgument(0));
+
+        Course result = courseService.updateCourse(1L, updateReq, testInstructor);
+
+        assertThat(result.getDescription()).isEqualTo("New Desc");
+        assertThat(result.getThumbnail()).isEqualTo("thumb.jpg");
+        assertThat(result.getPreviewVideo()).isEqualTo("vid.mp4");
+        assertThat(result.getLanguage()).isEqualTo("en");
+        assertThat(result.getIsFree()).isTrue();
+        assertThat(result.getCurrency()).isEqualTo(Currency.USD);
+        assertThat(result.getWhatYouLearn()).isEqualTo("A\nB");
+        assertThat(result.getEnrollmentType()).isEqualTo(EnrollmentType.SUBSCRIPTION);
+    }
 }
